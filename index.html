@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IELTS Study — Alex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;--paper:#fff;--surface2:#f9f7f4;--border:#e2ddd6;--border2:#cbc6bc;
+  --ink:#18160f;--ink2:#3c3930;--muted:#8c8880;
+  --r:#bc3318;--l:#1560a8;--w:#1a7a48;--vocab:#6b2ebc;--wt2:#0a7a72;--home:#b06818;
+  --r-bg:#fdf0ec;--l-bg:#edf3fc;--w-bg:#ecf7f1;--vocab-bg:#f4effe;--wt2-bg:#eaf7f6;--home-bg:#fdf6ed;
+  --r-bdr:#f2c4b8;--l-bdr:#b4d0f0;--w-bdr:#a8dcc0;--vocab-bdr:#d4b4f4;--wt2-bdr:#98dcd8;--home-bdr:#f0d0a0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh}
+
+/* ── HEADER ── */
+.hdr{background:var(--paper);border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.05);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink)}
+.logo em{font-style:normal;color:var(--r)}
+.logo-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-left:10px;letter-spacing:.08em}
+.url-chip{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:4px 10px;border-radius:5px;text-decoration:none;transition:all .15s}
+.url-chip:hover{color:var(--ink2);border-color:var(--border2)}
+
+/* ── HERO ── */
+.hero{max-width:720px;margin:0 auto;padding:40px 20px 10px}
+.hero-tag{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--r);margin-bottom:10px}
+.hero-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:10px}
+.hero-desc{font-size:14px;color:var(--ink2);line-height:1.75;max-width:520px}
+
+/* ── PROGRESS BAR ── */
+.prog-wrap{max-width:720px;margin:28px auto 0;padding:0 20px}
+.prog-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:flex;justify-content:space-between}
+.prog-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.prog-fill{height:6px;background:linear-gradient(90deg,var(--r),var(--home));border-radius:3px;width:20%;transition:width .6s ease}
+
+/* ── GRID ── */
+.grid{max-width:720px;margin:32px auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+
+/* ── CARD ── */
+.card{background:var(--paper);border:1px solid var(--border);border-radius:14px;overflow:hidden;text-decoration:none;display:block;transition:all .18s;box-shadow:0 1px 4px rgba(0,0,0,.04);position:relative}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.09);border-color:var(--border2)}
+.card.disabled{opacity:.5;pointer-events:none;cursor:default}
+.card-accent{height:4px}
+.card-body{padding:16px 17px 15px}
+.card-tag{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}
+.card-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:5px;line-height:1.3}
+.card-desc{font-size:12.5px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.card-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
+.card-arrow{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:5px 12px;border-radius:5px;border:1px solid;transition:all .15s}
+.card:hover .card-arrow{transform:translateX(2px)}
+
+/* badge */
+.badge{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:2px 8px;border-radius:3px;letter-spacing:.05em;position:absolute;top:12px;right:12px}
+.badge-new{background:var(--r-bg);color:var(--r);border:1px solid var(--r-bdr)}
+.badge-soon{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+
+/* ── SECTION LABEL ── */
+.sec{max-width:720px;margin:32px auto 0;padding:0 20px}
+.sec-row{display:flex;align-items:center;gap:12px;margin-bottom:0}
+.sec-lbl{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.sec-line{flex:1;height:1px;background:var(--border)}
+
+/* ── FOOTER ── */
+.footer{max-width:720px;margin:48px auto 0;padding:0 20px 40px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:20px}
+
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{animation:fu .3s ease both}
+.card:nth-child(2){animation-delay:.05s}
+.card:nth-child(3){animation-delay:.1s}
+.card:nth-child(4){animation-delay:.15s}
+.card:nth-child(5){animation-delay:.2s}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <span class="logo">IELTS <em>Study</em></span>
+    <span class="logo-sub">Alex's Hub</span>
+  </div>
+  <a class="url-chip" href="https://Alex426628.github.io/ielts-study/" target="_blank">Alex426628.github.io/ielts-study</a>
+</div>
+
+<div class="hero">
+  <div class="hero-tag">학습 허브 · Band 7.0 목표</div>
+  <div class="hero-title">나의 IELTS<br>Study Materials</div>
+  <div class="hero-desc">영역별 HTML 교재 + 실전 문제 + 전략 정리. 아래에서 학습할 자료를 선택하세요.</div>
+</div>
+
+<div class="prog-wrap">
+  <div class="prog-label">
+    <span>전체 진도</span>
+    <span id="progTxt">자료 3 / 목표 15</span>
+  </div>
+  <div class="prog-track"><div class="prog-fill" style="width:20%"></div></div>
+</div>
+
+<!-- ── READING ── -->
+<div class="sec"><div class="sec-row"><span class="sec-lbl">📖 Reading</span><div class="sec-line"></div></div></div>
+<div class="grid">
+
+  <a class="card" href="https://Alex426628.github.io/ielts-study/ielts-study-hub.html">
+    <div class="card-accent" style="background:var(--r)"></div>
+    <span class="badge badge-new">NEW</span>
+    <div class="card-body">
+      <div class="card-tag" style="color:var(--r)">Study Hub · 메인</div>
+      <div class="card-title">IELTS Study Hub</div>
+      <div class="card-desc">10가지 Reading 유형 개요 + Vocabulary + Writing Task 2 + Speaking 전략 통합</div>
+      <div class="card-footer">
+        <span class="card-meta">5개 섹션 · 퀴즈 포함</span>
+        <span class="card-arrow" style="color:var(--r);border-color:var(--r-bdr);background:var(--r-bg)">열기 →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="https://Alex426628.github.io/ielts-study/reading-practice-01-05.html">
+    <div class="card-accent" style="background:var(--l)"></div>
+    <span class="badge badge-new">NEW</span>
+    <div class="card-body">
+      <div class="card-tag" style="color:var(--l)">Reading Practice · 유형 01–05</div>
+      <div class="card-title">T/F/NG · Y/N/NG<br>Headings · Sentence · M·Info</div>
+      <div class="card-desc">실전 지문 5편 + 문제 29개 + 한국어 해설. 클릭 채점.</div>
+      <div class="card-footer">
+        <span class="card-meta">5유형 · 29문제</span>
+        <span class="card-arrow" style="color:var(--l);border-color:var(--l-bdr);background:var(--l-bg)">열기 →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="https://Alex426628.github.io/ielts-study/reading-practice-06-10.html">
+    <div class="card-accent" style="background:var(--wt2)"></div>
+    <span class="badge badge-new">NEW</span>
+    <div class="card-body">
+      <div class="card-tag" style="color:var(--wt2)">Reading Practice · 유형 06–10</div>
+      <div class="card-title">MCQ · Endings<br>Short Ans · Table · Pick List</div>
+      <div class="card-desc">실전 지문 5편 + 문제 26개 + 한국어 해설. 클릭 채점.</div>
+      <div class="card-footer">
+        <span class="card-meta">5유형 · 26문제</span>
+        <span class="card-arrow" style="color:var(--wt2);border-color:var(--wt2-bdr);background:var(--wt2-bg)">열기 →</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<!-- ── WRITING ── -->
+<div class="sec" style="margin-top:8px"><div class="sec-row"><span class="sec-lbl">✍️ Writing</span><div class="sec-line"></div></div></div>
+<div class="grid">
+  <div class="card disabled">
+    <div class="card-accent" style="background:var(--home)"></div>
+    <span class="badge badge-soon">SOON</span>
+    <div class="card-body">
+      <div class="card-tag" style="color:var(--home)">Writing Task 2</div>
+      <div class="card-title">에세이 유형별<br>전략 + 샘플</div>
+      <div class="card-desc">논증형·토론형·문제해결형 등 5가지 유형 + Band별 샘플 에세이</div>
+      <div class="card-footer">
+        <span class="card-meta">준비 중</span>
+        <span class="card-arrow" style="color:var(--muted);border-color:var(--border);background:var(--surface2)">곧 →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SPEAKING ── -->
+<div class="sec" style="margin-top:8px"><div class="sec-row"><span class="sec-lbl">🗣 Speaking</span><div class="sec-line"></div></div></div>
+<div class="grid">
+  <div class="card disabled">
+    <div class="card-accent" style="background:var(--vocab)"></div>
+    <span class="badge badge-soon">SOON</span>
+    <div class="card-body">
+      <div class="card-tag" style="color:var(--vocab)">Speaking Part 1–3</div>
+      <div class="card-title">전략 + 모범 답변<br>+ 타이머</div>
+      <div class="card-desc">Part별 전략 · PEEL 구조 · Cue Card 연습 · 2분 타이머</div>
+      <div class="card-footer">
+        <span class="card-meta">준비 중</span>
+        <span class="card-arrow" style="color:var(--muted);border-color:var(--border);background:var(--surface2)">곧 →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VOCABULARY ── -->
+<div class="sec" style="margin-top:8px"><div class="sec-row"><span class="sec-lbl">📝 Vocabulary</span><div class="sec-line"></div></div></div>
+<div class="grid">
+  <div class="card disabled">
+    <div class="card-accent" style="background:var(--w)"></div>
+    <span class="badge badge-soon">SOON</span>
+    <div class="card-body">
+      <div class="card-tag" style="color:var(--w)">Vocabulary</div>
+      <div class="card-title">주제별 어휘<br>플래시카드</div>
+      <div class="card-desc">Reading 지문 10편 핵심 어휘 + 콜로케이션 + 예문 인터랙티브</div>
+      <div class="card-footer">
+        <span class="card-meta">준비 중</span>
+        <span class="card-arrow" style="color:var(--muted);border-color:var(--border);background:var(--surface2)">곧 →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LISTENING ── -->
+<div class="sec" style="margin-top:8px"><div class="sec-row"><span class="sec-lbl">🎧 Listening</span><div class="sec-line"></div></div></div>
+<div class="grid">
+  <div class="card disabled">
+    <div class="card-accent" style="background:var(--muted)"></div>
+    <span class="badge badge-soon">SOON</span>
+    <div class="card-body">
+      <div class="card-tag" style="color:var(--muted)">Listening</div>
+      <div class="card-title">섹션별 전략<br>+ 연습</div>
+      <div class="card-desc">Section 1–4 유형별 전략 + 스크립트 연습</div>
+      <div class="card-footer">
+        <span class="card-meta">준비 중</span>
+        <span class="card-arrow" style="color:var(--muted);border-color:var(--border);background:var(--surface2)">곧 →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Alex426628.github.io/ielts-study</span>
+  <span>자료 3개 · Band 7.0 목표</span>
+</div>
+
+</body>
+</html>

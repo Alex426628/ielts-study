@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IELTS Reading Practice 01–05</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;--paper:#fff;--surface2:#f9f7f4;--border:#e2ddd6;--border2:#cbc6bc;
+  --ink:#18160f;--ink2:#3c3930;--muted:#8c8880;
+  --r:#bc3318;--l:#1560a8;--w:#1a7a48;--vocab:#6b2ebc;--wt2:#0a7a72;--home:#b06818;
+  --r-bg:#fdf0ec;--l-bg:#edf3fc;--w-bg:#ecf7f1;--vocab-bg:#f4effe;--wt2-bg:#eaf7f6;--home-bg:#fdf6ed;
+  --r-bdr:#f2c4b8;--l-bdr:#b4d0f0;--w-bdr:#a8dcc0;--vocab-bdr:#d4b4f4;--wt2-bdr:#98dcd8;--home-bdr:#f0d0a0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;padding-bottom:80px}
+.hdr{background:var(--paper);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:200;height:52px;display:flex;align-items:center;padding:0 16px;gap:12px}
+.logo{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);white-space:nowrap}
+.logo em{font-style:normal;color:var(--r)}
+.nav{flex:1;overflow-x:auto;display:flex;gap:5px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.06em;padding:5px 11px;border-radius:5px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.nb:hover{color:var(--ink2);border-color:var(--border2)}
+.nb.on{color:#fff;border-color:transparent;background:var(--r)}
+.prog{height:3px;background:var(--border)}
+.pf{height:3px;background:var(--r);transition:width .35s ease}
+.page{display:none}.page.on{display:block}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sr{display:flex;align-items:center;gap:12px;margin:22px 0 12px}
+.sl{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.sl+div{flex:1;height:1px;background:var(--border)}
+/* Banner */
+.banner{border-radius:12px;padding:16px 16px 14px;margin-top:18px;margin-bottom:4px;position:relative;overflow:hidden}
+.wm{position:absolute;right:-4px;bottom:-10px;font-family:'Playfair Display',serif;font-size:72px;font-weight:700;line-height:1;pointer-events:none;opacity:.07}
+.tag{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;margin-bottom:5px}
+.btitle{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.bdesc{font-size:13px;color:var(--ink2);line-height:1.7}
+/* Strategy */
+.sc{border-radius:10px;padding:13px 15px;margin-bottom:12px}
+.stitle{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.steps{display:flex;flex-direction:column;gap:6px}
+.step{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--ink2);line-height:1.6}
+.sn{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0;min-width:20px}
+/* Passage */
+.pc{background:var(--paper);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.ph{padding:10px 16px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ph-l{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.ph-r{font-family:'DM Mono',monospace;font-size:10px;font-weight:500}
+.ptitle{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);padding:14px 16px 3px;line-height:1.35}
+.pbody{padding:9px 16px 16px;font-size:13.5px;color:var(--ink2);line-height:1.9}
+.pbody p{margin-bottom:12px}
+.pbody p:last-child{margin-bottom:0}
+.pl{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-right:7px}
+/* Q section */
+.qhd{border-radius:9px 9px 0 0;padding:10px 15px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.07em}
+.qbd{background:var(--paper);border:1px solid;border-top:none;border-radius:0 0 9px 9px;padding:14px 15px;margin-bottom:13px}
+.qi{margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid var(--border)}
+.qi:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.qn{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;margin-bottom:5px}
+.qs{font-size:13.5px;color:var(--ink);line-height:1.7;margin-bottom:9px}
+.qo{display:flex;flex-direction:column;gap:5px}
+.opt{background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:9px 13px;font-size:13px;color:var(--ink2);cursor:pointer;text-align:left;transition:all .13s;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+.opt:hover{border-color:var(--r);color:var(--r);background:var(--r-bg)}
+.opt.ok{background:var(--w-bg);border-color:var(--w);color:var(--w)}
+.opt.no{background:var(--r-bg);border-color:var(--r);color:var(--r)}
+.ol{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0;min-width:17px}
+/* TF/YN buttons */
+.tfo{display:flex;gap:7px;flex-wrap:wrap}
+.tfo .opt{padding:8px 15px;flex:none}
+/* fill */
+.fi{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.inp{font-family:'DM Mono',monospace;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:7px;background:var(--surface2);color:var(--ink);flex:1;min-width:130px;outline:none;transition:border-color .13s}
+.inp:focus{border-color:var(--r)}
+.inp.ok{border-color:var(--w);background:var(--w-bg);color:var(--w)}
+.inp.no{border-color:var(--r);background:var(--r-bg);color:var(--r)}
+.chk{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:8px 13px;border-radius:7px;cursor:pointer;transition:all .13s}
+/* feedback */
+.fb{display:none;margin-top:9px;padding:10px 12px;border-radius:7px;font-size:12.5px;color:var(--ink2);line-height:1.7}
+.fb.show{display:block}
+.fb.ok{border-left:3px solid var(--w);background:var(--w-bg)}
+.fb.no{border-left:3px solid var(--r);background:var(--r-bg)}
+/* score */
+.scb{display:none;text-align:center;background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:22px 20px;margin-top:15px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.scb.show{display:block;animation:fu .4s ease}
+.scn{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;line-height:1}
+.sco{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);margin-top:4px}
+.scm{font-size:13px;color:var(--ink2);margin-top:8px;line-height:1.65}
+/* tip */
+.tip{background:var(--paper);border:1px solid var(--border);border-top:3px solid;border-radius:0 0 12px 12px;padding:13px 16px;margin-top:22px;box-shadow:0 1px 5px rgba(0,0,0,.04)}
+.tiptitle{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.tiptxt{font-size:13px;color:var(--ink2);line-height:1.8}
+/* heading list */
+.hlist{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--ink2);line-height:1.9}
+.hltitle{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:7px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+/* bottom nav */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--paper);border-top:1px solid var(--border);display:flex;z-index:200;box-shadow:0 -2px 12px rgba(0,0,0,.06);overflow-x:auto;scrollbar-width:none}
+.bnav::-webkit-scrollbar{display:none}
+.bn{flex:1;min-width:60px;padding:9px 6px 7px;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:background .12s}
+.bn:hover{background:var(--surface2)}
+.bni{font-size:14px;line-height:1}
+.bnl{font-family:'DM Mono',monospace;font-size:8.5px;font-weight:500;color:var(--muted);letter-spacing:.03em;white-space:nowrap}
+.bn.on .bnl{color:var(--r)}
+</style></head><body>
+<div class="hdr">
+  <div class="logo">IELTS <em>Reading</em> <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);font-weight:400">유형 01–05</span></div>
+  <div class="nav">
+    <button class="nb on" onclick="go('t01')">01 T/F/NG</button>
+    <button class="nb" onclick="go('t02')">02 Y/N/NG</button>
+    <button class="nb" onclick="go('t03')">03 Headings</button>
+    <button class="nb" onclick="go('t04')">04 Sentence</button>
+    <button class="nb" onclick="go('t05')">05 M·Info</button>
+  </div>
+</div>
+<div class="prog"><div class="pf" id="pf" style="width:20%"></div></div>
+
+<!-- ═══════════════ TYPE 01: T/F/NG ═══════════════ -->
+<div class="page on" id="page-t01"><div class="wrap">
+  <div class="banner" style="background:var(--r-bg);border:1px solid var(--r-bdr)">
+    <div class="wm" style="color:var(--r)">T/F</div>
+    <div class="tag" style="color:var(--r)">유형 01 · 실전 연습</div>
+    <div class="btitle">True / False / Not Given</div>
+    <div class="bdesc">지문의 <strong>사실 정보</strong>와 진술 일치 여부 판단. 지문에 없으면 무조건 NOT GIVEN.</div>
+  </div>
+  <div class="sc" style="background:var(--r-bg);border:1px solid var(--r-bdr)">
+    <div class="stitle" style="color:var(--r)">⚡ 핵심 전략</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--r)">①</span><span>진술 순서 = 지문 순서 — 위에서 아래로 찾기</span></div>
+      <div class="step"><span class="sn" style="color:var(--r)">②</span><span><strong>FALSE</strong> = 지문이 정반대 내용 명시 / <strong>NOT GIVEN</strong> = 언급 없음</span></div>
+      <div class="step"><span class="sn" style="color:var(--r)">③</span><span>상식으로 판단 금지 — 지문 내용만 기준으로</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~700 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--r)">Academic</span></div>
+    <div class="ptitle">The Decline of Coral Reefs</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>Coral reefs are among the most biologically diverse ecosystems on Earth, covering less than one percent of the ocean floor yet supporting approximately 25 percent of all marine species. Despite their ecological importance, coral reefs around the world are declining at an alarming rate. Scientists estimate that nearly 50 percent of the world's coral reefs have been lost over the past 30 years, and projections suggest that further losses are inevitable unless significant action is taken.</p>
+      <p><span class="pl">B</span>The primary cause of coral reef degradation is rising ocean temperatures linked to climate change. Coral polyps live in a symbiotic relationship with photosynthetic algae called zooxanthellae. When water temperatures rise by even one or two degrees Celsius above the seasonal average, the corals expel these algae — a process known as coral bleaching. While corals can recover from short-term bleaching events, prolonged or repeated exposure leads to coral death. Mass bleaching events have increased in frequency from once every 25–30 years before 1980 to once every six years in the current decade.</p>
+      <p><span class="pl">C</span>Ocean acidification presents an equally serious threat. As the oceans absorb carbon dioxide from the atmosphere, the water becomes more acidic, reducing the availability of carbonate ions that corals need to build their skeletons. Research by NOAA indicates that ocean pH has decreased by 0.1 units since the Industrial Revolution — a change representing a 26 percent increase in acidity. At projected CO₂ emission rates, ocean acidity could increase by a further 100 to 150 percent by the end of this century.</p>
+      <p><span class="pl">D</span>Human activities at the local level compound these global threats. Destructive fishing practices such as blast fishing directly damage reef structures. Agricultural runoff promotes algae growth that smothers corals by blocking sunlight. Coastal development increases sediment in the water, further reducing light penetration. Tourism, when poorly managed, contributes to damage through direct physical contact and anchor drops.</p>
+      <p><span class="pl">E</span>Conservation efforts are underway across multiple fronts. Marine Protected Areas (MPAs) have shown measurable success in some regions. In the Coral Triangle — spanning Indonesia, Malaysia, Papua New Guinea, the Philippines, Solomon Islands, and Timor-Leste — regional governments have cooperated to establish one of the world's largest MPA networks. Coral restoration programmes involving underwater nurseries are also gaining traction. However, critics note that these efforts are insufficient to counteract global warming without broader systemic change.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–6 — TRUE / FALSE / NOT GIVEN</div><div></div></div>
+  <div class="qhd" style="background:var(--r-bg);border:1px solid var(--r-bdr);color:var(--r)">Do the following statements agree with the information in the passage?</div>
+  <div class="qbd" style="border-color:var(--r-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 01</div>
+      <div class="qs">Coral reefs cover less than 1% of the ocean floor but support about a quarter of marine species.</div>
+      <div class="tfo">
+        <button class="opt" onclick="tf('t01_q1',this,'T','T')">TRUE</button>
+        <button class="opt" onclick="tf('t01_q1',this,'F','T')">FALSE</button>
+        <button class="opt" onclick="tf('t01_q1',this,'NG','T')">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t01_q1">✓ <strong>TRUE</strong> — Para A: "less than one percent… approximately 25 percent of all marine species."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 02</div>
+      <div class="qs">Coral bleaching always results in permanent coral death.</div>
+      <div class="tfo">
+        <button class="opt" onclick="tf('t01_q2',this,'T','F')">TRUE</button>
+        <button class="opt" onclick="tf('t01_q2',this,'F','F')">FALSE</button>
+        <button class="opt" onclick="tf('t01_q2',this,'NG','F')">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t01_q2">✓ <strong>FALSE</strong> — Para B: "corals <em>can recover</em> from short-term bleaching events." 항상 죽는 게 아닙니다.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 03</div>
+      <div class="qs">Ocean acidity has increased by more than 25% since the Industrial Revolution.</div>
+      <div class="tfo">
+        <button class="opt" onclick="tf('t01_q3',this,'T','T')">TRUE</button>
+        <button class="opt" onclick="tf('t01_q3',this,'F','T')">FALSE</button>
+        <button class="opt" onclick="tf('t01_q3',this,'NG','T')">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t01_q3">✓ <strong>TRUE</strong> — Para C: "26 percent increase in acidity" = 25% 초과.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 04</div>
+      <div class="qs">Blast fishing is carried out mainly by large commercial companies.</div>
+      <div class="tfo">
+        <button class="opt" onclick="tf('t01_q4',this,'T','NG')">TRUE</button>
+        <button class="opt" onclick="tf('t01_q4',this,'F','NG')">FALSE</button>
+        <button class="opt" onclick="tf('t01_q4',this,'NG','NG')">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t01_q4">✓ <strong>NOT GIVEN</strong> — Para D는 blast fishing을 언급하지만 누가 하는지는 전혀 설명하지 않습니다.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 05</div>
+      <div class="qs">The Coral Triangle covers exactly six countries.</div>
+      <div class="tfo">
+        <button class="opt" onclick="tf('t01_q5',this,'T','T')">TRUE</button>
+        <button class="opt" onclick="tf('t01_q5',this,'F','T')">FALSE</button>
+        <button class="opt" onclick="tf('t01_q5',this,'NG','T')">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t01_q5">✓ <strong>TRUE</strong> — Para E: Indonesia, Malaysia, Papua New Guinea, Philippines, Solomon Islands, Timor-Leste = 6개국.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 06</div>
+      <div class="qs">Most scientists believe current coral restoration programmes are sufficient to reverse reef decline.</div>
+      <div class="tfo">
+        <button class="opt" onclick="tf('t01_q6',this,'T','F')">TRUE</button>
+        <button class="opt" onclick="tf('t01_q6',this,'F','F')">FALSE</button>
+        <button class="opt" onclick="tf('t01_q6',this,'NG','F')">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t01_q6">✓ <strong>FALSE</strong> — Para E: "insufficient to counteract global warming without broader systemic change." 진술과 정반대.</div>
+    </div>
+  </div>
+  <div class="scb" id="scb_t01"><div class="scn" style="color:var(--r)" id="scn_t01">-</div><div class="sco">/ 6 정답</div><div class="scm" id="scm_t01"></div></div>
+  <div class="tip" style="border-top-color:var(--r)"><div class="tiptitle" style="color:var(--r)">📌 T/F/NG 핵심</div><div class="tiptxt"><strong>FALSE</strong> = 지문이 반대 명시 / <strong>NG</strong> = 언급 없음<br>상식 판단 절대 금지 · 순서 보장 활용</div></div>
+</div></div>
+
+<!-- ═══════════════ TYPE 02: Y/N/NG ═══════════════ -->
+<div class="page" id="page-t02"><div class="wrap">
+  <div class="banner" style="background:var(--l-bg);border:1px solid var(--l-bdr)">
+    <div class="wm" style="color:var(--l)">Y/N</div>
+    <div class="tag" style="color:var(--l)">유형 02 · 실전 연습</div>
+    <div class="btitle">Yes / No / Not Given</div>
+    <div class="bdesc"><strong>필자의 의견·주장</strong>과 진술 일치 여부 판단. 사실(T/F/NG)이 아닌 <em>관점</em>을 묻습니다.</div>
+  </div>
+  <div class="sc" style="background:var(--l-bg);border:1px solid var(--l-bdr)">
+    <div class="stitle" style="color:var(--l)">⚡ T/F/NG vs Y/N/NG 핵심 차이</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--l)">YES</span><span>필자 의견 = 진술 일치</span></div>
+      <div class="step"><span class="sn" style="color:var(--l)">NO</span><span>필자 의견 ≠ 진술 (모순)</span></div>
+      <div class="step"><span class="sn" style="color:var(--l)">NG</span><span>필자가 해당 주제 아예 언급 없음</span></div>
+      <div class="step"><span class="sn" style="color:var(--l)">💡</span><span>의견 동사: argue, believe, contend, suggest, maintain, claim</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~680 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--l)">Opinion Essay</span></div>
+    <div class="ptitle">The Case for Universal Basic Income</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>Universal Basic Income (UBI) — a regular, unconditional cash payment to all citizens regardless of employment status — has attracted growing attention in recent years. Proponents argue that UBI could reduce poverty, simplify welfare bureaucracies, and give individuals the freedom to pursue education or entrepreneurship. I believe that while UBI is not a panacea, it represents the most viable pathway to addressing the structural inequalities embedded in modern economies.</p>
+      <p><span class="pl">B</span>Critics often argue that UBI would be prohibitively expensive. However, this overlooks the potential savings from consolidating existing welfare programmes. In the UK alone, administering means-tested benefits involves dozens of overlapping schemes. A well-designed UBI could replace many of these, reducing administrative overhead considerably. I would contend that transition costs, while real, are manageable with appropriate fiscal planning.</p>
+      <p><span class="pl">C</span>Perhaps the most compelling argument for UBI is its potential to cushion disruptions caused by automation. As AI and robotics replace routine tasks, large segments of the workforce face structural unemployment. UBI would allow displaced workers to retrain and transition into new roles. In my view, this function is not merely desirable but essential: without income guarantees, technological progress risks deepening inequality rather than distributing its benefits broadly.</p>
+      <p><span class="pl">D</span>Opponents argue that unconditional payments reduce the incentive to work. I find this concern exaggerated. Pilot programmes in Finland, Kenya, and Canada suggested that recipients do not substantially reduce their working hours. Rather, they tend to be more selective, choosing jobs that match their skills — arguably producing a more productive workforce over time.</p>
+      <p><span class="pl">E</span>Despite these advantages, I acknowledge that UBI alone cannot resolve all dimensions of poverty. Issues such as housing affordability, healthcare, and educational inequality require targeted policy responses. Nevertheless, the combination of UBI with well-funded public services would, in my estimation, represent a transformative step toward a more equitable society. The question is not whether we can afford UBI, but whether we can afford to ignore the forces that make it necessary.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–5 — YES / NO / NOT GIVEN</div><div></div></div>
+  <div class="qhd" style="background:var(--l-bg);border:1px solid var(--l-bdr);color:var(--l)">Do the following statements reflect the claims of the writer?</div>
+  <div class="qbd" style="border-color:var(--l-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 01</div>
+      <div class="qs">The writer believes UBI is a complete solution to economic inequality.</div>
+      <div class="tfo">
+        <button class="opt" onclick="yn('t02_q1',this,'Y','N')" style="color:var(--l)">YES</button>
+        <button class="opt" onclick="yn('t02_q1',this,'N','N')" style="color:var(--l)">NO</button>
+        <button class="opt" onclick="yn('t02_q1',this,'NG','N')" style="color:var(--l)">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t02_q1">✓ <strong>NO</strong> — Para A: "not a panacea" / Para E: "cannot resolve all dimensions." 완전한 해결책이 아니라고 명시합니다.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 02</div>
+      <div class="qs">The writer thinks the cost of UBI is too high to be practical.</div>
+      <div class="tfo">
+        <button class="opt" onclick="yn('t02_q2',this,'Y','N')" style="color:var(--l)">YES</button>
+        <button class="opt" onclick="yn('t02_q2',this,'N','N')" style="color:var(--l)">NO</button>
+        <button class="opt" onclick="yn('t02_q2',this,'NG','N')" style="color:var(--l)">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t02_q2">✓ <strong>NO</strong> — Para B: "manageable with appropriate fiscal planning." 비용이 너무 높다는 주장과 반대입니다.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 03</div>
+      <div class="qs">According to the writer, providing income security during automation is not just desirable but necessary.</div>
+      <div class="tfo">
+        <button class="opt" onclick="yn('t02_q3',this,'Y','Y')" style="color:var(--l)">YES</button>
+        <button class="opt" onclick="yn('t02_q3',this,'N','Y')" style="color:var(--l)">NO</button>
+        <button class="opt" onclick="yn('t02_q3',this,'NG','Y')" style="color:var(--l)">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t02_q3">✓ <strong>YES</strong> — Para C: "not merely desirable but essential." 필자 표현 그대로 일치합니다.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 04</div>
+      <div class="qs">The writer believes the Finland pilot was more successful than the others.</div>
+      <div class="tfo">
+        <button class="opt" onclick="yn('t02_q4',this,'Y','NG')" style="color:var(--l)">YES</button>
+        <button class="opt" onclick="yn('t02_q4',this,'N','NG')" style="color:var(--l)">NO</button>
+        <button class="opt" onclick="yn('t02_q4',this,'NG','NG')" style="color:var(--l)">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t02_q4">✓ <strong>NOT GIVEN</strong> — Para D는 세 프로그램을 동등하게 나열하며 어느 것이 더 성공적인지 의견 없음.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 05</div>
+      <div class="qs">The writer considers UBI most effective when paired with strong public services.</div>
+      <div class="tfo">
+        <button class="opt" onclick="yn('t02_q5',this,'Y','Y')" style="color:var(--l)">YES</button>
+        <button class="opt" onclick="yn('t02_q5',this,'N','Y')" style="color:var(--l)">NO</button>
+        <button class="opt" onclick="yn('t02_q5',this,'NG','Y')" style="color:var(--l)">NOT GIVEN</button>
+      </div>
+      <div class="fb" id="t02_q5">✓ <strong>YES</strong> — Para E: "UBI with well-funded public services would represent a transformative step."</div>
+    </div>
+  </div>
+  <div class="scb" id="scb_t02"><div class="scn" style="color:var(--l)" id="scn_t02">-</div><div class="sco">/ 5 정답</div><div class="scm" id="scm_t02"></div></div>
+  <div class="tip" style="border-top-color:var(--l)"><div class="tiptitle" style="color:var(--l)">📌 Y/N/NG 핵심</div><div class="tiptxt"><strong>의견 동사</strong>(argue/believe/contend)로 필자 입장 파악<br>사실 진술(T/F/NG)과 혼동 금지 · 필자가 언급 없으면 NG</div></div>
+</div></div>
+
+<!-- ═══════════════ TYPE 03: MATCHING HEADINGS ═══════════════ -->
+<div class="page" id="page-t03"><div class="wrap">
+  <div class="banner" style="background:var(--home-bg);border:1px solid var(--home-bdr)">
+    <div class="wm" style="color:var(--home)">HDG</div>
+    <div class="tag" style="color:var(--home)">유형 03 · 실전 연습</div>
+    <div class="btitle">Matching Headings</div>
+    <div class="bdesc">각 단락의 <strong>핵심 아이디어</strong>에 맞는 소제목 연결. 세부 정보가 아닌 단락 전체 의미가 기준.</div>
+  </div>
+  <div class="sc" style="background:var(--home-bg);border:1px solid var(--home-bdr)">
+    <div class="stitle" style="color:var(--home)">⚡ 핵심 전략</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--home)">①</span><span>첫 문장(topic sentence)에 핵심 아이디어가 있음</span></div>
+      <div class="step"><span class="sn" style="color:var(--home)">②</span><span>너무 좁은(세부 예시) / 너무 넓은(전체 지문) 소제목은 오답</span></div>
+      <div class="step"><span class="sn" style="color:var(--home)">③</span><span>단락 읽기 먼저 → 핵심 정리 → 소제목 매칭 순서 권장</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~750 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--home)">Academic</span></div>
+    <div class="ptitle">The Psychology of Sleep</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>Sleep occupies roughly a third of human life, yet for most of recorded history its function was poorly understood. Ancient cultures attributed sleep to divine intervention or simple physical rest. It was not until the twentieth century, with the development of electroencephalography (EEG), that scientists began to systematically map the brain's electrical activity during sleep and uncover its complex architecture. Today, sleep science has established that sleep is an active, highly organised biological process essential to both physical and cognitive health.</p>
+      <p><span class="pl">B</span>Modern sleep research has identified two primary stages: rapid eye movement (REM) sleep and non-REM sleep. Non-REM sleep is further divided into three stages, progressing from light sleep to deep slow-wave sleep. During slow-wave sleep, the body repairs tissue, synthesises proteins, and releases growth hormones — processes critical for physical recovery. REM sleep, by contrast, is characterised by vivid dreaming, temporary muscle paralysis, and heightened brain activity, and is believed to play a central role in emotional processing and memory consolidation.</p>
+      <p><span class="pl">C</span>One of the most significant discoveries concerns the relationship between sleep and memory. Studies using fMRI have demonstrated that during REM sleep, the hippocampus repeatedly replays recently acquired information, effectively transferring it to long-term storage in the cortex. Students who sleep after learning new material consistently outperform those who remain awake, suggesting that sleep is not merely restful but actively productive from a cognitive standpoint.</p>
+      <p><span class="pl">D</span>Chronic sleep deprivation has been linked to a broad range of adverse health outcomes. Sleeping fewer than six hours per night is consistently associated with increased risks of cardiovascular disease, type 2 diabetes, obesity, and immune disorders. Sleep loss disrupts hormonal regulation, increases inflammatory markers, and impairs the prefrontal cortex's ability to regulate emotions. In the workplace, sleep deprivation is implicated in reduced productivity, higher accident rates, and poor decision-making — economic consequences estimated at hundreds of billions of dollars annually in developed nations.</p>
+      <p><span class="pl">E</span>Despite widespread recognition of sleep's importance, modern societies increasingly treat sleep as a negotiable commodity. The rise of artificial lighting, digital screens, and a culture equating productivity with long working hours has eroded sleep quality across populations. In the United States, surveys indicate that nearly 35 percent of adults sleep fewer than the recommended seven hours. The World Health Organisation has characterised insufficient sleep as a global health epidemic, yet policy responses remain limited and fragmented.</p>
+      <p><span class="pl">F</span>Addressing the sleep crisis requires both individual and structural interventions. On the individual level, sleep hygiene practices — maintaining consistent schedules, limiting screen exposure before bed, and optimising the sleeping environment — are well evidenced. At the structural level, schools and workplaces can implement later start times and flexible scheduling to align better with biological rhythms. Some corporations have introduced rest spaces and incentivised employees to prioritise sleep, citing gains in creativity and organisational performance.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–6 · Headings i–ix (3 extra)</div><div></div></div>
+  <div class="hlist">
+    <div class="hltitle">List of Headings</div>
+    <strong>i.</strong> The role of sleep in consolidating newly learned information<br>
+    <strong>ii.</strong> How sleep science developed into a rigorous discipline<br>
+    <strong>iii.</strong> The economic value of sleep research funding<br>
+    <strong>iv.</strong> The biological distinction between sleep stages and their functions<br>
+    <strong>v.</strong> How societal norms work against adequate sleep<br>
+    <strong>vi.</strong> The dangers of prolonged insufficient sleep<br>
+    <strong>vii.</strong> The role of dreaming in creative thinking<br>
+    <strong>viii.</strong> Practical measures to improve sleep at individual and societal levels<br>
+    <strong>ix.</strong> The relationship between sleep and appetite regulation
+  </div>
+  <div class="qhd" style="background:var(--home-bg);border:1px solid var(--home-bdr);color:var(--home)">Choose the correct heading (i–ix) for each paragraph.</div>
+  <div class="qbd" style="border-color:var(--home-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--home)">Paragraph A</div>
+      <div class="qo">
+        <button class="opt" onclick="mh('t03_a',this,'i','ii')"><span class="ol">i</span>The role of sleep in consolidating newly learned information</button>
+        <button class="opt" onclick="mh('t03_a',this,'ii','ii')"><span class="ol">ii</span>How sleep science developed into a rigorous discipline</button>
+        <button class="opt" onclick="mh('t03_a',this,'iii','ii')"><span class="ol">iii</span>The economic value of sleep research funding</button>
+        <button class="opt" onclick="mh('t03_a',this,'ix','ii')"><span class="ol">ix</span>The relationship between sleep and appetite regulation</button>
+      </div>
+      <div class="fb" id="t03_a">✓ <strong>ii</strong> — EEG 개발과 현대 수면과학 확립 과정이 Paragraph A의 전체 주제.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--home)">Paragraph B</div>
+      <div class="qo">
+        <button class="opt" onclick="mh('t03_b',this,'i','iv')"><span class="ol">i</span>The role of sleep in consolidating newly learned information</button>
+        <button class="opt" onclick="mh('t03_b',this,'iv','iv')"><span class="ol">iv</span>The biological distinction between sleep stages and their functions</button>
+        <button class="opt" onclick="mh('t03_b',this,'vii','iv')"><span class="ol">vii</span>The role of dreaming in creative thinking</button>
+        <button class="opt" onclick="mh('t03_b',this,'ix','iv')"><span class="ol">ix</span>Sleep and appetite regulation</button>
+      </div>
+      <div class="fb" id="t03_b">✓ <strong>iv</strong> — REM vs non-REM 구분과 각 단계의 생물학적 기능(신체 회복 / 기억 통합) 설명.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--home)">Paragraph C</div>
+      <div class="qo">
+        <button class="opt" onclick="mh('t03_c',this,'i','i')"><span class="ol">i</span>The role of sleep in consolidating newly learned information</button>
+        <button class="opt" onclick="mh('t03_c',this,'iv','i')"><span class="ol">iv</span>The biological distinction between sleep stages</button>
+        <button class="opt" onclick="mh('t03_c',this,'vii','i')"><span class="ol">vii</span>The role of dreaming in creative thinking</button>
+        <button class="opt" onclick="mh('t03_c',this,'viii','i')"><span class="ol">viii</span>Practical measures to improve sleep</button>
+      </div>
+      <div class="fb" id="t03_c">✓ <strong>i</strong> — 해마의 기억 재생, 수면 후 기억력 향상 연구 = 수면과 학습 정보 고화의 관계.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--home)">Paragraph D</div>
+      <div class="qo">
+        <button class="opt" onclick="mh('t03_d',this,'vi','vi')"><span class="ol">vi</span>The dangers of prolonged insufficient sleep</button>
+        <button class="opt" onclick="mh('t03_d',this,'v','vi')"><span class="ol">v</span>How societal norms work against adequate sleep</button>
+        <button class="opt" onclick="mh('t03_d',this,'iii','vi')"><span class="ol">iii</span>The economic value of sleep research funding</button>
+        <button class="opt" onclick="mh('t03_d',this,'ix','vi')"><span class="ol">ix</span>Sleep and appetite regulation</button>
+      </div>
+      <div class="fb" id="t03_d">✓ <strong>vi</strong> — 수면 부족의 건강(심혈관·당뇨)·직장·경제적 위험 전반을 다룸.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--home)">Paragraph E</div>
+      <div class="qo">
+        <button class="opt" onclick="mh('t03_e',this,'v','v')"><span class="ol">v</span>How societal norms work against adequate sleep</button>
+        <button class="opt" onclick="mh('t03_e',this,'vi','v')"><span class="ol">vi</span>The dangers of insufficient sleep</button>
+        <button class="opt" onclick="mh('t03_e',this,'viii','v')"><span class="ol">viii</span>Practical measures to improve sleep</button>
+        <button class="opt" onclick="mh('t03_e',this,'iii','v')"><span class="ol">iii</span>The economic value of sleep research</button>
+      </div>
+      <div class="fb" id="t03_e">✓ <strong>v</strong> — 인공조명·디지털 화면·장시간 노동 문화 등 <em>사회적 규범</em>이 수면을 침해한다는 내용.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--home)">Paragraph F</div>
+      <div class="qo">
+        <button class="opt" onclick="mh('t03_f',this,'viii','viii')"><span class="ol">viii</span>Practical measures to improve sleep at individual and societal levels</button>
+        <button class="opt" onclick="mh('t03_f',this,'v','viii')"><span class="ol">v</span>How societal norms work against adequate sleep</button>
+        <button class="opt" onclick="mh('t03_f',this,'iii','viii')"><span class="ol">iii</span>The economic value of sleep research</button>
+        <button class="opt" onclick="mh('t03_f',this,'vi','viii')"><span class="ol">vi</span>The dangers of insufficient sleep</button>
+      </div>
+      <div class="fb" id="t03_f">✓ <strong>viii</strong> — 개인(수면 위생)과 조직·학교(일정 조정) 수준의 구체적 해결 방안 제시.</div>
+    </div>
+  </div>
+  <div class="scb" id="scb_t03"><div class="scn" style="color:var(--home)" id="scn_t03">-</div><div class="sco">/ 6 정답</div><div class="scm" id="scm_t03"></div></div>
+  <div class="tip" style="border-top-color:var(--home)"><div class="tiptitle" style="color:var(--home)">📌 Headings 핵심</div><div class="tiptxt"><strong>Topic sentence(첫 문장)</strong>에 집중 · 너무 좁거나 넓은 소제목 소거<br>단락 전체 주제 = 소제목 범위 일치해야 정답</div></div>
+</div></div>
+
+<!-- ═══════════════ TYPE 04: SENTENCE COMPLETION ═══════════════ -->
+<div class="page" id="page-t04"><div class="wrap">
+  <div class="banner" style="background:var(--wt2-bg);border:1px solid var(--wt2-bdr)">
+    <div class="wm" style="color:var(--wt2)">FILL</div>
+    <div class="tag" style="color:var(--wt2)">유형 04 · 실전 연습</div>
+    <div class="btitle">Sentence Completion</div>
+    <div class="bdesc">지문 단어를 <strong>그대로 복사</strong>하여 빈칸을 채웁니다. 단어 수 제한(NO MORE THAN TWO WORDS) 필수.</div>
+  </div>
+  <div class="sc" style="background:var(--wt2-bg);border:1px solid var(--wt2-bdr)">
+    <div class="stitle" style="color:var(--wt2)">⚡ 핵심 전략</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--wt2)">①</span><span>지문 단어 그대로 복사 — paraphrase 절대 금지</span></div>
+      <div class="step"><span class="sn" style="color:var(--wt2)">②</span><span>빈칸 앞뒤 문법 확인 (관사·시제·단복수)</span></div>
+      <div class="step"><span class="sn" style="color:var(--wt2)">③</span><span>순서 보장 — Q1 답은 Q2 답보다 지문에서 앞에 위치</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~700 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--wt2)">Academic</span></div>
+    <div class="ptitle">Vertical Farming: Growing Up</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>Vertical farming — the practice of growing crops in stacked layers within controlled indoor environments — has emerged as a compelling response to mounting pressures on global food systems. Traditional agriculture occupies approximately 50 percent of the world's habitable land and accounts for around 70 percent of freshwater withdrawals globally. As the world's population is projected to reach nearly ten billion by 2050, the search for more resource-efficient methods of food production has become increasingly urgent.</p>
+      <p><span class="pl">B</span>Unlike conventional farms, vertical farms rely on artificial lighting — predominantly LED technology — and precisely controlled temperature, humidity, and carbon dioxide levels to optimise plant growth. These systems can produce crops year-round regardless of external weather conditions, making them particularly attractive in regions with extreme climates or limited arable land. Leafy vegetables, herbs, and strawberries are among the crops most successfully cultivated in vertical farms, while staple crops such as wheat and rice remain economically unviable at present due to their high energy requirements.</p>
+      <p><span class="pl">C</span>One of the most frequently cited advantages of vertical farming is its dramatic reduction in water consumption. Hydroponic and aeroponic systems — in which plants are grown in water-based nutrient solutions or exposed to mist — can reduce water use by up to 95 percent compared to field agriculture. Since water in these closed-loop systems is recycled and rarely lost to evaporation or soil absorption, water efficiency is exceptionally high. This makes vertical farming especially promising in water-scarce regions of the Middle East, North Africa, and parts of Asia.</p>
+      <p><span class="pl">D</span>The elimination of pesticides and herbicides is another significant benefit. Because vertical farms are enclosed environments, the risk of pest infestation is minimal, removing the need for chemical treatments. This results in produce free from pesticide residues — a characteristic valued by health-conscious consumers and an advantage in premium food markets. Furthermore, proximity to urban centres reduces transportation distances, minimising carbon emissions and ensuring fresher produce reaches consumers more quickly.</p>
+      <p><span class="pl">E</span>Despite these advantages, vertical farming faces substantial economic barriers. The initial capital investment for constructing a fully equipped vertical farm is considerable, and electricity costs — driven primarily by LED lighting — represent the single largest operational expense. Critics argue that until renewable energy becomes significantly cheaper, the carbon footprint of vertical farms may not be markedly better than that of conventional agriculture. Proponents counter that advances in LED efficiency and solar integration are steadily eroding this disadvantage.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–6 · NO MORE THAN TWO WORDS</div><div></div></div>
+  <div class="qhd" style="background:var(--wt2-bg);border:1px solid var(--wt2-bdr);color:var(--wt2)">Complete the sentences using NO MORE THAN TWO WORDS from the passage.</div>
+  <div class="qbd" style="border-color:var(--wt2-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 01</div>
+      <div class="qs">Traditional agriculture is responsible for roughly <strong>________</strong> percent of global freshwater use.</div>
+      <div class="fi">
+        <input class="inp" id="t04_q1" placeholder="최대 2단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sc('t04_q1',['seventy','70'],'fb_t04_q1',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t04_q1">✓ <strong>seventy / 70</strong> — Para A: "accounts for around 70 percent of freshwater withdrawals globally."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 02</div>
+      <div class="qs">Vertical farms use mainly <strong>________</strong> technology for their artificial lighting.</div>
+      <div class="fi">
+        <input class="inp" id="t04_q2" placeholder="최대 2단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sc('t04_q2',['led'],'fb_t04_q2',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t04_q2">✓ <strong>LED</strong> — Para B: "predominantly LED technology."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 03</div>
+      <div class="qs">Staple crops like wheat are currently <strong>________</strong> in vertical farms because of their high energy needs.</div>
+      <div class="fi">
+        <input class="inp" id="t04_q3" placeholder="최대 2단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sc('t04_q3',['economically unviable'],'fb_t04_q3',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t04_q3">✓ <strong>economically unviable</strong> — Para B: "remain economically unviable at present."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 04</div>
+      <div class="qs">In aeroponic systems, plants are grown by being exposed to <strong>________</strong>.</div>
+      <div class="fi">
+        <input class="inp" id="t04_q4" placeholder="최대 2단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sc('t04_q4',['mist'],'fb_t04_q4',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t04_q4">✓ <strong>mist</strong> — Para C: "aeroponic systems — …or exposed to mist."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 05</div>
+      <div class="qs">Because pests cannot easily enter vertical farms, <strong>________</strong> treatments are not required.</div>
+      <div class="fi">
+        <input class="inp" id="t04_q5" placeholder="최대 2단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sc('t04_q5',['chemical'],'fb_t04_q5',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t04_q5">✓ <strong>chemical</strong> — Para D: "removing the need for chemical treatments."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 06</div>
+      <div class="qs">Critics say the <strong>________</strong> of vertical farms may not be much better than conventional farming until energy costs fall.</div>
+      <div class="fi">
+        <input class="inp" id="t04_q6" placeholder="최대 2단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sc('t04_q6',['carbon footprint'],'fb_t04_q6',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t04_q6">✓ <strong>carbon footprint</strong> — Para E: "the carbon footprint of vertical farms may not be markedly better."</div>
+    </div>
+  </div>
+  <div class="tip" style="border-top-color:var(--wt2)"><div class="tiptitle" style="color:var(--wt2)">📌 Sentence Completion 핵심</div><div class="tiptxt"><strong>지문 단어 그대로</strong> 복사 · 단어 수 제한 엄수 · 문법 형태 확인</div></div>
+</div></div>
+
+<!-- ═══════════════ TYPE 05: MATCHING INFORMATION ═══════════════ -->
+<div class="page" id="page-t05"><div class="wrap">
+  <div class="banner" style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr)">
+    <div class="wm" style="color:var(--vocab)">SCAN</div>
+    <div class="tag" style="color:var(--vocab)">유형 05 · 실전 연습</div>
+    <div class="btitle">Matching Information to Paragraphs</div>
+    <div class="bdesc">특정 정보가 담긴 <strong>단락을 찾아</strong> 연결. 순서 보장 없음, 같은 단락이 여러 번 쓰일 수 있음.</div>
+  </div>
+  <div class="sc" style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr)">
+    <div class="stitle" style="color:var(--vocab)">⚡ 핵심 전략</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--vocab)">①</span><span>순서 보장 없음 — 각 질문마다 전체 지문 스캔</span></div>
+      <div class="step"><span class="sn" style="color:var(--vocab)">②</span><span>고유명사·숫자·날짜로 위치를 빠르게 특정</span></div>
+      <div class="step"><span class="sn" style="color:var(--vocab)">③</span><span>같은 단락이 2개 이상 질문의 답이 될 수 있음</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~720 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--vocab)">Academic</span></div>
+    <div class="ptitle">The History of Photography</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>The origins of photography can be traced to the camera obscura, a device known to scholars as early as the fifth century BCE. By projecting light through a small hole onto a surface, the camera obscura created inverted images of the outside world. Artists of the Renaissance used portable versions of this device to aid in drawing and painting, but the images produced were transient — they could not be chemically fixed. It was not until the nineteenth century that inventors succeeded in permanently capturing these projected images.</p>
+      <p><span class="pl">B</span>The first commercially successful photographic process was the daguerreotype, introduced by French artist Louis Daguerre in 1839. The process involved coating a copper plate with silver iodide and exposing it to light, producing a remarkably detailed image. Daguerreotypes quickly became popular for portraiture, despite requiring subjects to remain still for several minutes. The French government acquired the rights to the process and made it freely available to the public, a decision that accelerated its worldwide adoption.</p>
+      <p><span class="pl">C</span>A competing process, the calotype, was developed by British inventor William Henry Fox Talbot around the same time. Unlike daguerreotypes, which produced a single unique image, the calotype used a paper negative from which multiple prints could be made — a concept fundamental to virtually all photographic processes that followed. Talbot's system established the negative-positive principle that dominated photography for over a century.</p>
+      <p><span class="pl">D</span>The late nineteenth century brought major advances that made photography accessible to ordinary people. In 1888, George Eastman introduced the Kodak camera — a simple, portable device pre-loaded with roll film. Users could take photographs without technical knowledge, send the camera to Kodak for processing, and receive prints by post. Eastman's business model — selling affordable cameras and profiting from film and processing — proved enormously influential and was later echoed in industries from computing to mobile telephony.</p>
+      <p><span class="pl">E</span>The transition to digital photography, which began in earnest in the 1990s, was the most radical transformation in the medium's history. Digital cameras replaced film with electronic sensors, eliminating processing costs and allowing instant review of images. The proliferation of smartphones further democratised photography. By 2023, it was estimated that over 1.4 trillion photographs were taken globally each year — more images in a single year than were produced during the entire analogue era.</p>
+      <p><span class="pl">F</span>Despite the dominance of digital, analogue photography has experienced a notable revival among younger enthusiasts. Sales of 35mm film have risen steadily since 2015, driven partly by nostalgia and partly by the aesthetic qualities unique to film — its grain, colour rendering, and the discipline imposed by the finite number of exposures per roll. Film photography communities have flourished on social media, creating a paradox in which an old-fashioned medium thrives precisely because of the technology that was supposed to replace it.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–6 · 단락 A–F 찾기 (중복 가능)</div><div></div></div>
+  <div class="qhd" style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);color:var(--vocab)">Which paragraph (A–F) contains the following information? You may use any letter more than once.</div>
+  <div class="qbd" style="border-color:var(--vocab-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--vocab)">Q 01</div>
+      <div class="qs">A photographic process that allowed more than one image to be produced from a single exposure.</div>
+      <div class="qo">
+        <button class="opt" onclick="mi('t05_q1',this,'A','C')"><span class="ol">A</span></button>
+        <button class="opt" onclick="mi('t05_q1',this,'B','C')"><span class="ol">B</span></button>
+        <button class="opt" onclick="mi('t05_q1',this,'C','C')"><span class="ol">C</span></button>
+        <button class="opt" onclick="mi('t05_q1',this,'D','C')"><span class="ol">D</span></button>
+        <button class="opt" onclick="mi('t05_q1',this,'E','C')"><span class="ol">E</span></button>
+        <button class="opt" onclick="mi('t05_q1',this,'F','C')"><span class="ol">F</span></button>
+      </div>
+      <div class="fb" id="t05_q1">✓ <strong>C</strong> — Para C: "a paper negative from which multiple prints could be made."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--vocab)">Q 02</div>
+      <div class="qs">A reference to a business strategy that was later adopted in other industries.</div>
+      <div class="qo">
+        <button class="opt" onclick="mi('t05_q2',this,'A','D')"><span class="ol">A</span></button>
+        <button class="opt" onclick="mi('t05_q2',this,'B','D')"><span class="ol">B</span></button>
+        <button class="opt" onclick="mi('t05_q2',this,'C','D')"><span class="ol">C</span></button>
+        <button class="opt" onclick="mi('t05_q2',this,'D','D')"><span class="ol">D</span></button>
+        <button class="opt" onclick="mi('t05_q2',this,'E','D')"><span class="ol">E</span></button>
+        <button class="opt" onclick="mi('t05_q2',this,'F','D')"><span class="ol">F</span></button>
+      </div>
+      <div class="fb" id="t05_q2">✓ <strong>D</strong> — Para D: Eastman's model "later echoed in industries from computing to mobile telephony."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--vocab)">Q 03</div>
+      <div class="qs">A statistic indicating the enormous scale of modern photographic output.</div>
+      <div class="qo">
+        <button class="opt" onclick="mi('t05_q3',this,'A','E')"><span class="ol">A</span></button>
+        <button class="opt" onclick="mi('t05_q3',this,'B','E')"><span class="ol">B</span></button>
+        <button class="opt" onclick="mi('t05_q3',this,'C','E')"><span class="ol">C</span></button>
+        <button class="opt" onclick="mi('t05_q3',this,'D','E')"><span class="ol">D</span></button>
+        <button class="opt" onclick="mi('t05_q3',this,'E','E')"><span class="ol">E</span></button>
+        <button class="opt" onclick="mi('t05_q3',this,'F','E')"><span class="ol">F</span></button>
+      </div>
+      <div class="fb" id="t05_q3">✓ <strong>E</strong> — Para E: "over 1.4 trillion photographs were taken globally each year."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--vocab)">Q 04</div>
+      <div class="qs">A mention of government action that helped spread a photographic process worldwide.</div>
+      <div class="qo">
+        <button class="opt" onclick="mi('t05_q4',this,'A','B')"><span class="ol">A</span></button>
+        <button class="opt" onclick="mi('t05_q4',this,'B','B')"><span class="ol">B</span></button>
+        <button class="opt" onclick="mi('t05_q4',this,'C','B')"><span class="ol">C</span></button>
+        <button class="opt" onclick="mi('t05_q4',this,'D','B')"><span class="ol">D</span></button>
+        <button class="opt" onclick="mi('t05_q4',this,'E','B')"><span class="ol">E</span></button>
+        <button class="opt" onclick="mi('t05_q4',this,'F','B')"><span class="ol">F</span></button>
+      </div>
+      <div class="fb" id="t05_q4">✓ <strong>B</strong> — Para B: "The French government…made it freely available to the public."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--vocab)">Q 05</div>
+      <div class="qs">An explanation of why younger people are attracted to an older photographic medium.</div>
+      <div class="qo">
+        <button class="opt" onclick="mi('t05_q5',this,'A','F')"><span class="ol">A</span></button>
+        <button class="opt" onclick="mi('t05_q5',this,'B','F')"><span class="ol">B</span></button>
+        <button class="opt" onclick="mi('t05_q5',this,'C','F')"><span class="ol">C</span></button>
+        <button class="opt" onclick="mi('t05_q5',this,'D','F')"><span class="ol">D</span></button>
+        <button class="opt" onclick="mi('t05_q5',this,'E','F')"><span class="ol">E</span></button>
+        <button class="opt" onclick="mi('t05_q5',this,'F','F')"><span class="ol">F</span></button>
+      </div>
+      <div class="fb" id="t05_q5">✓ <strong>F</strong> — Para F: "nostalgia and partly by the aesthetic qualities unique to film."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--vocab)">Q 06</div>
+      <div class="qs">A reference to an early device used by artists to help them create more accurate pictures.</div>
+      <div class="qo">
+        <button class="opt" onclick="mi('t05_q6',this,'A','A')"><span class="ol">A</span></button>
+        <button class="opt" onclick="mi('t05_q6',this,'B','A')"><span class="ol">B</span></button>
+        <button class="opt" onclick="mi('t05_q6',this,'C','A')"><span class="ol">C</span></button>
+        <button class="opt" onclick="mi('t05_q6',this,'D','A')"><span class="ol">D</span></button>
+        <button class="opt" onclick="mi('t05_q6',this,'E','A')"><span class="ol">E</span></button>
+        <button class="opt" onclick="mi('t05_q6',this,'F','A')"><span class="ol">F</span></button>
+      </div>
+      <div class="fb" id="t05_q6">✓ <strong>A</strong> — Para A: "Artists of the Renaissance used portable versions…to aid in drawing and painting."</div>
+    </div>
+  </div>
+  <div class="scb" id="scb_t05"><div class="scn" style="color:var(--vocab)" id="scn_t05">-</div><div class="sco">/ 6 정답</div><div class="scm" id="scm_t05"></div></div>
+  <div class="tip" style="border-top-color:var(--vocab)"><div class="tiptitle" style="color:var(--vocab)">📌 Matching Info 핵심</div><div class="tiptxt"><strong>순서 보장 없음</strong> · 고유명사·숫자로 스캔 · 같은 단락 복수 답 가능</div></div>
+</div></div>
+
+<!-- ══ BOTTOM NAV ══ -->
+<div class="bnav">
+  <button class="bn on" id="bn_t01" onclick="go('t01')"><span class="bni">📖</span><span class="bnl">T/F/NG</span></button>
+  <button class="bn" id="bn_t02" onclick="go('t02')"><span class="bni">💬</span><span class="bnl">Y/N/NG</span></button>
+  <button class="bn" id="bn_t03" onclick="go('t03')"><span class="bni">🏷</span><span class="bnl">Headings</span></button>
+  <button class="bn" id="bn_t04" onclick="go('t04')"><span class="bni">✏️</span><span class="bnl">Sentence</span></button>
+  <button class="bn" id="bn_t05" onclick="go('t05')"><span class="bni">🔍</span><span class="bnl">M·Info</span></button>
+</div>
+
+<script>
+const pages=['t01','t02','t03','t04','t05'];
+const totals={t01:6,t02:5,t03:6,t04:0,t05:6};
+const scores={};
+pages.forEach(p=>scores[p]=0);
+
+function go(id){
+  pages.forEach(p=>{
+    document.getElementById('page-'+p).classList.toggle('on',p===id);
+    document.querySelector('.nb[onclick="go(\''+p+'\')"]')?.classList.toggle('on',p===id);
+    document.getElementById('bn_'+p)?.classList.toggle('on',p===id);
+  });
+  const idx=pages.indexOf(id)+1;
+  document.getElementById('pf').style.width=(idx/pages.length*100)+'%';
+  window.scrollTo(0,0);
+}
+
+function showFb(id,correct){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.classList.add('show');
+  el.classList.add(correct?'ok':'no');
+}
+
+function tf(qid,btn,choice,ans){
+  const btns=btn.parentElement.querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  const correct=choice===ans;
+  btn.classList.add(correct?'ok':'no');
+  if(!correct){btns.forEach(b=>{if(b.textContent.trim().startsWith(ans))b.classList.add('ok');})}
+  showFb(qid,correct);
+  const page=qid.split('_')[0];
+  if(correct){scores[page]=(scores[page]||0)+1;}
+  checkPageScore(page);
+}
+
+function yn(qid,btn,choice,ans){tf(qid,btn,choice,ans);}
+
+function mh(qid,btn,choice,ans){
+  const btns=btn.parentElement.querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  const correct=choice===ans;
+  btn.classList.add(correct?'ok':'no');
+  if(!correct){btns.forEach(b=>{if(b.querySelector('.ol')&&b.querySelector('.ol').textContent.trim()===ans)b.classList.add('ok');})}
+  showFb(qid,correct);
+  const page=qid.split('_')[0];
+  if(correct){scores[page]=(scores[page]||0)+1;}
+  checkPageScore(page);
+}
+
+function mi(qid,btn,choice,ans){mh(qid,btn,choice,ans);}
+
+function sc(inputId,answers,fbId,total){
+  const inp=document.getElementById(inputId);
+  const val=inp.value.trim().toLowerCase();
+  const correct=answers.some(a=>val===a.toLowerCase()||val===a.toLowerCase().replace(/[^a-z0-9 ]/g,''));
+  inp.classList.add(correct?'ok':'no');
+  inp.disabled=true;
+  const fb=document.getElementById(fbId);
+  if(fb){fb.classList.add('show');fb.classList.add(correct?'ok':'no');}
+}
+
+function checkPageScore(page){
+  const tot=totals[page];
+  if(!tot)return;
+  const qEls=document.querySelectorAll('#page-'+page+' .qi');
+  let answered=0;
+  qEls.forEach(q=>{
+    const btns=q.querySelectorAll('.opt');
+    if(btns.length>0&&btns[0].disabled)answered++;
+  });
+  if(answered>=tot){
+    const scb=document.getElementById('scb_'+page);
+    if(scb){
+      scb.classList.add('show');
+      const n=scores[page]||0;
+      document.getElementById('scn_'+page).textContent=n;
+      const pct=Math.round(n/tot*100);
+      const msgs=['もう一度挑戦してみましょう！','아직 복습이 필요해요.','절반 이상 맞혔어요! 계속하세요.','잘 하고 있어요!','거의 다 왔어요! 한 번만 더!','완벽합니다! 🎉'];
+      const mi2=Math.min(Math.floor(pct/20),5);
+      const ko=['다시 도전해 보세요!','좀 더 복습이 필요해요.','절반 이상! 계속 연습하세요.','잘 하고 있어요!','거의 만점! 훌륭합니다.','완벽합니다! 🎉'];
+      document.getElementById('scm_'+page).textContent=ko[mi2];
+    }
+  }
+}
+</script>
+</body></html>

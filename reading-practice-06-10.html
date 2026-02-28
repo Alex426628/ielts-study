@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IELTS Reading Practice 06–10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;--paper:#fff;--surface2:#f9f7f4;--border:#e2ddd6;--border2:#cbc6bc;
+  --ink:#18160f;--ink2:#3c3930;--muted:#8c8880;
+  --r:#bc3318;--l:#1560a8;--w:#1a7a48;--vocab:#6b2ebc;--wt2:#0a7a72;--home:#b06818;
+  --r-bg:#fdf0ec;--l-bg:#edf3fc;--w-bg:#ecf7f1;--vocab-bg:#f4effe;--wt2-bg:#eaf7f6;--home-bg:#fdf6ed;
+  --r-bdr:#f2c4b8;--l-bdr:#b4d0f0;--w-bdr:#a8dcc0;--vocab-bdr:#d4b4f4;--wt2-bdr:#98dcd8;--home-bdr:#f0d0a0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;padding-bottom:80px}
+.hdr{background:var(--paper);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:200;height:52px;display:flex;align-items:center;padding:0 16px;gap:12px}
+.logo{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);white-space:nowrap}
+.logo em{font-style:normal;color:var(--r)}
+.nav{flex:1;overflow-x:auto;display:flex;gap:5px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.06em;padding:5px 11px;border-radius:5px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.nb:hover{color:var(--ink2);border-color:var(--border2)}
+.nb.on{color:#fff;border-color:transparent;background:var(--r)}
+.prog{height:3px;background:var(--border)}
+.pf{height:3px;background:var(--r);transition:width .35s ease}
+.page{display:none}.page.on{display:block}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sr{display:flex;align-items:center;gap:12px;margin:22px 0 12px}
+.sl{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.sl+div{flex:1;height:1px;background:var(--border)}
+.banner{border-radius:12px;padding:16px 16px 14px;margin-top:18px;margin-bottom:4px;position:relative;overflow:hidden}
+.wm{position:absolute;right:-4px;bottom:-10px;font-family:'Playfair Display',serif;font-size:72px;font-weight:700;line-height:1;pointer-events:none;opacity:.07}
+.tag{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;margin-bottom:5px}
+.btitle{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.bdesc{font-size:13px;color:var(--ink2);line-height:1.7}
+.sc{border-radius:10px;padding:13px 15px;margin-bottom:12px}
+.stitle{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.steps{display:flex;flex-direction:column;gap:6px}
+.step{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--ink2);line-height:1.6}
+.sn{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0;min-width:20px}
+.pc{background:var(--paper);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.ph{padding:10px 16px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ph-l{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.ph-r{font-family:'DM Mono',monospace;font-size:10px;font-weight:500}
+.ptitle{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);padding:14px 16px 3px;line-height:1.35}
+.pbody{padding:9px 16px 16px;font-size:13.5px;color:var(--ink2);line-height:1.9}
+.pbody p{margin-bottom:12px}
+.pbody p:last-child{margin-bottom:0}
+.pl{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-right:7px}
+.qhd{border-radius:9px 9px 0 0;padding:10px 15px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.07em}
+.qbd{background:var(--paper);border:1px solid;border-top:none;border-radius:0 0 9px 9px;padding:14px 15px;margin-bottom:13px}
+.qi{margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid var(--border)}
+.qi:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.qn{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;margin-bottom:5px}
+.qs{font-size:13.5px;color:var(--ink);line-height:1.7;margin-bottom:9px}
+.qo{display:flex;flex-direction:column;gap:5px}
+.opt{background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:9px 13px;font-size:13px;color:var(--ink2);cursor:pointer;text-align:left;transition:all .13s;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+.opt:hover{border-color:var(--r);color:var(--r);background:var(--r-bg)}
+.opt.ok{background:var(--w-bg);border-color:var(--w);color:var(--w)}
+.opt.no{background:var(--r-bg);border-color:var(--r);color:var(--r)}
+.ol{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0;min-width:17px}
+.tfo{display:flex;gap:7px;flex-wrap:wrap}
+.tfo .opt{padding:8px 15px;flex:none}
+.fi{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.inp{font-family:'DM Mono',monospace;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:7px;background:var(--surface2);color:var(--ink);flex:1;min-width:130px;outline:none;transition:border-color .13s}
+.inp:focus{border-color:var(--r)}
+.inp.ok{border-color:var(--w);background:var(--w-bg);color:var(--w)}
+.inp.no{border-color:var(--r);background:var(--r-bg);color:var(--r)}
+.chk{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:8px 13px;border-radius:7px;cursor:pointer;transition:all .13s}
+.fb{display:none;margin-top:9px;padding:10px 12px;border-radius:7px;font-size:12.5px;color:var(--ink2);line-height:1.7}
+.fb.show{display:block}
+.fb.ok{border-left:3px solid var(--w);background:var(--w-bg)}
+.fb.no{border-left:3px solid var(--r);background:var(--r-bg)}
+.scb{display:none;text-align:center;background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:22px 20px;margin-top:15px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.scb.show{display:block;animation:fu .4s ease}
+.scn{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;line-height:1}
+.sco{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);margin-top:4px}
+.scm{font-size:13px;color:var(--ink2);margin-top:8px;line-height:1.65}
+.tip{background:var(--paper);border:1px solid var(--border);border-top:3px solid;border-radius:0 0 12px 12px;padding:13px 16px;margin-top:22px;box-shadow:0 1px 5px rgba(0,0,0,.04)}
+.tiptitle{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.tiptxt{font-size:13px;color:var(--ink2);line-height:1.8}
+.endsbox{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--ink2);line-height:1.9}
+.endsbox-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:7px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.table-q{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
+.table-q th{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);background:var(--surface2)}
+.table-q td{padding:9px 10px;color:var(--ink2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+.table-q tr:last-child td{border-bottom:none}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--paper);border-top:1px solid var(--border);display:flex;z-index:200;box-shadow:0 -2px 12px rgba(0,0,0,.06);overflow-x:auto;scrollbar-width:none}
+.bnav::-webkit-scrollbar{display:none}
+.bn{flex:1;min-width:60px;padding:9px 6px 7px;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:background .12s}
+.bn:hover{background:var(--surface2)}
+.bni{font-size:14px;line-height:1}
+.bnl{font-family:'DM Mono',monospace;font-size:8.5px;font-weight:500;color:var(--muted);letter-spacing:.03em;white-space:nowrap}
+.bn.on .bnl{color:var(--r)}
+</style></head><body>
+<div class="hdr">
+  <div class="logo">IELTS <em>Reading</em> <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);font-weight:400">유형 06–10</span></div>
+  <div class="nav">
+    <button class="nb on" onclick="go('t06')">06 MCQ</button>
+    <button class="nb" onclick="go('t07')">07 Endings</button>
+    <button class="nb" onclick="go('t08')">08 Short Ans</button>
+    <button class="nb" onclick="go('t09')">09 Table/Flow</button>
+    <button class="nb" onclick="go('t10')">10 Pick List</button>
+  </div>
+</div>
+<div class="prog"><div class="pf" id="pf" style="width:20%"></div></div>
+
+<!-- ═══════════════ TYPE 06: MCQ ═══════════════ -->
+<div class="page on" id="page-t06"><div class="wrap">
+  <div class="banner" style="background:var(--r-bg);border:1px solid var(--r-bdr)">
+    <div class="wm" style="color:var(--r)">MCQ</div>
+    <div class="tag" style="color:var(--r)">유형 06 · 실전 연습</div>
+    <div class="btitle">Multiple Choice (MCQ)</div>
+    <div class="bdesc">4개 보기 중 소거법으로 정답 찾기. 지문 단어가 그대로 있어도 오답일 수 있습니다.</div>
+  </div>
+  <div class="sc" style="background:var(--r-bg);border:1px solid var(--r-bdr)">
+    <div class="stitle" style="color:var(--r)">⚡ 소거법 4단계</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--r)">①</span><span>키워드로 단락 위치 먼저 스캔</span></div>
+      <div class="step"><span class="sn" style="color:var(--r)">②</span><span>지문에 언급 없는 보기 즉시 소거</span></div>
+      <div class="step"><span class="sn" style="color:var(--r)">③</span><span>언급됐지만 질문과 무관한 보기 소거</span></div>
+      <div class="step"><span class="sn" style="color:var(--r)">✕</span><span><strong>지문 단어 = 자동 정답 아님!</strong> 의미가 일치해야 합니다</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~680 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--r)">Academic</span></div>
+    <div class="ptitle">Microplastics and the Ocean</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>Microplastics — plastic particles smaller than five millimetres — have been detected in virtually every environment on Earth, from the deepest ocean trenches to the peaks of remote mountain ranges. Their presence in marine ecosystems has become one of the most pressing environmental concerns of the twenty-first century. Unlike larger plastic debris, microplastics are difficult to remove once dispersed into the ocean and can persist in the marine environment for centuries.</p>
+      <p><span class="pl">B</span>Microplastics originate from two main sources. Primary microplastics are manufactured at a small size for specific applications — such as the microbeads in cosmetic products and the plastic pellets used as raw material in manufacturing. Secondary microplastics result from the gradual breakdown of larger plastic objects through weathering, UV radiation, and physical abrasion. Synthetic fibres shed by clothing during washing constitute a particularly significant and often overlooked source of secondary microplastics.</p>
+      <p><span class="pl">C</span>Marine organisms at all levels of the food web ingest microplastics, sometimes mistaking them for food. Studies have documented ingestion in fish, seabirds, sea turtles, and filter-feeding animals such as mussels and oysters. Physical effects include blockages in digestive tracts and reduced food intake, which can lead to starvation. More concerning to researchers are the chemical effects: many plastic polymers absorb and concentrate toxic pollutants from surrounding seawater, and these chemicals can transfer to the tissues of organisms that consume the particles.</p>
+      <p><span class="pl">D</span>The pathway from ocean to human plate is now well-documented. Microplastics have been found in commercially sold seafood including fish, prawns, and bivalves. A 2019 study estimated that regular seafood consumers may ingest tens of thousands of microplastic particles annually. While the full health implications for humans remain under investigation, early studies have detected microplastics in human blood, lung tissue, and placentas, raising concerns about potential inflammatory responses and long-term health effects.</p>
+      <p><span class="pl">E</span>Addressing the microplastic crisis requires action at multiple levels. Phasing out single-use plastics and replacing microbeads in cosmetics with biodegradable alternatives represent important steps. Improved wastewater treatment can capture synthetic fibres before they enter waterways. A growing number of countries have banned microbeads, and international frameworks for plastic pollution are under negotiation. However, experts caution that without a fundamental rethinking of how society produces and disposes of plastics, these measures will not be sufficient.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–5</div><div></div></div>
+  <div class="qhd" style="background:var(--r-bg);border:1px solid var(--r-bdr);color:var(--r)">Choose the correct letter A, B, C, or D.</div>
+  <div class="qbd" style="border-color:var(--r-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 01 — What makes microplastics particularly problematic in the ocean?</div>
+      <div class="qo">
+        <button class="opt" onclick="mc('t06_q1',this,'A','D')"><span class="ol">A</span>They are heavier than water and sink to the seabed.</button>
+        <button class="opt" onclick="mc('t06_q1',this,'B','D')"><span class="ol">B</span>They are invisible to the naked eye.</button>
+        <button class="opt" onclick="mc('t06_q1',this,'C','D')"><span class="ol">C</span>They are too large to filter from seawater.</button>
+        <button class="opt" onclick="mc('t06_q1',this,'D','D')"><span class="ol">D</span>They are hard to remove and remain in the environment for a very long time.</button>
+      </div>
+      <div class="fb" id="t06_q1">✓ <strong>D</strong> — Para A: "difficult to remove once dispersed" + "persist…for centuries."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 02 — Secondary microplastics differ from primary microplastics because they</div>
+      <div class="qo">
+        <button class="opt" onclick="mc('t06_q2',this,'A','B')"><span class="ol">A</span>are deliberately manufactured at a small size.</button>
+        <button class="opt" onclick="mc('t06_q2',this,'B','B')"><span class="ol">B</span>form when larger plastic objects break down.</button>
+        <button class="opt" onclick="mc('t06_q2',this,'C','B')"><span class="ol">C</span>come mainly from industrial manufacturing waste.</button>
+        <button class="opt" onclick="mc('t06_q2',this,'D','B')"><span class="ol">D</span>are found only in synthetic clothing fibres.</button>
+      </div>
+      <div class="fb" id="t06_q2">✓ <strong>B</strong> — Para B: "Secondary microplastics result from the gradual breakdown of larger plastic objects."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 03 — What do researchers consider the more serious concern about microplastics in marine life?</div>
+      <div class="qo">
+        <button class="opt" onclick="mc('t06_q3',this,'A','C')"><span class="ol">A</span>Physical blockage of digestive systems</button>
+        <button class="opt" onclick="mc('t06_q3',this,'B','C')"><span class="ol">B</span>Animals mistaking microplastics for food</button>
+        <button class="opt" onclick="mc('t06_q3',this,'C','C')"><span class="ol">C</span>Transfer of concentrated toxic chemicals to animal tissues</button>
+        <button class="opt" onclick="mc('t06_q3',this,'D','C')"><span class="ol">D</span>Reduced reproduction rates in filter-feeding animals</button>
+      </div>
+      <div class="fb" id="t06_q3">✓ <strong>C</strong> — Para C: "More concerning to researchers…chemicals can transfer to the tissues of organisms."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 04 — Which best describes the current knowledge about microplastics and human health?</div>
+      <div class="qo">
+        <button class="opt" onclick="mc('t06_q4',this,'A','B')"><span class="ol">A</span>Scientists have proven that microplastics cause cancer.</button>
+        <button class="opt" onclick="mc('t06_q4',this,'B','B')"><span class="ol">B</span>Microplastics have been found in human tissues, but full health effects are not yet understood.</button>
+        <button class="opt" onclick="mc('t06_q4',this,'C','B')"><span class="ol">C</span>There is no evidence that microplastics enter the human body.</button>
+        <button class="opt" onclick="mc('t06_q4',this,'D','B')"><span class="ol">D</span>Microplastics in seafood are at safe levels.</button>
+      </div>
+      <div class="fb" id="t06_q4">✓ <strong>B</strong> — Para D: found in blood, lungs, placenta + "full health implications…remain under investigation."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--r)">Q 05 — What is the writer's overall view of current solutions to the microplastic crisis?</div>
+      <div class="qo">
+        <button class="opt" onclick="mc('t06_q5',this,'A','D')"><span class="ol">A</span>They are already proving highly effective.</button>
+        <button class="opt" onclick="mc('t06_q5',this,'B','D')"><span class="ol">B</span>They focus too much on legislation rather than technology.</button>
+        <button class="opt" onclick="mc('t06_q5',this,'C','D')"><span class="ol">C</span>They are not yet being implemented in most countries.</button>
+        <button class="opt" onclick="mc('t06_q5',this,'D','D')"><span class="ol">D</span>They are useful but inadequate without broader systemic change.</button>
+      </div>
+      <div class="fb" id="t06_q5">✓ <strong>D</strong> — Para E: "without a fundamental rethinking…these measures will not be sufficient."</div>
+    </div>
+  </div>
+  <div class="scb" id="scb_t06"><div class="scn" style="color:var(--r)" id="scn_t06">-</div><div class="sco">/ 5 정답</div><div class="scm" id="scm_t06"></div></div>
+  <div class="tip" style="border-top-color:var(--r)"><div class="tiptitle" style="color:var(--r)">📌 MCQ 핵심</div><div class="tiptxt"><strong>소거법</strong>으로 오답 2개 먼저 제거 · 지문 단어 ≠ 자동 정답<br>의미가 일치하는지 반드시 확인</div></div>
+</div></div>
+
+<!-- ═══════════════ TYPE 07: SENTENCE ENDINGS ═══════════════ -->
+<div class="page" id="page-t07"><div class="wrap">
+  <div class="banner" style="background:var(--l-bg);border:1px solid var(--l-bdr)">
+    <div class="wm" style="color:var(--l)">LINK</div>
+    <div class="tag" style="color:var(--l)">유형 07 · 실전 연습</div>
+    <div class="btitle">Matching Sentence Endings</div>
+    <div class="bdesc">문장 <strong>앞부분(stems)</strong>에 어울리는 <strong>뒷부분(endings)</strong> 연결. Stems 순서 = 지문 순서. Endings는 남는 보기 있음.</div>
+  </div>
+  <div class="sc" style="background:var(--l-bg);border:1px solid var(--l-bdr)">
+    <div class="stitle" style="color:var(--l)">⚡ 핵심 전략</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--l)">①</span><span>Stems 순서 = 지문 순서 (위에서 아래 스캔)</span></div>
+      <div class="step"><span class="sn" style="color:var(--l)">②</span><span>주어-동사 시제·단복수 문법 일치 확인</span></div>
+      <div class="step"><span class="sn" style="color:var(--l)">③</span><span>Endings를 모두 사용할 필요 없음 (여분 보기 존재)</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~650 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--l)">Academic</span></div>
+    <div class="ptitle">The Science of Habit Formation</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>Habits are automatic behavioural patterns triggered by specific cues in the environment. Neurologically, habits form when repeated behaviours create strong neural pathways in a region of the brain called the basal ganglia, which operates largely outside conscious awareness. Once established, habitual behaviour requires minimal cognitive effort and is remarkably resistant to change.</p>
+      <p><span class="pl">B</span>Psychologist Charles Duhigg popularised the concept of the "habit loop," which consists of three components: a cue, a routine, and a reward. The cue triggers the behaviour, the routine is the behaviour itself, and the reward reinforces the neural pathway, making the behaviour more likely to recur. Understanding this loop is central to both breaking unwanted habits and forming new ones.</p>
+      <p><span class="pl">C</span>Research suggests habit formation is a gradual process. A widely cited study by Phillippa Lally at University College London found that, on average, it takes 66 days for a new behaviour to become automatic — though the range varied considerably from 18 to 254 days depending on the complexity of the behaviour and the individual. This finding challenges the popular claim that habits can be formed in just 21 days.</p>
+      <p><span class="pl">D</span>Environmental design is one of the most effective strategies for shaping behaviour. By altering the physical environment to make desired behaviours easier and undesired ones harder, individuals can support habit change without relying solely on willpower. For example, placing healthy food at eye level or putting a gym bag by the front door reduces friction for beneficial behaviours and increases the likelihood of performing them.</p>
+      <p><span class="pl">E</span>Social context also plays a powerful role in habit maintenance. People are more likely to sustain habits when those around them model the same behaviour. Studies of smoking cessation show that quitting rates are significantly higher when friends or family also quit. The social dimension highlights that behaviour change is not purely an individual endeavour but is deeply embedded in community and culture.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–5 · Endings A–H (3 extra)</div><div></div></div>
+  <div class="endsbox">
+    <div class="endsbox-title">Sentence Endings (A–H)</div>
+    <strong>A</strong> &nbsp;require very little conscious thought once established.<br>
+    <strong>B</strong> &nbsp;consists of a cue, a routine, and a reward.<br>
+    <strong>C</strong> &nbsp;can take considerably longer than popular belief suggests.<br>
+    <strong>D</strong> &nbsp;is more effective than relying on willpower alone.<br>
+    <strong>E</strong> &nbsp;was conducted at a major European university.<br>
+    <strong>F</strong> &nbsp;is influenced by the behaviour of people in one's social circle.<br>
+    <strong>G</strong> &nbsp;operates in the prefrontal cortex of the brain.<br>
+    <strong>H</strong> &nbsp;may vary widely depending on the person and the behaviour.
+  </div>
+  <div class="qhd" style="background:var(--l-bg);border:1px solid var(--l-bdr);color:var(--l)">Complete each sentence with the correct ending A–H.</div>
+  <div class="qbd" style="border-color:var(--l-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 01 — Habitual behaviours…</div>
+      <div class="qo">
+        <button class="opt" onclick="se('t07_q1',this,'A','A')"><span class="ol">A</span>require very little conscious thought once established.</button>
+        <button class="opt" onclick="se('t07_q1',this,'G','A')"><span class="ol">G</span>operates in the prefrontal cortex of the brain.</button>
+        <button class="opt" onclick="se('t07_q1',this,'B','A')"><span class="ol">B</span>consists of a cue, a routine, and a reward.</button>
+        <button class="opt" onclick="se('t07_q1',this,'D','A')"><span class="ol">D</span>is more effective than relying on willpower alone.</button>
+      </div>
+      <div class="fb" id="t07_q1">✓ <strong>A</strong> — Para A: "habitual behaviour requires minimal cognitive effort."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 02 — According to Duhigg, the habit loop…</div>
+      <div class="qo">
+        <button class="opt" onclick="se('t07_q2',this,'B','B')"><span class="ol">B</span>consists of a cue, a routine, and a reward.</button>
+        <button class="opt" onclick="se('t07_q2',this,'C','B')"><span class="ol">C</span>can take considerably longer than popular belief.</button>
+        <button class="opt" onclick="se('t07_q2',this,'E','B')"><span class="ol">E</span>was conducted at a major European university.</button>
+        <button class="opt" onclick="se('t07_q2',this,'F','B')"><span class="ol">F</span>is influenced by people in one's social circle.</button>
+      </div>
+      <div class="fb" id="t07_q2">✓ <strong>B</strong> — Para B: "consists of three components: a cue, a routine, and a reward."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 03 — The time needed to make a behaviour automatic…</div>
+      <div class="qo">
+        <button class="opt" onclick="se('t07_q3',this,'C','C')"><span class="ol">C</span>can take considerably longer than popular belief suggests.</button>
+        <button class="opt" onclick="se('t07_q3',this,'A','C')"><span class="ol">A</span>require very little conscious thought once established.</button>
+        <button class="opt" onclick="se('t07_q3',this,'H','C')"><span class="ol">H</span>may vary widely depending on the person and behaviour.</button>
+        <button class="opt" onclick="se('t07_q3',this,'D','C')"><span class="ol">D</span>is more effective than relying on willpower alone.</button>
+      </div>
+      <div class="fb" id="t07_q3">✓ <strong>C</strong> — Para C: 21일 주장에 반하는 내용. 평균 66일, 최대 254일 소요됩니다.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 04 — Modifying the physical environment…</div>
+      <div class="qo">
+        <button class="opt" onclick="se('t07_q4',this,'D','D')"><span class="ol">D</span>is more effective than relying on willpower alone.</button>
+        <button class="opt" onclick="se('t07_q4',this,'B','D')"><span class="ol">B</span>consists of a cue, a routine, and a reward.</button>
+        <button class="opt" onclick="se('t07_q4',this,'H','D')"><span class="ol">H</span>may vary widely depending on the person.</button>
+        <button class="opt" onclick="se('t07_q4',this,'E','D')"><span class="ol">E</span>was conducted at a major European university.</button>
+      </div>
+      <div class="fb" id="t07_q4">✓ <strong>D</strong> — Para D: "without relying solely on willpower" → 환경 디자인이 의지력보다 효과적임을 시사.</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--l)">Q 05 — Whether someone successfully sustains a habit…</div>
+      <div class="qo">
+        <button class="opt" onclick="se('t07_q5',this,'F','F')"><span class="ol">F</span>is influenced by the behaviour of people in one's social circle.</button>
+        <button class="opt" onclick="se('t07_q5',this,'C','F')"><span class="ol">C</span>can take longer than popular belief suggests.</button>
+        <button class="opt" onclick="se('t07_q5',this,'G','F')"><span class="ol">G</span>operates in the prefrontal cortex.</button>
+        <button class="opt" onclick="se('t07_q5',this,'A','F')"><span class="ol">A</span>require very little conscious thought.</button>
+      </div>
+      <div class="fb" id="t07_q5">✓ <strong>F</strong> — Para E: 주변인의 행동이 습관 유지에 영향을 미친다고 명시합니다.</div>
+    </div>
+  </div>
+  <div class="scb" id="scb_t07"><div class="scn" style="color:var(--l)" id="scn_t07">-</div><div class="sco">/ 5 정답</div><div class="scm" id="scm_t07"></div></div>
+  <div class="tip" style="border-top-color:var(--l)"><div class="tiptitle" style="color:var(--l)">📌 Sentence Endings 핵심</div><div class="tiptxt"><strong>Stems 순서 = 지문 순서</strong> · 문법 일치 확인 · Endings 모두 쓰지 않아도 됨</div></div>
+</div></div>
+
+<!-- ═══════════════ TYPE 08: SHORT ANSWER ═══════════════ -->
+<div class="page" id="page-t08"><div class="wrap">
+  <div class="banner" style="background:var(--wt2-bg);border:1px solid var(--wt2-bdr)">
+    <div class="wm" style="color:var(--wt2)">ANS</div>
+    <div class="tag" style="color:var(--wt2)">유형 08 · 실전 연습</div>
+    <div class="btitle">Short Answer Questions</div>
+    <div class="bdesc">질문에 지문 단어로 짧게 답하기. <strong>단어 수 제한 엄수</strong>. 숫자도 단어 수에 포함됩니다.</div>
+  </div>
+  <div class="sc" style="background:var(--wt2-bg);border:1px solid var(--wt2-bdr)">
+    <div class="stitle" style="color:var(--wt2)">⚡ 의문사별 공략 팁</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--wt2)">What</span><span>명사(구) · 지문에서 그대로 복사</span></div>
+      <div class="step"><span class="sn" style="color:var(--wt2)">When</span><span>날짜·연도 표현 · 숫자 포함</span></div>
+      <div class="step"><span class="sn" style="color:var(--wt2)">Why</span><span>이유 명사구 · because 생략 가능</span></div>
+      <div class="step"><span class="sn" style="color:var(--wt2)">How</span><span>수치·수량 표현 예측 후 스캔</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~660 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--wt2)">Academic</span></div>
+    <div class="ptitle">The Invention of the World Wide Web</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>The World Wide Web was invented by British computer scientist Tim Berners-Lee in 1989 while he was working at CERN, the European particle physics laboratory in Geneva, Switzerland. Berners-Lee submitted a proposal titled "Information Management: A Proposal," which outlined a system for linking documents using hypertext over a computer network. His manager, Mike Sendall, famously described the proposal as "vague but exciting."</p>
+      <p><span class="pl">B</span>The first website in history went live on 20 August 1991. It was hosted on Berners-Lee's NeXT computer at CERN and described the World Wide Web project itself. Unlike the internet — the underlying network infrastructure that existed since the late 1960s — the Web was a specific application using HTTP (Hypertext Transfer Protocol) and HTML (Hypertext Markup Language) to create and display linked documents.</p>
+      <p><span class="pl">C</span>Berners-Lee made a crucial decision in 1993: CERN announced that the World Wide Web technology would be available to everyone free of charge and in the public domain. This decision, made when commercial alternatives were actively being developed, ensured that the Web remained an open platform rather than a proprietary system. Had CERN chosen to license the technology, the Web as we know it today might never have developed in the same way.</p>
+      <p><span class="pl">D</span>The first widely used web browser, Mosaic, was released in 1993 by the National Centre for Supercomputing Applications (NCSA) in the United States. Mosaic was significant because it was the first browser to display images inline with text, making the web experience visually engaging and accessible to non-technical users. Its release coincided with the public opening of the Web and helped spark explosive growth of the internet in the mid-1990s.</p>
+      <p><span class="pl">E</span>Today, Berners-Lee remains a prominent advocate for what he calls the "original spirit" of the Web — an open, decentralised, and universally accessible information space. He has expressed concern about the concentration of web traffic among a small number of large technology companies and the use of personal data for commercial purposes without adequate user consent. In 2019, he launched the Contract for the Web, a global initiative calling on governments, companies, and individuals to commit to nine core principles for protecting and preserving the open Web.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–6 · NO MORE THAN THREE WORDS</div><div></div></div>
+  <div class="qhd" style="background:var(--wt2-bg);border:1px solid var(--wt2-bdr);color:var(--wt2)">Answer the questions using NO MORE THAN THREE WORDS from the passage.</div>
+  <div class="qbd" style="border-color:var(--wt2-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 01 — Where was Tim Berners-Lee working when he invented the Web?</div>
+      <div class="fi">
+        <input class="inp" id="t08_q1" placeholder="최대 3단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sa('t08_q1',['cern','at cern'],'fb_t08_q1',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t08_q1">✓ <strong>CERN</strong> — Para A: "while he was working at CERN."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 02 — How did Berners-Lee's manager describe the proposal?</div>
+      <div class="fi">
+        <input class="inp" id="t08_q2" placeholder="최대 3단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sa('t08_q2',['vague but exciting'],'fb_t08_q2',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t08_q2">✓ <strong>vague but exciting</strong> — Para A: 'famously described…as "vague but exciting."'</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 03 — When did the first website go live?</div>
+      <div class="fi">
+        <input class="inp" id="t08_q3" placeholder="최대 3단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sa('t08_q3',['20 august 1991','august 1991'],'fb_t08_q3',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t08_q3">✓ <strong>20 August 1991</strong> — Para B: "went live on 20 August 1991."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 04 — What type of platform did making the Web free ensure it remained?</div>
+      <div class="fi">
+        <input class="inp" id="t08_q4" placeholder="최대 3단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sa('t08_q4',['open platform','an open platform'],'fb_t08_q4',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t08_q4">✓ <strong>open platform</strong> — Para C: "the Web remained an open platform rather than a proprietary system."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 05 — What unique feature made Mosaic different from earlier browsers?</div>
+      <div class="fi">
+        <input class="inp" id="t08_q5" placeholder="최대 3단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sa('t08_q5',['images inline','display images inline'],'fb_t08_q5',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t08_q5">✓ <strong>images inline</strong> — Para D: "first browser to display images inline with text."</div>
+    </div>
+    <div class="qi">
+      <div class="qn" style="color:var(--wt2)">Q 06 — What did Berners-Lee launch in 2019 to protect the Web?</div>
+      <div class="fi">
+        <input class="inp" id="t08_q6" placeholder="최대 3단어" oninput="this.style.borderColor='var(--border)'">
+        <button class="chk" style="border:1px solid var(--wt2);color:var(--wt2);background:var(--wt2-bg)" onclick="sa('t08_q6',['contract for the web','the contract'],'fb_t08_q6',6)">확인</button>
+      </div>
+      <div class="fb" id="fb_t08_q6">✓ <strong>Contract for the Web</strong> — Para E: "he launched the Contract for the Web."</div>
+    </div>
+  </div>
+  <div class="tip" style="border-top-color:var(--wt2)"><div class="tiptitle" style="color:var(--wt2)">📌 Short Answer 핵심</div><div class="tiptxt"><strong>지문 단어 그대로</strong> · 단어 수 제한 철저 · 의문사 유형별로 답 형태 예측 후 스캔</div></div>
+</div></div>
+
+<!-- ═══════════════ TYPE 09: TABLE / FLOW COMPLETION ═══════════════ -->
+<div class="page" id="page-t09"><div class="wrap">
+  <div class="banner" style="background:var(--home-bg);border:1px solid var(--home-bdr)">
+    <div class="wm" style="color:var(--home)">TAB</div>
+    <div class="tag" style="color:var(--home)">유형 09 · 실전 연습</div>
+    <div class="btitle">Table / Flow Completion</div>
+    <div class="bdesc">표나 흐름도의 빈칸을 지문 단어로 채웁니다. <strong>표의 구조</strong>가 지문의 구조를 반영하므로 위치 파악이 빠릅니다.</div>
+  </div>
+  <div class="sc" style="background:var(--home-bg);border:1px solid var(--home-bdr)">
+    <div class="stitle" style="color:var(--home)">⚡ 핵심 전략</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--home)">①</span><span>표 전체 구조를 먼저 파악 — 행/열 헤더가 스캔 키워드</span></div>
+      <div class="step"><span class="sn" style="color:var(--home)">②</span><span>빈칸 주변 단어(행 제목, 열 제목)로 지문 위치 특정</span></div>
+      <div class="step"><span class="sn" style="color:var(--home)">③</span><span>지문 단어 그대로 복사 · 단어 수 제한 엄수</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~680 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--home)">Academic</span></div>
+    <div class="ptitle">The Development of the Printing Press</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>The printing press, developed by German goldsmith Johannes Gutenberg around 1440, is widely regarded as one of the most transformative inventions in human history. Gutenberg's key innovation was the movable type system, in which individual metal letter blocks could be rearranged to compose different texts and reused indefinitely. Prior to this development, books in Europe were produced by hand, a slow and expensive process largely confined to monasteries and royal courts.</p>
+      <p><span class="pl">B</span>Gutenberg's first major project was the printing of the Bible — now known as the Gutenberg Bible — completed around 1455. He produced approximately 180 copies, a remarkable output for the era. The press operated using an oil-based ink that adhered well to metal type and the high-quality vellum or paper pages, producing text of exceptional clarity. The process of setting type and printing a single page could be completed far more quickly than copying it by hand, dramatically reducing the cost per book.</p>
+      <p><span class="pl">C</span>The impact of the printing press on European society was profound and far-reaching. Within fifty years of Gutenberg's invention, an estimated twenty million books had been printed in Europe. The rapid spread of printed texts enabled the standardisation of languages, as printed works were often composed in regional vernaculars rather than Latin. This contributed to the rise of national identities and, ultimately, to the fragmentation of the authority of the Catholic Church during the Protestant Reformation, as reformers such as Martin Luther were able to disseminate their ideas rapidly and widely.</p>
+      <p><span class="pl">D</span>The press also transformed the production of scientific knowledge. Before printing, scholarly manuscripts were copied with errors introduced by scribes, leading to inconsistencies between different versions of the same text. Printed books allowed identical copies to be distributed across a wide geographic area, enabling scholars to refer to the same version of a text and build collective knowledge systematically. This standardisation of scientific literature is considered a key precondition for the Scientific Revolution of the sixteenth and seventeenth centuries.</p>
+      <p><span class="pl">E</span>The printing press spread rapidly across Europe. By 1500, printing presses had been established in more than 250 cities across the continent. Venice emerged as a particularly important centre of early printing, with its presses producing over a third of all books printed in Europe by the end of the fifteenth century. The Aldine Press, founded in Venice by Aldus Manutius in 1494, was especially influential, introducing the italic typeface and the portable octavo book format, which made books more affordable and convenient to carry.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–6 · NO MORE THAN TWO WORDS</div><div></div></div>
+  <div class="qhd" style="background:var(--home-bg);border:1px solid var(--home-bdr);color:var(--home)">Complete the table using NO MORE THAN TWO WORDS from the passage for each answer.</div>
+  <div class="qbd" style="border-color:var(--home-bdr)">
+    <div style="overflow-x:auto">
+    <table class="table-q">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Key Information</th>
+          <th>Your Answer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Inventor</td>
+          <td>German goldsmith; developed press around 1440</td>
+          <td><div class="fi"><input class="inp" id="t09_q1" placeholder="2단어 이내" style="min-width:100px" oninput="this.style.borderColor='var(--border)'"><button class="chk" style="border:1px solid var(--home);color:var(--home);background:var(--home-bg)" onclick="sa('t09_q1',['johannes gutenberg','gutenberg'],'fb_t09_q1',6)">확인</button></div><div class="fb" id="fb_t09_q1">✓ <strong>Johannes Gutenberg</strong> — Para A: "developed by German goldsmith Johannes Gutenberg."</div></td>
+        </tr>
+        <tr>
+          <td>Key Innovation</td>
+          <td>Individual letter blocks that could be rearranged and reused</td>
+          <td><div class="fi"><input class="inp" id="t09_q2" placeholder="2단어 이내" style="min-width:100px" oninput="this.style.borderColor='var(--border)'"><button class="chk" style="border:1px solid var(--home);color:var(--home);background:var(--home-bg)" onclick="sa('t09_q2',['movable type'],'fb_t09_q2',6)">확인</button></div><div class="fb" id="fb_t09_q2">✓ <strong>movable type</strong> — Para A: "Gutenberg's key innovation was the movable type system."</div></td>
+        </tr>
+        <tr>
+          <td>First major work</td>
+          <td>Gutenberg Bible — ~<strong>___①___</strong> copies produced c.1455</td>
+          <td><div class="fi"><input class="inp" id="t09_q3" placeholder="숫자" style="min-width:80px" oninput="this.style.borderColor='var(--border)'"><button class="chk" style="border:1px solid var(--home);color:var(--home);background:var(--home-bg)" onclick="sa('t09_q3',['180'],'fb_t09_q3',6)">확인</button></div><div class="fb" id="fb_t09_q3">✓ <strong>180</strong> — Para B: "He produced approximately 180 copies."</div></td>
+        </tr>
+        <tr>
+          <td>Social impact</td>
+          <td>Helped standardise <strong>___②___</strong> by spreading regional vernaculars</td>
+          <td><div class="fi"><input class="inp" id="t09_q4" placeholder="2단어 이내" style="min-width:100px" oninput="this.style.borderColor='var(--border)'"><button class="chk" style="border:1px solid var(--home);color:var(--home);background:var(--home-bg)" onclick="sa('t09_q4',['languages'],'fb_t09_q4',6)">확인</button></div><div class="fb" id="fb_t09_q4">✓ <strong>languages</strong> — Para C: "enabled the standardisation of languages."</div></td>
+        </tr>
+        <tr>
+          <td>Scientific impact</td>
+          <td>Eliminated scribal <strong>___③___</strong>; enabled identical copies for scholars</td>
+          <td><div class="fi"><input class="inp" id="t09_q5" placeholder="2단어 이내" style="min-width:100px" oninput="this.style.borderColor='var(--border)'"><button class="chk" style="border:1px solid var(--home);color:var(--home);background:var(--home-bg)" onclick="sa('t09_q5',['errors'],'fb_t09_q5',6)">확인</button></div><div class="fb" id="fb_t09_q5">✓ <strong>errors</strong> — Para D: "scholarly manuscripts were copied with errors introduced by scribes."</div></td>
+        </tr>
+        <tr>
+          <td>Venice contribution</td>
+          <td>Aldine Press introduced italic typeface and <strong>___④___</strong> book format</td>
+          <td><div class="fi"><input class="inp" id="t09_q6" placeholder="2단어 이내" style="min-width:100px" oninput="this.style.borderColor='var(--border)'"><button class="chk" style="border:1px solid var(--home);color:var(--home);background:var(--home-bg)" onclick="sa('t09_q6',['octavo','portable octavo'],'fb_t09_q6',6)">확인</button></div><div class="fb" id="fb_t09_q6">✓ <strong>octavo / portable octavo</strong> — Para E: "the italic typeface and the portable octavo book format."</div></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="tip" style="border-top-color:var(--home)"><div class="tiptitle" style="color:var(--home)">📌 Table Completion 핵심</div><div class="tiptxt"><strong>행·열 제목</strong>이 스캔 키워드 · 표 구조 = 지문 구조 반영<br>지문 단어 그대로 · 단어 수 제한 엄수</div></div>
+</div></div>
+
+<!-- ═══════════════ TYPE 10: PICK FROM A LIST ═══════════════ -->
+<div class="page" id="page-t10"><div class="wrap">
+  <div class="banner" style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr)">
+    <div class="wm" style="color:var(--vocab)">PICK</div>
+    <div class="tag" style="color:var(--vocab)">유형 10 · 실전 연습</div>
+    <div class="btitle">Pick from a List</div>
+    <div class="bdesc">제시된 보기 목록 중 정답 <strong>여러 개</strong>를 고르는 유형. 정답 수가 몇 개인지 반드시 확인하세요.</div>
+  </div>
+  <div class="sc" style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr)">
+    <div class="stitle" style="color:var(--vocab)">⚡ 핵심 전략</div>
+    <div class="steps">
+      <div class="step"><span class="sn" style="color:var(--vocab)">①</span><span>정답 개수 먼저 확인 ("Choose TWO" 등)</span></div>
+      <div class="step"><span class="sn" style="color:var(--vocab)">②</span><span>지문에 언급된 것 vs 언급 없는 것 구분이 핵심</span></div>
+      <div class="step"><span class="sn" style="color:var(--vocab)">③</span><span>언급됐지만 질문 맥락과 다른 보기 소거 (함정 주의)</span></div>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="ph"><span class="ph-l">Passage · ~700 words · Band 6.0–6.5</span><span class="ph-r" style="color:var(--vocab)">Academic</span></div>
+    <div class="ptitle">Urban Green Spaces and Mental Health</div>
+    <div class="pbody">
+      <p><span class="pl">A</span>Urban green spaces — parks, gardens, street trees, and riverside paths — are increasingly recognised as essential infrastructure for public health in densely populated cities. A growing body of research links regular exposure to urban nature with measurable improvements in mental wellbeing, including reductions in stress, anxiety, and depression. Cities that invest in accessible green space are not merely improving aesthetic appeal; they are making evidence-based investments in the health of their populations.</p>
+      <p><span class="pl">B</span>The psychological benefits of green spaces operate through several mechanisms. First, natural environments offer "soft fascination" — a type of effortless attention that allows the directed attention system of the brain to rest and recover, a process described in Attention Restoration Theory. Second, time in nature triggers measurable reductions in cortisol, the body's primary stress hormone, lowering physiological stress markers. Third, green spaces provide social opportunities: shared parks encourage chance encounters between neighbours, strengthening community bonds and reducing social isolation, which is independently linked to poor mental health outcomes.</p>
+      <p><span class="pl">C</span>Access to green space is, however, inequitably distributed in most cities. Low-income and minority communities are disproportionately located in urban areas with less green space and more environmental stressors such as traffic noise and air pollution. This environmental inequality means that the mental health benefits of urban nature are least available to the populations who may need them most. Several cities, including Singapore and Medellín, have taken deliberate steps to prioritise green infrastructure in historically underserved neighbourhoods as part of broader urban equity initiatives.</p>
+      <p><span class="pl">D</span>The quality and design of green spaces matters as much as their quantity. Research indicates that people are more likely to use and benefit from green spaces that are perceived as safe, well-maintained, and offering some degree of biodiversity. Simple features such as the presence of birdsong, varied planting, and access to water have been shown to enhance the restorative experience. Conversely, green spaces that are poorly lit, feel unsafe, or are dominated by manicured grass with little ecological diversity provide fewer psychological benefits.</p>
+      <p><span class="pl">E</span>Digital technology is beginning to play a role in how cities plan and manage green spaces. Satellite mapping, citizen science apps, and urban heat modelling allow planners to identify gaps in green infrastructure and prioritise new plantings for maximum ecological and health benefit. Some cities are also using data from wearable sensors to track how people's physiological stress levels change as they move through urban landscapes — insights that are beginning to directly inform urban design decisions.</p>
+    </div>
+  </div>
+  <div class="sr"><div class="sl">Questions 1–2 (Choose TWO) · Questions 3–4 (Choose TWO)</div><div></div></div>
+  <div class="qhd" style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);color:var(--vocab)">Questions 1–2: Choose TWO letters A–F. Which TWO benefits of urban green spaces are mentioned in the passage?</div>
+  <div class="qbd" style="border-color:var(--vocab-bdr);margin-bottom:6px">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:10px;font-weight:500">정답 2개를 선택하세요 — 각각 독립적으로 채점됩니다</div>
+    <div class="qi">
+      <div class="qn" style="color:var(--vocab)">Q 01 — 해당하는 것 모두 고르기 (정답: 2개)</div>
+      <div class="qo">
+        <button class="opt" onclick="pl('t10_p1',this,'A','AC')"><span class="ol">A</span>Reduction in physiological stress through lower cortisol levels</button>
+        <button class="opt" onclick="pl('t10_p1',this,'B','AC')"><span class="ol">B</span>Improved physical fitness due to increased outdoor exercise</button>
+        <button class="opt" onclick="pl('t10_p1',this,'C','AC')"><span class="ol">C</span>Reduced social isolation through community interaction in parks</button>
+        <button class="opt" onclick="pl('t10_p1',this,'D','AC')"><span class="ol">D</span>Lower rates of cardiovascular disease in green neighbourhoods</button>
+        <button class="opt" onclick="pl('t10_p1',this,'E','AC')"><span class="ol">E</span>Improved air quality in cities with more trees</button>
+        <button class="opt" onclick="pl('t10_p1',this,'F','AC')"><span class="ol">F</span>Reduced crime rates in well-maintained parks</button>
+      </div>
+      <div class="fb" id="t10_p1">✓ 정답: <strong>A와 C</strong><br>A: Para B — "reductions in cortisol, the body's primary stress hormone"<br>C: Para B — "shared parks encourage chance encounters…reducing social isolation"<br>B/D/E/F: 지문에 언급 없음(NG) 또는 질문과 관련 없는 내용.</div>
+    </div>
+  </div>
+  <div class="qhd" style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);color:var(--vocab)">Questions 3–4: Choose TWO letters A–F. Which TWO features make a green space MORE restorative, according to the passage?</div>
+  <div class="qbd" style="border-color:var(--vocab-bdr)">
+    <div class="qi">
+      <div class="qn" style="color:var(--vocab)">Q 02 — 해당하는 것 모두 고르기 (정답: 2개)</div>
+      <div class="qo">
+        <button class="opt" onclick="pl('t10_p2',this,'A','BD')"><span class="ol">A</span>A large area with open grass lawns</button>
+        <button class="opt" onclick="pl('t10_p2',this,'B','BD')"><span class="ol">B</span>Presence of birdsong and varied planting</button>
+        <button class="opt" onclick="pl('t10_p2',this,'C','BD')"><span class="ol">C</span>Regular security patrols and CCTV</button>
+        <button class="opt" onclick="pl('t10_p2',this,'D','BD')"><span class="ol">D</span>Access to water features</button>
+        <button class="opt" onclick="pl('t10_p2',this,'E','BD')"><span class="ol">E</span>Free public Wi-Fi</button>
+        <button class="opt" onclick="pl('t10_p2',this,'F','BD')"><span class="ol">F</span>Being located near a busy commercial area</button>
+      </div>
+      <div class="fb" id="t10_p2">✓ 정답: <strong>B와 D</strong><br>B: Para D — "presence of birdsong, varied planting"<br>D: Para D — "access to water…enhance the restorative experience"<br>A: 오히려 "manicured grass with little ecological diversity = fewer benefits"로 오답<br>C/E/F: 지문에 언급 없음.</div>
+    </div>
+  </div>
+  <div class="tip" style="border-top-color:var(--vocab)"><div class="tiptitle" style="color:var(--vocab)">📌 Pick from List 핵심</div><div class="tiptxt"><strong>정답 개수 먼저 확인</strong> (2개, 3개 등)<br>언급됐지만 질문 맥락과 다른 보기 함정 주의 · 소거법으로 접근</div></div>
+</div></div>
+
+<!-- ══ BOTTOM NAV ══ -->
+<div class="bnav">
+  <button class="bn on" id="bn_t06" onclick="go('t06')"><span class="bni">🔘</span><span class="bnl">MCQ</span></button>
+  <button class="bn" id="bn_t07" onclick="go('t07')"><span class="bni">🔗</span><span class="bnl">Endings</span></button>
+  <button class="bn" id="bn_t08" onclick="go('t08')"><span class="bni">✏️</span><span class="bnl">Short Ans</span></button>
+  <button class="bn" id="bn_t09" onclick="go('t09')"><span class="bni">📊</span><span class="bnl">Table</span></button>
+  <button class="bn" id="bn_t10" onclick="go('t10')"><span class="bni">📋</span><span class="bnl">Pick List</span></button>
+</div>
+
+<script>
+const pages=['t06','t07','t08','t09','t10'];
+const totals={t06:5,t07:5,t08:0,t09:0,t10:0};
+const scores={};
+pages.forEach(p=>scores[p]=0);
+
+function go(id){
+  pages.forEach(p=>{
+    document.getElementById('page-'+p).classList.toggle('on',p===id);
+    document.querySelector('.nb[onclick="go(\''+p+'\')"]')?.classList.toggle('on',p===id);
+    document.getElementById('bn_'+p)?.classList.toggle('on',p===id);
+  });
+  const idx=pages.indexOf(id)+1;
+  document.getElementById('pf').style.width=(idx/pages.length*100)+'%';
+  window.scrollTo(0,0);
+}
+
+function showFb(id,correct){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.classList.add('show');
+  el.classList.add(correct?'ok':'no');
+}
+
+function mc(qid,btn,choice,ans){
+  const btns=btn.parentElement.querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  const correct=choice===ans;
+  btn.classList.add(correct?'ok':'no');
+  if(!correct){btns.forEach(b=>{if(b.querySelector('.ol')&&b.querySelector('.ol').textContent.trim()===ans)b.classList.add('ok');})}
+  showFb(qid,correct);
+  const page=qid.split('_')[0];
+  if(correct){scores[page]=(scores[page]||0)+1;}
+  checkPageScore(page);
+}
+
+function se(qid,btn,choice,ans){mc(qid,btn,choice,ans);}
+
+function sa(inputId,answers,fbId){
+  const inp=document.getElementById(inputId);
+  const val=inp.value.trim().toLowerCase().replace(/[^a-z0-9 ]/g,'');
+  const correct=answers.some(a=>val===a.toLowerCase().replace(/[^a-z0-9 ]/g,''));
+  inp.classList.add(correct?'ok':'no');
+  inp.disabled=true;
+  showFb(fbId,correct);
+}
+
+function pl(qid,btn,choice,ans){
+  const correct=ans.includes(choice);
+  btn.classList.add(correct?'ok':'no');
+  btn.disabled=true;
+  if(correct){
+    const fb=document.getElementById(qid);
+    if(fb){fb.classList.add('show');fb.classList.add('ok');}
+  }
+}
+
+function checkPageScore(page){
+  const tot=totals[page];
+  if(!tot)return;
+  const qItems=document.querySelectorAll('#page-'+page+' .qi');
+  let answered=0;
+  qItems.forEach(q=>{
+    const btns=q.querySelectorAll('.opt');
+    if(btns.length>0&&btns[0].disabled)answered++;
+  });
+  if(answered>=tot){
+    const scb=document.getElementById('scb_'+page);
+    if(scb){
+      scb.classList.add('show');
+      const n=scores[page]||0;
+      const nn=document.getElementById('scn_'+page);
+      if(nn)nn.textContent=n;
+      const pct=Math.round(n/tot*100);
+      const ko=['다시 도전해 보세요!','좀 더 복습이 필요해요.','절반 이상! 계속 연습하세요.','잘 하고 있어요!','거의 만점! 훌륭합니다.','완벽합니다! 🎉'];
+      const mi=Math.min(Math.floor(pct/20),5);
+      const sm=document.getElementById('scm_'+page);
+      if(sm)sm.textContent=ko[mi];
+    }
+  }
+}
+</script>
+</body></html>
