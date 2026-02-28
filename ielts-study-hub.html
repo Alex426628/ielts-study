@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   GLOBAL TOKENS — Light Theme
+═══════════════════════════════════════ */
+:root {
+  --bg:       #f4f1ec;
+  --paper:    #ffffff;
+  --surface2: #f9f7f4;
+  --surface3: #f0ede7;
+  --border:   #e2ddd6;
+  --border2:  #cbc6bc;
+  --ink:      #18160f;
+  --ink2:     #3c3930;
+  --muted:    #8c8880;
+
+  --r:        #bc3318;
+  --l:        #1560a8;
+  --w:        #1a7a48;
+  --vocab:    #6b2ebc;
+  --wt2:      #0a7a72;
+  --home:     #b06818;
+
+  --r-bg:     #fdf0ec;
+  --l-bg:     #edf3fc;
+  --w-bg:     #ecf7f1;
+  --vocab-bg: #f4effe;
+  --wt2-bg:   #eaf7f6;
+  --home-bg:  #fdf6ed;
+
+  --r-bdr:    #f2c4b8;
+  --l-bdr:    #b4d0f0;
+  --w-bdr:    #a8dcc0;
+  --vocab-bdr:#d4b4f4;
+  --wt2-bdr:  #98dcd8;
+  --home-bdr: #f0d0a0;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  padding-bottom: 72px;
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.app-header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 var(--border), 0 2px 12px rgba(0,0,0,.05);
+  position: sticky; top:0; z-index:200;
+  height: 52px;
+  display: flex; align-items: center;
+  padding: 0 18px; gap: 14px;
+}
+
+.app-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--ink); letter-spacing:.01em;
+  white-space: nowrap;
+}
+.app-logo em { font-style:normal; color: var(--home); }
+
+.nav-scroll {
+  flex:1; overflow-x:auto;
+  display:flex; gap:5px;
+  scrollbar-width:none;
+}
+.nav-scroll::-webkit-scrollbar { display:none; }
+
+.nav-btn {
+  flex-shrink:0;
+  font-family:'DM Mono',monospace;
+  font-size:10px; font-weight:500; letter-spacing:.07em;
+  padding: 5px 12px; border-radius:5px;
+  border: 1px solid var(--border);
+  background: var(--surface2); color: var(--muted);
+  cursor:pointer; transition:all .15s; white-space:nowrap;
+}
+.nav-btn:hover { color:var(--ink2); border-color:var(--border2); }
+.nav-btn.active { color:#fff; border-color:transparent; background:var(--c); }
+.nb-home    { --c:var(--home); }
+.nb-r       { --c:var(--r); }
+.nb-vocab   { --c:var(--vocab); }
+.nb-wt2     { --c:var(--wt2); }
+  .nb-reading  { --c:var(--r); }
+  .nb-speaking { --c:var(--vocab); }
+
+.prog-strip { height:3px; background:var(--border); }
+.prog-fill  { height:3px; width:0; transition:width .35s ease; }
+
+/* ═══════════════════════════════════════
+   LAYOUT / SHARED
+═══════════════════════════════════════ */
+.page { display:none; }
+.page.active { display:block; }
+.container { max-width:720px; margin:0 auto; padding:0 18px; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(7px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.sec-row {
+  display:flex; align-items:center; gap:12px;
+  margin: 22px 0 13px;
+}
+.sec-lbl {
+  font-family:'DM Mono',monospace;
+  font-size:10px; font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); white-space:nowrap;
+}
+.sec-line { flex:1; height:1px; background:var(--border); }
+
+.card {
+  background:var(--paper);
+  border:1px solid var(--border);
+  border-radius:12px; overflow:hidden;
+  margin-bottom:13px;
+  box-shadow:0 1px 4px rgba(0,0,0,.04);
+  animation:fadeUp .32s ease both;
+}
+.card-hd {
+  padding:11px 18px 10px;
+  background:var(--surface2);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.card-hd-title {
+  font-family:'DM Mono',monospace;
+  font-size:10px; font-weight:500;
+  text-transform:uppercase; letter-spacing:.12em; color:var(--muted);
+}
+.card-body { padding:16px 18px; }
+
+.chip {
+  font-family:'DM Mono',monospace;
+  font-size:10px; font-weight:500;
+  padding:3px 10px; border-radius:4px;
+  border:1px solid; letter-spacing:.05em;
+}
+
+/* ═══════════════════════════════════════
+   HOME
+═══════════════════════════════════════ */
+.home-hero {
+  background:var(--paper);
+  border-bottom:1px solid var(--border);
+  padding:28px 18px 24px;
+  position:relative; overflow:hidden;
+}
+.home-hero::after {
+  content:'IELTS';
+  position:absolute; right:-4px; bottom:-14px;
+  font-family:'Playfair Display',serif;
+  font-size:96px; font-weight:700;
+  color:rgba(0,0,0,.035); line-height:1; pointer-events:none;
+}
+.hero-eyebrow {
+  font-family:'DM Mono',monospace;
+  font-size:10px; letter-spacing:.14em;
+  color:var(--muted); text-transform:uppercase; margin-bottom:8px;
+}
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:25px; font-weight:700;
+  color:var(--ink); line-height:1.25; margin-bottom:8px;
+}
+.hero-sub {
+  font-size:13px; color:var(--ink2); line-height:1.75; max-width:480px;
+}
+.hero-badges {
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:18px;
+}
+.hero-badge {
+  font-family:'DM Mono',monospace; font-size:11px;
+  padding:5px 13px; border-radius:5px;
+  border:1px solid var(--border);
+  background:var(--surface2); color:var(--ink2);
+}
+.hero-badge strong { font-weight:500; color:var(--ink); }
+
+.session-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+}
+@media(max-width:480px){ .session-grid{ grid-template-columns:1fr; } }
+
+.sess-card {
+  background:var(--paper); border:1px solid var(--border);
+  border-radius:12px; padding:16px 16px 14px;
+  cursor:pointer; transition:all .18s;
+  position:relative; overflow:hidden;
+  box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+.sess-card:hover { transform:translateY(-2px); border-color:var(--c); box-shadow:0 6px 20px rgba(0,0,0,.09); }
+.sess-card::before {
+  content:''; position:absolute; left:0; top:0; bottom:0;
+  width:4px; background:var(--c);
+}
+.sc-tag {
+  font-family:'DM Mono',monospace; font-size:9px; font-weight:500;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--c); margin-bottom:6px;
+}
+.sc-title {
+  font-family:'Playfair Display',serif;
+  font-size:15px; font-weight:600; color:var(--ink); margin-bottom:7px;
+}
+.sc-meta { font-size:11.5px; color:var(--muted); line-height:1.7; }
+.sc-arrow { margin-top:10px; font-family:'DM Mono',monospace; font-size:10px; color:var(--c); }
+
+/* band table */
+.band-table { width:100%; border-collapse:collapse; }
+.band-table tr { border-bottom:1px solid var(--border); transition:background .1s; }
+.band-table tr:last-child { border-bottom:none; }
+.band-table tr:hover { background:var(--surface2); }
+.band-table td { padding:10px 14px; vertical-align:middle; }
+.bt-num { font-family:'Playfair Display',serif; font-size:20px; font-weight:600; width:50px; }
+.bt-desc { font-size:12.5px; color:var(--ink2); line-height:1.5; }
+.bt-bar-wrap { width:110px; }
+.bt-bar { height:5px; background:var(--surface3); border-radius:3px; overflow:hidden; }
+.bt-bar-fill { height:100%; border-radius:3px; }
+
+/* ═══════════════════════════════════════
+   INTRO TABS
+═══════════════════════════════════════ */
+.intro-tabs {
+  display:flex; gap:5px; padding:16px 0 4px; flex-wrap:wrap;
+}
+.itab {
+  font-family:'DM Mono',monospace; font-size:10px; font-weight:500; letter-spacing:.08em;
+  padding:5px 13px; border-radius:5px;
+  border:1px solid var(--border);
+  background:var(--surface2); color:var(--muted);
+  cursor:pointer; transition:all .15s;
+}
+.itab:hover { color:var(--ink2); border-color:var(--border2); }
+.itab.on-r { background:var(--r); color:#fff; border-color:var(--r); }
+.itab.on-l { background:var(--l); color:#fff; border-color:var(--l); }
+.itab.on-w { background:var(--w); color:#fff; border-color:var(--w); }
+.itab.on-s { background:var(--vocab); color:#fff; border-color:var(--vocab); }
+
+.itab-page { display:none; }
+.itab-page.active { display:block; animation:fadeUp .3s ease; }
+
+.detail-title {
+  font-family:'Playfair Display',serif;
+  font-size:23px; font-weight:700; line-height:1.25;
+  margin:8px 0 7px;
+}
+.detail-chips { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:4px; }
+
+.qtype-list { display:flex; flex-direction:column; gap:8px; }
+.qtype-item {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:9px; padding:11px 14px;
+  display:flex; gap:12px;
+}
+.qt-num { font-family:'DM Mono',monospace; font-size:11px; font-weight:500; min-width:22px; padding-top:2px; }
+.qt-name { font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:3px; }
+.qt-desc { font-size:12.5px; color:var(--muted); line-height:1.6; }
+.qt-tip {
+  margin-top:5px; font-size:12px; line-height:1.6;
+  padding:5px 10px; border-radius:5px; border-left:2px solid;
+}
+
+.strat-list { display:flex; flex-direction:column; gap:8px; }
+.strat-item {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:9px; padding:12px 14px; display:flex; gap:12px;
+}
+.si-icon { font-size:17px; flex-shrink:0; line-height:1.35; }
+.si-title { font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:3px; }
+.si-desc  { font-size:12.5px; color:var(--muted); line-height:1.65; }
+
+.time-bk { display:flex; flex-direction:column; gap:8px; }
+.tb-row  { display:flex; align-items:center; gap:10px; }
+.tb-lbl  { font-size:12px; color:var(--ink2); min-width:130px; flex-shrink:0; }
+.tb-bar-w { flex:1; background:var(--surface3); border-radius:4px; height:18px; overflow:hidden; border:1px solid var(--border); }
+.tb-bar2  { height:100%; border-radius:3px; display:flex; align-items:center; padding-left:8px; font-family:'DM Mono',monospace; font-size:10px; font-weight:500; color:#fff; white-space:nowrap; }
+.tb-min   { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); min-width:34px; text-align:right; }
+
+/* ═══════════════════════════════════════
+   VOCAB
+═══════════════════════════════════════ */
+.word-card {
+  background:var(--paper); border:1px solid var(--border);
+  border-radius:12px; overflow:hidden; margin-bottom:13px;
+  box-shadow:0 1px 4px rgba(0,0,0,.04);
+  animation:fadeUp .32s ease both;
+}
+.word-card:nth-child(1){animation-delay:.04s}
+.word-card:nth-child(2){animation-delay:.08s}
+.word-card:nth-child(3){animation-delay:.12s}
+.word-card:nth-child(4){animation-delay:.16s}
+.word-card:nth-child(5){animation-delay:.20s}
+
+.wc-hd {
+  padding:14px 18px 12px; background:var(--surface2);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+}
+.wc-word { font-family:'Playfair Display',serif; font-size:22px; font-weight:600; color:var(--ink); line-height:1.2; }
+.wc-pron { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px; }
+.wc-right { display:flex; flex-direction:column; align-items:flex-end; gap:5px; }
+.pos-tag {
+  font-family:'DM Mono',monospace; font-size:10px; font-weight:500;
+  padding:3px 9px; border-radius:4px; text-transform:uppercase; letter-spacing:.07em; border:1px solid;
+}
+.pt-v   { background:var(--r-bg);     color:var(--r);     border-color:var(--r-bdr); }
+.pt-adj { background:var(--w-bg);     color:var(--w);     border-color:var(--w-bdr); }
+.pt-adv { background:var(--home-bg);  color:var(--home);  border-color:var(--home-bdr); }
+.awl-lbl { font-size:10px; color:var(--muted); font-family:'DM Mono',monospace; }
+
+.wc-meaning { padding:12px 18px; border-bottom:1px solid var(--border); }
+.meaning-ko { font-size:14px; font-weight:500; color:var(--ink); margin-bottom:3px; }
+.meaning-en { font-size:12.5px; color:var(--muted); line-height:1.6; }
+
+.wc-examples { padding:13px 18px 14px; }
+.ex-label { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin-bottom:9px; }
+.ex-item { margin-bottom:11px; padding-left:12px; border-left:2px solid var(--border); }
+.ex-item:last-child { margin-bottom:0; }
+.ex-item.ielts { border-left-color:var(--vocab); }
+.ex-ctx { font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:3px; font-family:'DM Mono',monospace; }
+.ex-item.ielts .ex-ctx { color:var(--vocab); }
+.ex-sentence { font-family:'Playfair Display',serif; font-size:13.5px; font-style:italic; color:var(--ink2); line-height:1.75; }
+.ex-sentence em { font-style:normal; color:var(--vocab); font-weight:600; text-decoration:underline; text-decoration-color:rgba(107,46,188,.2); text-underline-offset:2px; }
+.ex-tr { font-size:12px; color:var(--muted); margin-top:2px; }
+
+.para-box {
+  background:var(--vocab-bg); border:1px solid var(--vocab-bdr);
+  border-radius:0 0 11px 11px; padding:10px 18px;
+  display:flex; gap:8px; align-items:flex-start;
+  font-size:12.5px; color:var(--ink2); line-height:1.65;
+}
+.para-box strong { color:var(--l); font-weight:500; }
+
+/* vocab quiz */
+.vq-card { background:var(--paper); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:11px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.vq-body { padding:15px 18px 13px; }
+.vq-num { font-family:'DM Mono',monospace; font-size:10px; color:var(--vocab); font-weight:500; letter-spacing:.1em; margin-bottom:7px; }
+.vq-stem { font-family:'Playfair Display',serif; font-size:14.5px; color:var(--ink); line-height:1.75; font-style:italic; margin-bottom:13px; }
+.vq-opts { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+@media(max-width:420px){ .vq-opts{ grid-template-columns:1fr; } }
+.vq-opt {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:8px 12px;
+  font-size:13px; color:var(--ink2);
+  cursor:pointer; text-align:left; transition:all .14s;
+  display:flex; gap:8px; align-items:center;
+}
+.vq-opt:hover { border-color:var(--vocab); color:var(--vocab); background:var(--vocab-bg); }
+.vq-opt.correct { background:var(--w-bg); border-color:var(--w); color:var(--w); }
+.vq-opt.wrong   { background:var(--r-bg); border-color:var(--r); color:var(--r); }
+.opt-l { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; opacity:.45; flex-shrink:0; }
+.vq-fb { padding:11px 18px 13px; display:none; border-top:1px solid var(--border); background:var(--surface2); font-size:13px; color:var(--ink2); line-height:1.7; }
+.vq-fb.visible { display:block; }
+.vq-fb.ok  { border-top-color:var(--w); }
+.vq-fb.bad { border-top-color:var(--r); }
+.fb-res { font-weight:600; margin-bottom:4px; }
+.fb-res.ok  { color:var(--w); }
+.fb-res.bad { color:var(--r); }
+
+/* ═══════════════════════════════════════
+   WRITING TASK 2
+═══════════════════════════════════════ */
+.blueprint { display:flex; flex-direction:column; gap:6px; }
+.bp-row { display:flex; gap:10px; align-items:stretch; }
+.bp-bar { width:4px; border-radius:2px; flex-shrink:0; }
+.bp-content { flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 14px; }
+.bp-label { font-family:'DM Mono',monospace; font-size:11px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; margin-bottom:4px; }
+.bp-desc { font-size:13px; color:var(--ink2); line-height:1.65; }
+.bp-chips { display:flex; gap:6px; margin-top:7px; flex-wrap:wrap; }
+.bp-chip { font-family:'DM Mono',monospace; font-size:10px; padding:2px 8px; border-radius:3px; color:var(--muted); border:1px solid var(--border); background:var(--paper); }
+.bp-arrow { text-align:center; font-size:11px; color:var(--muted); padding:1px 0; }
+
+.para-card { background:var(--paper); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:11px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.pc-hd { padding:11px 18px 10px; background:var(--surface2); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.pc-title { font-family:'DM Mono',monospace; font-size:12px; font-weight:500; letter-spacing:.05em; }
+.pc-body { padding:14px 18px; }
+.pc-sec { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:7px; margin-top:13px; }
+.pc-sec:first-child { margin-top:0; }
+
+.tpl-box { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 15px; font-family:'DM Mono',monospace; font-size:12.5px; line-height:1.8; color:var(--ink2); }
+.tbl { display:inline-block; background:var(--wt2-bg); color:var(--wt2); border-bottom:1.5px solid var(--wt2); padding:0 4px; border-radius:3px; font-style:italic; }
+
+.band-cmp { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:4px; }
+@media(max-width:440px){ .band-cmp{ grid-template-columns:1fr; } }
+.bc-box { border-radius:8px; padding:12px 13px; }
+.bc-b5 { background:var(--r-bg); border:1px solid var(--r-bdr); }
+.bc-b7 { background:var(--w-bg); border:1px solid var(--w-bdr); }
+.bc-lbl { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; letter-spacing:.1em; margin-bottom:6px; }
+.bc-b5 .bc-lbl { color:var(--r); }
+.bc-b7 .bc-lbl { color:var(--w); }
+.bc-text { font-family:'Playfair Display',serif; font-size:13px; font-style:italic; line-height:1.7; color:var(--ink2); }
+
+.conn-grid { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+.conn { font-family:'DM Mono',monospace; font-size:11px; padding:4px 10px; border-radius:5px; border:1px solid var(--border); background:var(--surface2); color:var(--ink2); cursor:default; transition:all .12s; }
+.conn:hover { border-color:var(--wt2); color:var(--wt2); background:var(--wt2-bg); }
+
+.do-dont { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+@media(max-width:440px){ .do-dont{ grid-template-columns:1fr; } }
+.dd-do   { background:var(--w-bg);  border:1px solid var(--w-bdr);  border-radius:8px; padding:11px 13px; }
+.dd-dont { background:var(--r-bg);  border:1px solid var(--r-bdr);  border-radius:8px; padding:11px 13px; }
+.dd-lbl  { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; letter-spacing:.1em; margin-bottom:6px; }
+.dd-do .dd-lbl   { color:var(--w); }
+.dd-dont .dd-lbl { color:var(--r); }
+.dd-item { font-size:12.5px; color:var(--ink2); line-height:1.65; margin-bottom:4px; }
+.dd-item:last-child { margin-bottom:0; }
+
+/* wt2 quiz */
+.wq-card { background:var(--paper); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:11px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.wq-body { padding:15px 18px 13px; }
+.wq-num  { font-family:'DM Mono',monospace; font-size:10px; color:var(--wt2); font-weight:500; letter-spacing:.1em; margin-bottom:7px; }
+.wq-stem { font-size:14px; color:var(--ink); line-height:1.7; margin-bottom:13px; }
+.wq-opts { display:flex; flex-direction:column; gap:6px; }
+.wq-opt {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:10px 14px;
+  font-size:13px; color:var(--ink2);
+  cursor:pointer; text-align:left; transition:all .14s;
+  display:flex; gap:10px; align-items:flex-start; line-height:1.55;
+}
+.wq-opt:hover { border-color:var(--wt2); color:var(--wt2); background:var(--wt2-bg); }
+.wq-opt.correct { background:var(--w-bg); border-color:var(--w); color:var(--w); }
+.wq-opt.wrong   { background:var(--r-bg); border-color:var(--r); color:var(--r); }
+.wq-fb { padding:12px 18px 13px; display:none; border-top:1px solid var(--border); background:var(--surface2); font-size:13px; color:var(--ink2); line-height:1.7; }
+.wq-fb.visible { display:block; }
+.wq-fb.ok  { border-top-color:var(--w); }
+.wq-fb.bad { border-top-color:var(--r); }
+
+/* ═══════════════════════════════════════
+   SCORE / TIP
+═══════════════════════════════════════ */
+.score-banner {
+  display:none; text-align:center;
+  background:var(--paper); border:1px solid var(--border);
+  border-radius:12px; padding:26px 20px; margin-top:18px;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+.score-banner.visible { display:block; animation:fadeUp .4s ease; }
+.score-big { font-family:'Playfair Display',serif; font-size:52px; font-weight:700; line-height:1; }
+.score-of  { font-family:'DM Mono',monospace; font-size:12px; color:var(--muted); margin-top:5px; }
+.score-msg { font-size:13.5px; color:var(--ink2); margin-top:10px; line-height:1.65; }
+
+.tip-box {
+  background:var(--paper); border:1px solid var(--border);
+  border-top:3px solid; border-radius:0 0 12px 12px;
+  padding:15px 18px; margin-top:26px;
+  box-shadow:0 1px 6px rgba(0,0,0,.04);
+}
+.tip-title { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:.12em; margin-bottom:9px; }
+.tip-text  { font-size:13px; color:var(--ink2); line-height:1.8; }
+.tip-text strong { color:var(--ink); font-weight:500; }
+
+/* ═══════════════════════════════════════
+   BOTTOM NAV
+═══════════════════════════════════════ */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0;
+  background:var(--paper); border-top:1px solid var(--border);
+  display:flex; z-index:200;
+  box-shadow:0 -2px 12px rgba(0,0,0,.06);
+}
+.bn { flex:1; padding:10px 4px 8px; background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; transition:background .12s; }
+.bn:hover { background:var(--surface2); }
+.bn-icon { font-size:16px; line-height:1; }
+.bn-lbl  { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.06em; color:var(--muted); text-transform:uppercase; transition:color .15s; }
+.bn.active .bn-lbl { color:var(--c); font-weight:500; }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="app-header">
+  <div class="app-logo">IELTS <em>Hub</em></div>
+  <div class="nav-scroll">
+    <button class="nav-btn nb-home active" onclick="goPage('home')">🏠 Home</button>
+    <button class="nav-btn nb-r"       onclick="goPage('intro')">📋 시험 소개</button>
+    <button class="nav-btn nb-vocab"   onclick="goPage('vocab')">📖 AWL 어휘</button>
+    <button class="nav-btn nb-wt2"     onclick="goPage('wt2')">✍️ Writing T2</button>
+    <button class="nav-btn nb-reading" onclick="goPage('reading')">🔍 Reading 전략</button>
+    <button class="nav-btn nb-speaking" onclick="goPage('speaking')">🎤 Speaking</button>
+  </div>
+</div>
+<div class="prog-strip"><div class="prog-fill" id="progFill"></div></div>
+
+
+<!-- ══════════ HOME ══════════ -->
+<div class="page active" id="page-home">
+  <div class="home-hero">
+    <div class="hero-eyebrow">IELTS Study Hub · Band 7 목표</div>
+    <div class="hero-title">오늘 뭘 공부할까요?</div>
+    <div class="hero-sub">시험 소개, AWL 어휘, Writing Task 2 구조 — 이동 중 10분씩 쌓아가는 학습 시스템입니다.</div>
+    <div class="hero-badges">
+      <div class="hero-badge">4개 영역 · <strong>2h 45m</strong></div>
+      <div class="hero-badge">Band Score <strong>1–9</strong></div>
+      <div class="hero-badge">목표 <strong>7.0–7.5</strong></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sec-row" style="margin-top:20px;"><div class="sec-lbl">세션 선택</div><div class="sec-line"></div></div>
+    <div class="session-grid">
+      <div class="sess-card" style="--c:var(--r)" onclick="goPage('intro')">
+        <div class="sc-tag">시험 소개</div>
+        <div class="sc-title">IELTS Introduction</div>
+        <div class="sc-meta">4개 영역 전체 구조<br>문제 유형 · 시간 · 전략</div>
+        <div class="sc-arrow">열기 →</div>
+      </div>
+      <div class="sess-card" style="--c:var(--vocab)" onclick="goPage('vocab')">
+        <div class="sc-tag">어휘 세션 · AWL 01</div>
+        <div class="sc-title">Vocabulary</div>
+        <div class="sc-meta">핵심 단어 5개 + 예문<br>Paraphrase 감각 + 퀴즈</div>
+        <div class="sc-arrow">열기 →</div>
+      </div>
+      <div class="sess-card" style="--c:var(--wt2)" onclick="goPage('wt2')">
+        <div class="sc-tag">Writing Task 2 · 01</div>
+        <div class="sc-title">Essay Structure</div>
+        <div class="sc-meta">4단락 Blueprint<br>PEEL · Concession · 퀴즈</div>
+        <div class="sc-arrow">열기 →</div>
+      </div>
+      <div class="sess-card" style="--c:var(--r)" onclick="goPage('reading')">
+        <div class="sc-tag">Reading 전략 · 01</div>
+        <div class="sc-title">유형별 풀이법</div>
+        <div class="sc-meta">T/F/NG · Matching 등<br>함정 패턴 + 퀴즈</div>
+        <div class="sc-arrow">열기 →</div>
+      </div>
+      <div class="sess-card" style="--c:var(--vocab)" onclick="goPage('speaking')">
+        <div class="sc-tag">Speaking · 01</div>
+        <div class="sc-title">Cue Card 전략</div>
+        <div class="sc-meta">Part 2 구조 + 템플릿<br>Part 3 고득점 답변법 + 퀴즈</div>
+        <div class="sc-arrow">열기 →</div>
+      </div>
+    </div>
+
+    <div class="sec-row"><div class="sec-lbl">Band Score 가이드</div><div class="sec-line"></div></div>
+    <div class="card">
+      <div class="card-body" style="padding:0;">
+        <table class="band-table">
+          <tr>
+            <td class="bt-num" style="color:#187a3a">9</td>
+            <td class="bt-desc"><strong style="color:var(--ink)">Expert</strong><br>원어민 수준, 완전한 구사력</td>
+            <td class="bt-bar-wrap"><div class="bt-bar"><div class="bt-bar-fill" style="width:100%;background:#187a3a"></div></div></td>
+          </tr>
+          <tr>
+            <td class="bt-num" style="color:var(--w)">8</td>
+            <td class="bt-desc"><strong style="color:var(--ink)">Very Good</strong><br>간헐적 부정확 외 거의 완벽</td>
+            <td class="bt-bar-wrap"><div class="bt-bar"><div class="bt-bar-fill" style="width:89%;background:var(--w)"></div></div></td>
+          </tr>
+          <tr style="background:#fdf9f2;">
+            <td class="bt-num" style="color:var(--home);font-size:22px;">7.0</td>
+            <td class="bt-desc"><strong style="color:var(--home)">🎯 목표 — Good User</strong><br><span style="font-size:11px;color:var(--muted)">대부분 영어권 대학원·이민 기준</span></td>
+            <td class="bt-bar-wrap"><div class="bt-bar"><div class="bt-bar-fill" style="width:78%;background:var(--home)"></div></div></td>
+          </tr>
+          <tr>
+            <td class="bt-num" style="color:#a05820">6.5</td>
+            <td class="bt-desc"><strong style="color:var(--ink)">Competent+</strong><br>조건부 입학 수준</td>
+            <td class="bt-bar-wrap"><div class="bt-bar"><div class="bt-bar-fill" style="width:72%;background:#a05820"></div></div></td>
+          </tr>
+          <tr>
+            <td class="bt-num" style="color:var(--r)">6.0</td>
+            <td class="bt-desc"><strong style="color:var(--ink)">Competent</strong><br>학부·일반 취업비자</td>
+            <td class="bt-bar-wrap"><div class="bt-bar"><div class="bt-bar-fill" style="width:67%;background:var(--r)"></div></div></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd"><div class="card-hd-title">Overall 점수 계산</div></div>
+      <div class="card-body" style="font-size:13.5px;color:var(--ink2);line-height:1.8;">
+        4개 영역 평균을 0.5 단위로 반올림합니다.<br>
+        예: R 7.0 + L 7.5 + W 6.5 + S 6.5 = 27.5 ÷ 4 = <strong style="color:var(--ink)">6.875 → Overall 7.0</strong>
+        <div style="margin-top:10px;background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--r);line-height:1.6;">
+          ⚠️ 기관마다 영역별 최소 점수를 따로 요구합니다. Overall만 보지 마세요.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ INTRO ══════════ -->
+<div class="page" id="page-intro">
+<div class="container">
+  <div class="intro-tabs">
+    <button class="itab on-r" onclick="switchITab('r',this)">Reading</button>
+    <button class="itab"      onclick="switchITab('l',this)">Listening</button>
+    <button class="itab"      onclick="switchITab('w',this)">Writing</button>
+    <button class="itab"      onclick="switchITab('s',this)">Speaking</button>
+  </div>
+
+  <!-- Reading -->
+  <div class="itab-page active" id="it-r">
+    <div class="detail-title" style="color:var(--r)">Reading</div>
+    <div class="detail-chips">
+      <div class="chip" style="color:var(--r);border-color:var(--r-bdr);background:var(--r-bg);">⏱ 60분</div>
+      <div class="chip" style="color:var(--r);border-color:var(--r-bdr);background:var(--r-bg);">3 passages · 40문제</div>
+      <div class="chip" style="color:var(--r);border-color:var(--r-bdr);background:var(--r-bg);">10가지 유형</div>
+    </div>
+    <div class="sec-row"><div class="sec-lbl">시간 배분</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="time-bk">
+        <div class="tb-row"><div class="tb-lbl">Passage 1 <small style="color:var(--muted)">(쉬움)</small></div><div class="tb-bar-w"><div class="tb-bar2" style="width:33%;background:var(--r);">13문제</div></div><div class="tb-min" style="color:var(--r)">18분</div></div>
+        <div class="tb-row"><div class="tb-lbl">Passage 2 <small style="color:var(--muted)">(보통)</small></div><div class="tb-bar-w"><div class="tb-bar2" style="width:36%;background:#b05038;">13문제</div></div><div class="tb-min" style="color:#b05038">20분</div></div>
+        <div class="tb-row"><div class="tb-lbl">Passage 3 <small style="color:var(--muted)">(어려움)</small></div><div class="tb-bar-w"><div class="tb-bar2" style="width:40%;background:#8c2810;">14문제</div></div><div class="tb-min" style="color:#8c2810">22분</div></div>
+      </div>
+    </div></div>
+    <div class="sec-row"><div class="sec-lbl">문제 유형</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="qtype-list">
+        <div class="qtype-item"><div class="qt-num" style="color:var(--r)">01</div><div><div class="qt-name">True / False / Not Given</div><div class="qt-desc">진술이 지문과 일치·반박·미언급인지 판단</div><div class="qt-tip" style="background:var(--r-bg);border-color:var(--r-bdr);color:var(--r)">NG ≠ FALSE — 틀렸다는 증거 있어야 F</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--r)">02</div><div><div class="qt-name">Yes / No / Not Given</div><div class="qt-desc">필자의 의견·주장과 일치 여부 (T/F/NG와 구분)</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--r)">03</div><div><div class="qt-name">Multiple Choice</div><div class="qt-desc">4지선다 또는 다중선택. 소거법 적용</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--r)">04</div><div><div class="qt-name">Matching Headings</div><div class="qt-desc">각 단락에 알맞은 소제목 선택</div><div class="qt-tip" style="background:var(--r-bg);border-color:var(--r-bdr);color:var(--r)">단락 첫·마지막 문장에 핵심이 있는 경우 많음</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--r)">05</div><div><div class="qt-name">Matching Information / Features</div><div class="qt-desc">어느 단락에 특정 정보가 있는지 / 인물·사건과 특징 연결</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--r)">06</div><div><div class="qt-name">Sentence Completion</div><div class="qt-desc">지문 발췌로 빈칸 완성. 단어 수 제한 엄수</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--r)">07</div><div><div class="qt-name">Summary / Table / Flow Chart Completion</div><div class="qt-desc">요약·표·흐름도 빈칸을 지문 또는 보기에서 채우기</div></div></div>
+      </div>
+    </div></div>
+    <div class="sec-row"><div class="sec-lbl">Band 7 전략</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="strat-list">
+        <div class="strat-item"><div class="si-icon">🔍</div><div><div class="si-title">문제 먼저 읽고 키워드 파악</div><div class="si-desc">Skimming 후 해당 키워드 위치를 Scanning — 처음부터 정독하면 시간 부족</div></div></div>
+        <div class="strat-item"><div class="si-icon">🔁</div><div><div class="si-title">Paraphrase 감각 훈련</div><div class="si-desc">지문 단어는 문제에서 AWL 동의어로 바꿔 출제됨. 동의어 묶음 암기가 핵심</div></div></div>
+        <div class="strat-item"><div class="si-icon">⏱</div><div><div class="si-title">막히면 넘어가기</div><div class="si-desc">1문제 2분 초과 금지. 미답변이 오답보다 손해</div></div></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Listening -->
+  <div class="itab-page" id="it-l">
+    <div class="detail-title" style="color:var(--l)">Listening</div>
+    <div class="detail-chips">
+      <div class="chip" style="color:var(--l);border-color:var(--l-bdr);background:var(--l-bg);">⏱ 약 40분</div>
+      <div class="chip" style="color:var(--l);border-color:var(--l-bdr);background:var(--l-bg);">4 sections · 40문제</div>
+      <div class="chip" style="color:var(--l);border-color:var(--l-bdr);background:var(--l-bg);">1회만 재생</div>
+    </div>
+    <div class="sec-row"><div class="sec-lbl">섹션 구성</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="time-bk">
+        <div class="tb-row"><div class="tb-lbl">Section 1 <small style="color:var(--muted)">일상 대화</small></div><div class="tb-bar-w"><div class="tb-bar2" style="width:25%;background:#5090c8;">2인 대화</div></div><div class="tb-min" style="color:var(--l);font-size:10px">10문제</div></div>
+        <div class="tb-row"><div class="tb-lbl">Section 2 <small style="color:var(--muted)">일상 독백</small></div><div class="tb-bar-w"><div class="tb-bar2" style="width:25%;background:#3a80b8;">1인 안내</div></div><div class="tb-min" style="color:var(--l);font-size:10px">10문제</div></div>
+        <div class="tb-row"><div class="tb-lbl">Section 3 <small style="color:var(--muted)">학술 대화</small></div><div class="tb-bar-w"><div class="tb-bar2" style="width:25%;background:var(--l);">토론·발표</div></div><div class="tb-min" style="color:var(--l);font-size:10px">10문제</div></div>
+        <div class="tb-row"><div class="tb-lbl">Section 4 <small style="color:var(--muted)">학술 강의</small></div><div class="tb-bar-w"><div class="tb-bar2" style="width:25%;background:#104888;">1인 강의</div></div><div class="tb-min" style="color:var(--l);font-size:10px">10문제</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6">※ 섹션 사이 예고 시간에 다음 문제 미리 읽기가 핵심</div>
+    </div></div>
+    <div class="sec-row"><div class="sec-lbl">Band 7 전략</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="strat-list">
+        <div class="strat-item"><div class="si-icon">👀</div><div><div class="si-title">Pre-reading — 예고 시간 활용</div><div class="si-desc">30초 예고 시간에 다음 문제 전체를 읽고 키워드 파악. 이것만으로 Band 0.5 상승 가능</div></div></div>
+        <div class="strat-item"><div class="si-icon">🎭</div><div><div class="si-title">Distractor 경계</div><div class="si-desc">"Actually…" / "Let me correct that" 들리면 앞 답 지우기. 처음 언급을 나중에 정정하는 패턴이 빈출</div></div></div>
+        <div class="strat-item"><div class="si-icon">✍️</div><div><div class="si-title">철자 오류 = 오답</div><div class="si-desc">검토 10분을 철자·숫자·날짜 확인에 집중 투자</div></div></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Writing -->
+  <div class="itab-page" id="it-w">
+    <div class="detail-title" style="color:var(--w)">Writing</div>
+    <div class="detail-chips">
+      <div class="chip" style="color:var(--w);border-color:var(--w-bdr);background:var(--w-bg);">⏱ 60분</div>
+      <div class="chip" style="color:var(--w);border-color:var(--w-bdr);background:var(--w-bg);">Task 1 · 150w · 20분</div>
+      <div class="chip" style="color:var(--w);border-color:var(--w-bdr);background:var(--w-bg);">Task 2 · 250w · 40분</div>
+    </div>
+    <div class="sec-row"><div class="sec-lbl">Task 1 vs Task 2</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="band-cmp">
+        <div style="background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:9px;padding:14px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--w);letter-spacing:.1em;margin-bottom:8px;">TASK 1</div>
+          <div style="font-size:13px;color:var(--ink2);line-height:1.75;">그래프·차트·지도 객관적 묘사<br>최소 150단어<br>배점: <strong style="color:var(--w)">Overall의 1/3</strong></div>
+        </div>
+        <div style="background:var(--wt2-bg);border:1px solid var(--wt2-bdr);border-radius:9px;padding:14px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--wt2);letter-spacing:.1em;margin-bottom:8px;">TASK 2</div>
+          <div style="font-size:13px;color:var(--ink2);line-height:1.75;">에세이 논술<br>최소 250단어<br>배점: <strong style="color:var(--wt2)">Overall의 2/3</strong></div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--r);line-height:1.6;">⚠️ Task 2가 배점 2배. 시간 부족 시 Task 2를 먼저 완성하세요.</div>
+    </div></div>
+    <div class="sec-row"><div class="sec-lbl">4가지 채점 기준 (각 25%)</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="qtype-list">
+        <div class="qtype-item"><div class="qt-num" style="color:var(--w)">TA</div><div><div class="qt-name">Task Achievement</div><div class="qt-desc">질문에 완전히 답했는가? 주장이 명확하고 잘 뒷받침되는가?</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--w)">CC</div><div><div class="qt-name">Coherence & Cohesion</div><div class="qt-desc">논리 흐름·연결어·단락 구성이 자연스러운가?</div><div class="qt-tip" style="background:var(--w-bg);border-color:var(--w-bdr);color:var(--w)">연결어 과용도 감점 — 매 문장에 쓰지 말 것</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--w)">LR</div><div><div class="qt-name">Lexical Resource</div><div class="qt-desc">어휘의 다양성과 정확성. AWL 어휘를 정확하게 활용</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--w)">GRA</div><div><div class="qt-name">Grammatical Range & Accuracy</div><div class="qt-desc">다양한 문장 구조를 정확하게 사용</div><div class="qt-tip" style="background:var(--w-bg);border-color:var(--w-bdr);color:var(--w)">복잡한 문장을 틀리게 쓰는 것보다 단순 문장을 정확하게 쓰는 게 낫습니다</div></div></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Speaking -->
+  <div class="itab-page" id="it-s">
+    <div class="detail-title" style="color:var(--vocab)">Speaking</div>
+    <div class="detail-chips">
+      <div class="chip" style="color:var(--vocab);border-color:var(--vocab-bdr);background:var(--vocab-bg);">⏱ 11–14분</div>
+      <div class="chip" style="color:var(--vocab);border-color:var(--vocab-bdr);background:var(--vocab-bg);">3 parts · 면접관 1:1</div>
+    </div>
+    <div class="sec-row"><div class="sec-lbl">3 Parts 구성</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="qtype-list">
+        <div class="qtype-item"><div class="qt-num" style="color:var(--vocab)">P1</div><div><div class="qt-name">Introduction & Interview <span style="font-weight:300;color:var(--muted)">4–5분</span></div><div class="qt-desc">일상 주제(가족·취미 등) 간단 Q&A</div><div class="qt-tip" style="background:var(--vocab-bg);border-color:var(--vocab-bdr);color:var(--vocab)">1–2문장으로 끝내지 말고 이유·예시로 2–3문장 확장</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--vocab)">P2</div><div><div class="qt-name">Cue Card <span style="font-weight:300;color:var(--muted)">3–4분</span></div><div class="qt-desc">카드 주제로 1분 준비 후 1–2분 독백</div><div class="qt-tip" style="background:var(--vocab-bg);border-color:var(--vocab-bdr);color:var(--vocab)">1분에 WHEN·WHERE·WHO·WHAT·WHY 구조로 메모</div></div></div>
+        <div class="qtype-item"><div class="qt-num" style="color:var(--vocab)">P3</div><div><div class="qt-name">Discussion <span style="font-weight:300;color:var(--muted)">4–5분</span></div><div class="qt-desc">추상적·사회적 주제 토론. Band 7을 결정하는 핵심 파트</div><div class="qt-tip" style="background:var(--vocab-bg);border-color:var(--vocab-bdr);color:var(--vocab)">의견 → 이유 → 예시 → 결론 구조로 답변 전개</div></div></div>
+      </div>
+    </div></div>
+    <div class="sec-row"><div class="sec-lbl">한국 응시자 흔한 실수</div><div class="sec-line"></div></div>
+    <div class="card"><div class="card-body">
+      <div class="strat-list">
+        <div class="strat-item" style="background:var(--r-bg);border-color:var(--r-bdr)"><div class="si-icon">✕</div><div><div class="si-title" style="color:var(--r)">Yes/No로만 답변 끝내기</div><div class="si-desc">항상 이유·예시로 2–3문장 확장해야 합니다</div></div></div>
+        <div class="strat-item" style="background:var(--r-bg);border-color:var(--r-bdr)"><div class="si-icon">✕</div><div><div class="si-title" style="color:var(--r)">답변 통째로 외우기</div><div class="si-desc">면접관은 암기 답변을 바로 알아챕니다</div></div></div>
+        <div class="strat-item" style="background:var(--r-bg);border-color:var(--r-bdr)"><div class="si-icon">✕</div><div><div class="si-title" style="color:var(--r)">침묵을 "um, um"으로 채우기</div><div class="si-desc">"That's an interesting question. Let me think…" 같은 filler phrase를 준비해두세요</div></div></div>
+      </div>
+    </div></div>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════ VOCAB ══════════ -->
+<div class="page" id="page-vocab">
+<div class="container">
+  <div class="sec-row" style="margin-top:20px;"><div class="sec-lbl">AWL Session 01 · 단어 학습</div><div class="sec-line"></div></div>
+  <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;">오늘 5개 단어 + IELTS 실전 예문 + Paraphrase 핵심 포인트</p>
+
+  <!-- indicate -->
+  <div class="word-card">
+    <div class="wc-hd"><div><div class="wc-word">indicate</div><div class="wc-pron">/ˈɪndɪkeɪt/</div></div><div class="wc-right"><div class="pos-tag pt-v">verb</div><div class="awl-lbl">AWL Sublist 1</div></div></div>
+    <div class="wc-meaning"><div class="meaning-ko">나타내다, 시사하다</div><div class="meaning-en">to show, suggest, or point to something as likely or true</div></div>
+    <div class="wc-examples">
+      <div class="ex-label">예문</div>
+      <div class="ex-item ielts"><div class="ex-ctx">🎯 IELTS 유형</div><div class="ex-sentence">The graph <em>indicates</em> a steady decline in biodiversity across tropical regions between 1990 and 2020.</div><div class="ex-tr">그래프는 생물 다양성의 꾸준한 감소를 나타낸다.</div></div>
+      <div class="ex-item"><div class="ex-ctx">학술 지문</div><div class="ex-sentence">Several studies <em>indicate</em> that sleep deprivation significantly impairs cognitive performance.</div><div class="ex-tr">여러 연구는 수면 부족이 인지 능력을 크게 손상시킨다는 것을 시사한다.</div></div>
+    </div>
+    <div class="para-box">🔁 <div><strong>Paraphrase:</strong> "the results <u>show</u>" → "the findings <em>indicate</em>" — show / reveal / demonstrate / suggest와 묶어 암기</div></div>
+  </div>
+
+  <!-- significant -->
+  <div class="word-card">
+    <div class="wc-hd"><div><div class="wc-word">significant</div><div class="wc-pron">/sɪɡˈnɪfɪkənt/</div></div><div class="wc-right"><div class="pos-tag pt-adj">adj</div><div class="awl-lbl">AWL Sublist 1</div></div></div>
+    <div class="wc-meaning"><div class="meaning-ko">상당한, 중요한</div><div class="meaning-en">large or important enough to have a notable effect</div></div>
+    <div class="wc-examples">
+      <div class="ex-label">예문</div>
+      <div class="ex-item ielts"><div class="ex-ctx">🎯 IELTS 유형</div><div class="ex-sentence">The introduction of microfinance has had a <em>significant</em> impact on reducing poverty in sub-Saharan Africa.</div><div class="ex-tr">소액금융 도입은 빈곤율 감소에 상당한 영향을 미쳤다.</div></div>
+      <div class="ex-item"><div class="ex-ctx">비교 표현</div><div class="ex-sentence">Deforestation rates in the Amazon are <em>significantly</em> higher than in any other region of comparable size.</div><div class="ex-tr">아마존의 삼림 벌채율은 비슷한 규모의 다른 어떤 지역보다 상당히 높다.</div></div>
+    </div>
+    <div class="para-box">🔁 <div><strong>Paraphrase:</strong> "a major change" ↔ "a <em>significant</em> shift" — major / considerable / substantial / notable 묶음. 반의어: negligible / marginal</div></div>
+  </div>
+
+  <!-- sustain -->
+  <div class="word-card">
+    <div class="wc-hd"><div><div class="wc-word">sustain</div><div class="wc-pron">/səˈsteɪn/</div></div><div class="wc-right"><div class="pos-tag pt-v">verb</div><div class="awl-lbl">AWL Sublist 5</div></div></div>
+    <div class="wc-meaning"><div class="meaning-ko">유지하다, 지속시키다</div><div class="meaning-en">① to keep at the same level ② to experience damage (formal)</div></div>
+    <div class="wc-examples">
+      <div class="ex-label">예문</div>
+      <div class="ex-item ielts"><div class="ex-ctx">🎯 IELTS 유형</div><div class="ex-sentence">Critics argue that current agricultural practices cannot be <em>sustained</em> without causing irreversible damage to soil quality.</div><div class="ex-tr">현재의 농업 방식은 토양 품질에 돌이킬 수 없는 피해를 주지 않고는 지속될 수 없다.</div></div>
+      <div class="ex-item"><div class="ex-ctx">파생어</div><div class="ex-sentence">The government pledged to transition to a fully <em>sustainable</em> energy grid by 2040.</div><div class="ex-tr">정부는 2040년까지 완전히 지속 가능한 에너지 그리드로 전환할 것을 약속했다.</div></div>
+    </div>
+    <div class="para-box">🔁 <div><strong>Paraphrase:</strong> maintain / keep up / uphold ↔ <em>sustain</em>. 파생어 sustainability / sustained / unsustainable 묶음 암기</div></div>
+  </div>
+
+  <!-- comprise -->
+  <div class="word-card">
+    <div class="wc-hd"><div><div class="wc-word">comprise</div><div class="wc-pron">/kəmˈpraɪz/</div></div><div class="wc-right"><div class="pos-tag pt-v">verb</div><div class="awl-lbl">AWL Sublist 7</div></div></div>
+    <div class="wc-meaning"><div class="meaning-ko">~로 구성되다, ~을 포함하다</div><div class="meaning-en">to consist of particular parts or members</div></div>
+    <div class="wc-examples">
+      <div class="ex-label">예문</div>
+      <div class="ex-item ielts"><div class="ex-ctx">🎯 IELTS 유형</div><div class="ex-sentence">The research team <em>comprises</em> experts from twelve different countries, reflecting the international scope of the project.</div><div class="ex-tr">연구팀은 12개국의 전문가들로 구성되어 있다.</div></div>
+      <div class="ex-item"><div class="ex-ctx">비율 표현</div><div class="ex-sentence">Women <em>comprise</em> approximately 34 percent of the total workforce in the engineering sector.</div><div class="ex-tr">여성은 엔지니어링 분야 전체 인력의 약 34%를 차지한다.</div></div>
+    </div>
+    <div class="para-box">🔁 <div><strong>Paraphrase:</strong> consists of / is made up of / encompasses ↔ <em>comprises</em>. 비율 데이터 문제에서 자주 paraphrase됨</div></div>
+  </div>
+
+  <!-- nonetheless -->
+  <div class="word-card">
+    <div class="wc-hd"><div><div class="wc-word">nonetheless</div><div class="wc-pron">/ˌnʌnðəˈles/</div></div><div class="wc-right"><div class="pos-tag pt-adv">adv</div><div class="awl-lbl">AWL Sublist 10</div></div></div>
+    <div class="wc-meaning"><div class="meaning-ko">그럼에도 불구하고</div><div class="meaning-en">despite what has just been said; introduces a contrasting statement</div></div>
+    <div class="wc-examples">
+      <div class="ex-label">예문</div>
+      <div class="ex-item ielts"><div class="ex-ctx">🎯 IELTS 유형</div><div class="ex-sentence">The technology remains prohibitively expensive; <em>nonetheless</em>, several pilot programmes have demonstrated its potential effectiveness.</div><div class="ex-tr">이 기술은 여전히 비싸다. 그럼에도 불구하고, 여러 시범 프로그램이 잠재적 효과를 입증했다.</div></div>
+      <div class="ex-item"><div class="ex-ctx">논리 흐름</div><div class="ex-sentence">The initial trials yielded inconclusive results; <em>nonetheless</em>, the research team chose to proceed.</div><div class="ex-tr">초기 시험은 결론을 내지 못했다. 그럼에도 연구팀은 진행하기로 했다.</div></div>
+    </div>
+    <div class="para-box">🔁 <div><strong>Paraphrase:</strong> however / nevertheless / even so / yet ↔ <em>nonetheless</em>. T/F/NG 역접 함정에 자주 등장</div></div>
+  </div>
+
+  <div class="sec-row"><div class="sec-lbl">퀴즈 · 5문제</div><div class="sec-line"></div></div>
+
+  <div class="vq-card" id="vqc1"><div class="vq-body"><div class="vq-num">Q 01 / 05</div><div class="vq-stem">The survey data ________ that urban residents are more likely to use public transport than their rural counterparts.</div><div class="vq-opts"><button class="vq-opt" onclick="vAns(1,'A')"><span class="opt-l">A</span>sustain</button><button class="vq-opt" onclick="vAns(1,'B')"><span class="opt-l">B</span>indicate</button><button class="vq-opt" onclick="vAns(1,'C')"><span class="opt-l">C</span>comprise</button><button class="vq-opt" onclick="vAns(1,'D')"><span class="opt-l">D</span>nonetheless</button></div></div><div class="vq-fb" id="vfb1"><div class="fb-res" id="vfr1"></div>정답: <strong>indicate</strong> — 데이터가 무언가를 "나타낸다/시사한다"는 맥락. suggest / show / reveal과 교체 가능.</div></div>
+  <div class="vq-card" id="vqc2"><div class="vq-body"><div class="vq-num">Q 02 / 05</div><div class="vq-stem">The proposed infrastructure project will have a ________ effect on the region's economic development over the next two decades.</div><div class="vq-opts"><button class="vq-opt" onclick="vAns(2,'A')"><span class="opt-l">A</span>significant</button><button class="vq-opt" onclick="vAns(2,'B')"><span class="opt-l">B</span>nonetheless</button><button class="vq-opt" onclick="vAns(2,'C')"><span class="opt-l">C</span>sustained</button><button class="vq-opt" onclick="vAns(2,'D')"><span class="opt-l">D</span>indicated</button></div></div><div class="vq-fb" id="vfb2"><div class="fb-res" id="vfr2"></div>정답: <strong>significant</strong> — "effect on development"를 수식하는 형용사 자리. considerable / substantial / major로 paraphrase.</div></div>
+  <div class="vq-card" id="vqc3"><div class="vq-body"><div class="vq-num">Q 03 / 05</div><div class="vq-stem">The ecosystem cannot ________ current levels of tourism without experiencing long-term ecological degradation.</div><div class="vq-opts"><button class="vq-opt" onclick="vAns(3,'A')"><span class="opt-l">A</span>indicate</button><button class="vq-opt" onclick="vAns(3,'B')"><span class="opt-l">B</span>comprise</button><button class="vq-opt" onclick="vAns(3,'C')"><span class="opt-l">C</span>sustain</button><button class="vq-opt" onclick="vAns(3,'D')"><span class="opt-l">D</span>significant</button></div></div><div class="vq-fb" id="vfb3"><div class="fb-res" id="vfr3"></div>정답: <strong>sustain</strong> — "현재 수준을 유지하다". maintain / support / keep up으로 paraphrase.</div></div>
+  <div class="vq-card" id="vqc4"><div class="vq-body"><div class="vq-num">Q 04 / 05</div><div class="vq-stem">The working group ________ representatives from government agencies, non-profit organisations, and the private sector.</div><div class="vq-opts"><button class="vq-opt" onclick="vAns(4,'A')"><span class="opt-l">A</span>indicates</button><button class="vq-opt" onclick="vAns(4,'B')"><span class="opt-l">B</span>nonetheless</button><button class="vq-opt" onclick="vAns(4,'C')"><span class="opt-l">C</span>sustains</button><button class="vq-opt" onclick="vAns(4,'D')"><span class="opt-l">D</span>comprises</button></div></div><div class="vq-fb" id="vfb4"><div class="fb-res" id="vfr4"></div>정답: <strong>comprises</strong> — "A is made up of B". consists of / is composed of로 paraphrase.</div></div>
+  <div class="vq-card" id="vqc5"><div class="vq-body"><div class="vq-num">Q 05 / 05</div><div class="vq-stem">The study acknowledges several methodological limitations; ________, its core findings are considered reliable by the scientific community.</div><div class="vq-opts"><button class="vq-opt" onclick="vAns(5,'A')"><span class="opt-l">A</span>nonetheless</button><button class="vq-opt" onclick="vAns(5,'B')"><span class="opt-l">B</span>significantly</button><button class="vq-opt" onclick="vAns(5,'C')"><span class="opt-l">C</span>comprised</button><button class="vq-opt" onclick="vAns(5,'D')"><span class="opt-l">D</span>indicated</button></div></div><div class="vq-fb" id="vfb5"><div class="fb-res" id="vfr5"></div>정답: <strong>nonetheless</strong> — 세미콜론 뒤 역접 연결. however / nevertheless / even so와 동일.</div></div>
+
+  <div class="score-banner" id="vScore"><div class="score-big" style="color:var(--vocab)" id="vScNum">–</div><div class="score-of">5문제 중 정답</div><div class="score-msg" id="vScMsg"></div></div>
+  <div class="tip-box" style="border-top-color:var(--vocab)"><div class="tip-title" style="color:var(--vocab)">📌 학습 전략</div><div class="tip-text"><strong>단어 암기보다 paraphrase 감각이 핵심입니다.</strong> IELTS는 지문 단어를 문제에서 거의 항상 바꿔 씁니다. 동의어 묶음을 통째로 익혀두세요.<br><br>이동 중 루틴: <strong>단어 카드 3분 → 예문 5분 → 퀴즈 2분</strong></div></div>
+</div>
+</div>
+
+
+<!-- ══════════ WRITING TASK 2 ══════════ -->
+<div class="page" id="page-wt2">
+<div class="container">
+  <div class="sec-row" style="margin-top:20px;"><div class="sec-lbl">Step 1 · 전체 구조</div><div class="sec-line"></div></div>
+
+  <div class="card">
+    <div class="card-hd"><div class="card-hd-title">Task 2 Essay Blueprint</div><div class="chip" style="color:var(--r);border-color:var(--r-bdr);background:var(--r-bg);">Opinion Essay 기준</div></div>
+    <div class="card-body">
+      <div class="blueprint">
+        <div class="bp-row"><div class="bp-bar" style="background:var(--wt2)"></div><div class="bp-content"><div class="bp-label" style="color:var(--wt2)">① Introduction</div><div class="bp-desc">질문 paraphrase → 자신의 입장 명확히 제시</div><div class="bp-chips"><div class="bp-chip">2–3 sentences</div><div class="bp-chip">~50 words</div><div class="bp-chip">입장은 마지막 문장에</div></div></div></div>
+        <div class="bp-arrow">↓</div>
+        <div class="bp-row"><div class="bp-bar" style="background:var(--vocab)"></div><div class="bp-content"><div class="bp-label" style="color:var(--vocab)">② Body 1 — PEEL</div><div class="bp-desc">핵심 주장 → 이유 → 구체적 예시 → 마무리</div><div class="bp-chips"><div class="bp-chip">4–5 sentences</div><div class="bp-chip">~90 words</div><div class="bp-chip">예시는 구체적으로</div></div></div></div>
+        <div class="bp-arrow">↓</div>
+        <div class="bp-row"><div class="bp-bar" style="background:var(--home)"></div><div class="bp-content"><div class="bp-label" style="color:var(--home)">③ Body 2 — Concession</div><div class="bp-desc">반론 인정 후 논리적 재반박 → PEEL 반복</div><div class="bp-chips"><div class="bp-chip">4–5 sentences</div><div class="bp-chip">~90 words</div><div class="bp-chip">Band 7 필수 요소</div></div></div></div>
+        <div class="bp-arrow">↓</div>
+        <div class="bp-row"><div class="bp-bar" style="background:var(--r)"></div><div class="bp-content"><div class="bp-label" style="color:var(--r)">④ Conclusion</div><div class="bp-desc">핵심 논점 재진술 (paraphrase) → 입장 재확인</div><div class="bp-chips"><div class="bp-chip">2–3 sentences</div><div class="bp-chip">~40 words</div><div class="bp-chip">새 정보 금지</div></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-row"><div class="sec-lbl">Step 2 · 단락별 심화</div><div class="sec-line"></div></div>
+
+  <div class="para-card">
+    <div class="pc-hd"><div class="pc-title" style="color:var(--wt2)">① Introduction</div><div class="chip" style="color:var(--wt2);border-color:var(--wt2-bdr);background:var(--wt2-bg);">50 words</div></div>
+    <div class="pc-body">
+      <div class="pc-sec">📐 템플릿</div>
+      <div class="tpl-box"><span class="tbl">Topic paraphrase</span>. While some argue that <span class="tbl">opposing view</span>, I firmly believe that <span class="tbl">your position</span> for several reasons.</div>
+      <div class="pc-sec" style="margin-top:14px">⚖️ Band 5 vs Band 7</div>
+      <div class="band-cmp">
+        <div class="bc-box bc-b5"><div class="bc-lbl">✕ Band 5</div><div class="bc-text">Nowadays many people think technology is good. I agree with this opinion.</div></div>
+        <div class="bc-box bc-b7"><div class="bc-lbl">✓ Band 7</div><div class="bc-text">Technological advancement has fundamentally altered the way societies function. While some contend this shift has been detrimental, I firmly believe the benefits outweigh the drawbacks.</div></div>
+      </div>
+      <div class="pc-sec" style="margin-top:14px">🔑 Do / Don't</div>
+      <div class="do-dont"><div class="dd-do"><div class="dd-lbl">✓ Do</div><div class="dd-item">질문 단어를 paraphrase로 바꾸기</div><div class="dd-item">입장을 마지막 문장에 명확히</div></div><div class="dd-dont"><div class="dd-lbl">✕ Don't</div><div class="dd-item">질문 첫 문장 그대로 복사</div><div class="dd-item">"In this essay I will discuss…" 나열</div></div></div>
+    </div>
+  </div>
+
+  <div class="para-card">
+    <div class="pc-hd"><div class="pc-title" style="color:var(--vocab)">② Body — PEEL 구조</div><div class="chip" style="color:var(--vocab);border-color:var(--vocab-bdr);background:var(--vocab-bg);">~90 words</div></div>
+    <div class="pc-body">
+      <div class="pc-sec">📐 PEEL</div>
+      <div class="tpl-box"><span style="color:var(--vocab);font-weight:500">P</span>oint &nbsp;→ <span class="tbl">핵심 주장 1문장</span><br><span style="color:var(--home);font-weight:500">E</span>xplain → <span class="tbl">이유 설명 1–2문장</span><br><span style="color:var(--wt2);font-weight:500">E</span>xample → <span class="tbl">구체적 사례 1–2문장</span><br><span style="color:var(--r);font-weight:500">L</span>ink &nbsp;&nbsp;→ <span class="tbl">주제 재연결 (선택)</span></div>
+      <div class="pc-sec" style="margin-top:14px">⚖️ Band 5 vs Band 7</div>
+      <div class="band-cmp">
+        <div class="bc-box bc-b5"><div class="bc-lbl">✕ Band 5 — 추상적</div><div class="bc-text">For example, technology helps many people in their daily life.</div></div>
+        <div class="bc-box bc-b7"><div class="bc-lbl">✓ Band 7 — 구체적</div><div class="bc-text">For instance, telemedicine adoption during the 2020 pandemic enabled patients in remote areas to consult specialists without travelling.</div></div>
+      </div>
+      <div class="pc-sec" style="margin-top:14px">🔗 Body 시작 연결어</div>
+      <div class="conn-grid"><div class="conn">To begin with,</div><div class="conn">One key reason is that</div><div class="conn">First and foremost,</div><div class="conn">This is because</div><div class="conn">For instance,</div><div class="conn">A clear example of this is</div></div>
+    </div>
+  </div>
+
+  <div class="para-card">
+    <div class="pc-hd"><div class="pc-title" style="color:var(--home)">③ Body 2 — Concession &amp; Rebuttal</div><div class="chip" style="color:var(--home);border-color:var(--home-bdr);background:var(--home-bg);">Band 7 필수</div></div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;">Band 6 이하는 자기 주장만 반복합니다. Band 7+은 <strong style="color:var(--home)">반대 입장을 인정한 뒤 논리적으로 넘어서는</strong> 구조가 필수입니다.</div>
+      <div class="pc-sec">📐 Concession 템플릿</div>
+      <div class="tpl-box">Admittedly, <span class="tbl">반론 인정</span>. However, <span class="tbl">반박 + 이유</span>. In fact, <span class="tbl">강화 증거 또는 예시</span>.</div>
+      <div class="pc-sec" style="margin-top:14px">⚖️ Band 5 vs Band 7</div>
+      <div class="band-cmp">
+        <div class="bc-box bc-b5"><div class="bc-lbl">✕ Band 5 — 반론 무시</div><div class="bc-text">Also, technology creates jobs. Many companies need engineers. This is another benefit.</div></div>
+        <div class="bc-box bc-b7"><div class="bc-lbl">✓ Band 7 — 반론 → 재반박</div><div class="bc-text">Admittedly, automation displaces certain jobs. However, technological transitions have historically generated more employment than they eliminated.</div></div>
+      </div>
+      <div class="pc-sec" style="margin-top:14px">🔗 Concession 연결어</div>
+      <div class="conn-grid"><div class="conn">Admittedly,</div><div class="conn">It is true that</div><div class="conn">While it may be argued that</div><div class="conn">However,</div><div class="conn">Nevertheless,</div><div class="conn">On closer examination,</div></div>
+    </div>
+  </div>
+
+  <div class="para-card">
+    <div class="pc-hd"><div class="pc-title" style="color:var(--r)">④ Conclusion</div><div class="chip" style="color:var(--r);border-color:var(--r-bdr);background:var(--r-bg);">~40 words</div></div>
+    <div class="pc-body">
+      <div class="pc-sec">📐 템플릿</div>
+      <div class="tpl-box">In conclusion, <span class="tbl">핵심 논점 paraphrase 요약</span>. For this reason, I maintain that <span class="tbl">입장 재확인</span>.</div>
+      <div class="pc-sec" style="margin-top:14px">🔑 Do / Don't</div>
+      <div class="do-dont"><div class="dd-do"><div class="dd-lbl">✓ Do</div><div class="dd-item">서론·본론을 paraphrase로 압축</div><div class="dd-item">"In conclusion"으로 명확히 시작</div></div><div class="dd-dont"><div class="dd-lbl">✕ Don't</div><div class="dd-item">새로운 주장·예시 추가</div><div class="dd-item">본론 문장 그대로 복붙</div></div></div>
+    </div>
+  </div>
+
+  <div class="sec-row"><div class="sec-lbl">Step 3 · 확인 퀴즈</div><div class="sec-line"></div></div>
+
+  <div class="wq-card" id="wqc1"><div class="wq-body"><div class="wq-num">Q 01 / 04</div><div class="wq-stem">Band 7을 받기 위해 반드시 보여줘야 하는 구조적 요소는?</div><div class="wq-opts"><button class="wq-opt" onclick="wAns(1,'A')"><span class="opt-l">A</span>서론에서 질문을 그대로 인용하는 것</button><button class="wq-opt" onclick="wAns(1,'B')"><span class="opt-l">B</span>반론을 인정한 뒤 논리적으로 재반박하는 Concession 구조</button><button class="wq-opt" onclick="wAns(1,'C')"><span class="opt-l">C</span>결론에서 새로운 통계 자료를 추가하는 것</button><button class="wq-opt" onclick="wAns(1,'D')"><span class="opt-l">D</span>본론을 3개 이상의 단락으로 나누는 것</button></div></div><div class="wq-fb" id="wfb1"><div class="fb-res" id="wfr1"></div>Band 6 이하는 자기 주장만 반복합니다. Band 7+은 <strong>Concession — 반론 인정 후 재반박</strong>이 필수입니다. C(결론에 새 정보)는 감점 요인입니다.</div></div>
+  <div class="wq-card" id="wqc2"><div class="wq-body"><div class="wq-num">Q 02 / 04</div><div class="wq-stem">PEEL 구조에서 Band 7 기준의 Example은?</div><div class="wq-opts"><button class="wq-opt" onclick="wAns(2,'A')"><span class="opt-l">A</span>"많은 사람들" 같은 일반적 표현으로 공감대를 형성한다</button><button class="wq-opt" onclick="wAns(2,'B')"><span class="opt-l">B</span>예시 없이 이유만 충분히 설명한다</button><button class="wq-opt" onclick="wAns(2,'C')"><span class="opt-l">C</span>구체적인 사례(사건·기관·데이터)로 주장을 뒷받침한다</button><button class="wq-opt" onclick="wAns(2,'D')"><span class="opt-l">D</span>개인적 경험담을 중심으로 서술한다</button></div></div><div class="wq-fb" id="wfb2"><div class="fb-res" id="wfr2"></div>Band 7 예시는 <strong>구체적 맥락·시기·대상</strong>이 있어야 설득력이 생깁니다.</div></div>
+  <div class="wq-card" id="wqc3"><div class="wq-body"><div class="wq-num">Q 03 / 04</div><div class="wq-stem">결론에서 절대 해서는 안 되는 것은?</div><div class="wq-opts"><button class="wq-opt" onclick="wAns(3,'A')"><span class="opt-l">A</span>서론·본론의 핵심을 paraphrase로 요약</button><button class="wq-opt" onclick="wAns(3,'B')"><span class="opt-l">B</span>"In conclusion,"으로 시작</button><button class="wq-opt" onclick="wAns(3,'C')"><span class="opt-l">C</span>이전에 언급하지 않은 새로운 주장·통계 추가</button><button class="wq-opt" onclick="wAns(3,'D')"><span class="opt-l">D</span>자신의 입장 마지막으로 재확인</button></div></div><div class="wq-fb" id="wfb3"><div class="fb-res" id="wfr3"></div>결론은 <strong>새로운 정보를 도입하는 곳이 아닙니다.</strong> 역할은 오직 "정리 + 입장 재확인"입니다.</div></div>
+  <div class="wq-card" id="wqc4"><div class="wq-body"><div class="wq-num">Q 04 / 04</div><div class="wq-stem">다음 서론 중 Band 7에 가장 가까운 것은?</div><div class="wq-opts"><button class="wq-opt" onclick="wAns(4,'A')"><span class="opt-l">A</span>"Today I will discuss whether technology is good or bad."</button><button class="wq-opt" onclick="wAns(4,'B')"><span class="opt-l">B</span>"Technology is very important. I think it is good for society."</button><button class="wq-opt" onclick="wAns(4,'C')"><span class="opt-l">C</span>"The rapid proliferation of digital technology has reshaped contemporary societies. While critics warn of its social costs, I firmly believe that its long-term benefits are considerable."</button><button class="wq-opt" onclick="wAns(4,'D')"><span class="opt-l">D</span>"Some people say technology is good. Others say it is harmful. This essay will look at both sides."</button></div></div><div class="wq-fb" id="wfb4"><div class="fb-res" id="wfr4"></div>C: ① 질문 paraphrase, ② 반대 입장 한 문장, ③ 자신의 입장 명확히 — Band 7 서론의 세 가지 조건 충족.</div></div>
+
+  <div class="score-banner" id="wScore"><div class="score-big" style="color:var(--wt2)" id="wScNum">–</div><div class="score-of">4문제 중 정답</div><div class="score-msg" id="wScMsg"></div></div>
+  <div class="tip-box" style="border-top-color:var(--wt2)"><div class="tip-title" style="color:var(--wt2)">📌 핵심 요약</div><div class="tip-text"><strong>구조를 외우면 시간이 남습니다.</strong> 4단락 구조를 내재화하면 시험장에서 첫 5분을 아이디어 구성에만 쓸 수 있습니다.<br><br><strong>다음 세션:</strong> Task 2 유형별 전략 — Opinion / Discussion / Problem-Solution 각각 구조 조정법</div></div>
+</div>
+</div>
+
+<!-- ══════════ READING 전략 ══════════ -->
+<div class="page" id="page-reading">
+<div class="container">
+
+  <!-- ── 인트로 배너 ── -->
+  <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:12px;padding:18px 18px 16px;margin-top:20px;margin-bottom:4px;position:relative;overflow:hidden;">
+    <div style="position:absolute;right:-6px;bottom:-14px;font-family:'Playfair Display',serif;font-size:80px;font-weight:700;color:rgba(188,51,24,.06);line-height:1;pointer-events:none;">READ</div>
+    <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--r);margin-bottom:6px;">Reading 전략 · Session 01</div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:6px;">유형별 함정 & 풀이법</div>
+    <div style="font-size:13px;color:var(--ink2);line-height:1.7;">IELTS Reading은 <strong style="color:var(--ink)">10가지 유형</strong>이 반복 출제됩니다. 각 유형의 함정 패턴을 알면 60분이 충분해집니다.</div>
+  </div>
+
+  <!-- ── 시간 전략 요약 ── -->
+  <div class="sec-row"><div class="sec-lbl">60분 시간 배분 원칙</div><div class="sec-line"></div></div>
+  <div class="card"><div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+    <div style="display:flex;gap:12px;align-items:flex-start;">
+      <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:7px;padding:8px 12px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--r);min-width:52px;text-align:center;flex-shrink:0;">P1<br><span style="font-size:16px;font-family:'Playfair Display',serif;font-weight:700;">18분</span></div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.65;padding-top:2px;"><strong style="color:var(--ink)">Passage 1 — 쉬움.</strong> 빠르게 처리해서 시간 여유를 만들어야 합니다. 13문제, 문제당 최대 1분 20초.</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;">
+      <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:7px;padding:8px 12px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:#b05038;min-width:52px;text-align:center;flex-shrink:0;">P2<br><span style="font-size:16px;font-family:'Playfair Display',serif;font-weight:700;">20분</span></div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.65;padding-top:2px;"><strong style="color:var(--ink)">Passage 2 — 중간.</strong> 여기서 흔들리면 P3까지 영향. 13문제. 모르는 문제는 표시 후 넘어가기.</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;">
+      <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:7px;padding:8px 12px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:#8c2810;min-width:52px;text-align:center;flex-shrink:0;">P3<br><span style="font-size:16px;font-family:'Playfair Display',serif;font-weight:700;">22분</span></div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.65;padding-top:2px;"><strong style="color:var(--ink)">Passage 3 — 어려움.</strong> 학술 주제. 14문제. Matching Headings와 T/F/NG가 집중 출제. 처음부터 정독 금지.</div>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--muted);line-height:1.6;">💡 <strong style="color:var(--ink2)">황금 법칙:</strong> 한 문제에 2분 이상 쓰지 마세요. 찍고 넘어간 후 시간이 남으면 돌아오는 게 이득입니다.</div>
+  </div></div>
+
+  <!-- ── 유형별 심화 ── -->
+  <div class="sec-row"><div class="sec-lbl">핵심 유형 심화</div><div class="sec-line"></div></div>
+
+  <!-- T/F/NG -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 01</div>
+        <div class="pc-title" style="color:var(--r);">True / False / Not Given</div>
+      </div>
+      <div class="chip" style="color:var(--r);border-color:var(--r-bdr);background:var(--r-bg);font-size:9px;">가장 빈출</div>
+    </div>
+    <div class="pc-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+        <div style="background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:10px 12px;text-align:center;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--w);margin-bottom:4px;">TRUE</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.55;">지문 내용과 <strong style="color:var(--w)">일치</strong></div>
+        </div>
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:8px;padding:10px 12px;text-align:center;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:4px;">FALSE</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.55;">지문과 <strong style="color:var(--r)">반대</strong> 또는 모순</div>
+        </div>
+        <div style="background:var(--l-bg);border:1px solid var(--l-bdr);border-radius:8px;padding:10px 12px;text-align:center;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--l);margin-bottom:4px;">NOT GIVEN</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.55;">언급 <strong style="color:var(--l)">없음</strong></div>
+        </div>
+      </div>
+      <div class="pc-sec">⚠️ 가장 흔한 함정 3가지</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-left:3px solid var(--r);border-radius:0 7px 7px 0;padding:10px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:3px;">함정 #1 — NG를 FALSE로 착각</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;">정보가 없다고 FALSE가 아닙니다. <strong style="color:var(--ink)">지문에 반박 증거가 있어야</strong> FALSE입니다. "언급 안 됨" → NG</div>
+        </div>
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-left:3px solid var(--r);border-radius:0 7px 7px 0;padding:10px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:3px;">함정 #2 — 부분 paraphrase에 속기</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;">문제 키워드가 지문에 있어도 나머지 내용이 다르면 FALSE. <strong style="color:var(--ink)">전체 진술을 확인</strong>하세요.</div>
+        </div>
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-left:3px solid var(--r);border-radius:0 7px 7px 0;padding:10px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:3px;">함정 #3 — 역접 연결어 놓치기</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">however / nonetheless / yet / although</strong>가 있으면 그 뒤가 실제 주장입니다. 앞부분만 보면 반대 답이 나옵니다.</div>
+        </div>
+      </div>
+      <div class="pc-sec" style="margin-top:14px;">✅ Band 7 풀이 순서</div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'DM Mono',monospace;font-size:12px;line-height:2;color:var(--ink2);">
+        1. 문제 키워드 밑줄 → 지문에서 해당 위치 Scan<br>
+        2. 일치하면 TRUE / 반박이면 FALSE / 없으면 NG<br>
+        3. 확신 없으면 NG를 선택 (TRUE/FALSE 혼동보다 안전)
+      </div>
+    </div>
+  </div>
+
+  <!-- Y/N/NG -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 02</div>
+        <div class="pc-title" style="color:var(--r);">Yes / No / Not Given</div>
+      </div>
+      <div class="chip" style="color:var(--vocab);border-color:var(--vocab-bdr);background:var(--vocab-bg);font-size:9px;">T/F/NG와 혼동 주의</div>
+    </div>
+    <div class="pc-body">
+      <div style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--ink2);line-height:1.75;margin-bottom:12px;">
+        T/F/NG: <strong style="color:var(--ink)">사실 정보</strong>와 일치하는지<br>
+        Y/N/NG: <strong style="color:var(--vocab)">필자의 의견·주장·주관</strong>과 일치하는지<br><br>
+        시험에서 둘이 한 지문에 같이 나오는 경우는 없습니다. 문제 지시문을 반드시 확인!
+      </div>
+      <div class="pc-sec">핵심 구별법</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:6px;">T/F/NG에 나오는 표현</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.7;">The study found that…<br>Research shows that…<br>In 2020, X increased…</div>
+        </div>
+        <div style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--vocab);margin-bottom:6px;">Y/N/NG에 나오는 표현</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.7;">The author believes…<br>It is argued that…<br>Critics suggest…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matching Headings -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 03</div>
+        <div class="pc-title" style="color:var(--r);">Matching Headings</div>
+      </div>
+      <div class="chip" style="color:var(--home);border-color:var(--home-bdr);background:var(--home-bg);font-size:9px;">시간 소모 1위</div>
+    </div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;">
+        각 단락에 알맞은 소제목을 보기 목록에서 선택하는 유형. 보기가 10개 이상이고 유사한 선택지가 많아서 시간이 가장 많이 걸립니다.
+      </div>
+      <div class="pc-sec">⚡ 고속 풀이 전략</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--w);flex-shrink:0;line-height:1.3;">①</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">단락 첫 1~2문장만 읽기.</strong> 대부분의 단락 주제는 첫 문장에 있습니다. 전체 정독은 시간 낭비.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--w);flex-shrink:0;line-height:1.3;">②</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">마지막 문장도 확인.</strong> 첫 문장이 도입이고 마지막 문장에 핵심이 있는 경우가 있습니다.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--w);flex-shrink:0;line-height:1.3;">③</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">확실한 것 먼저, 애매한 것 나중.</strong> 쉬운 단락을 먼저 맞추면 보기 후보가 줄어들어 나머지가 쉬워집니다.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--r);flex-shrink:0;line-height:1.3;">✕</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--r)">보기 단어가 단락에 그대로 있다고 선택하지 마세요.</strong> 함정입니다. 핵심 의미(paraphrase)가 일치해야 합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sentence Completion -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 04</div>
+        <div class="pc-title" style="color:var(--r);">Sentence / Summary Completion</div>
+      </div>
+      <div class="chip" style="color:var(--l);border-color:var(--l-bdr);background:var(--l-bg);font-size:9px;">단어 수 제한 엄수</div>
+    </div>
+    <div class="pc-body">
+      <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--r);line-height:1.75;margin-bottom:12px;">
+        ⚠️ <strong>"NO MORE THAN TWO WORDS"</strong> 등 단어 수 제한이 있습니다. 초과하면 무조건 오답. 관사(a/the)도 단어 수에 포함됩니다.
+      </div>
+      <div class="pc-sec">풀이 원칙</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:var(--l-bg);border:1px solid var(--l-bdr);border-left:3px solid var(--l);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;">
+          <strong style="color:var(--l);">답은 반드시 지문에서 그대로 가져옵니다.</strong> 철자를 바꾸거나 paraphrase 하면 오답입니다. 지문의 단어를 정확히 복사.
+        </div>
+        <div style="background:var(--l-bg);border:1px solid var(--l-bdr);border-left:3px solid var(--l);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;">
+          <strong style="color:var(--l);">문제 앞뒤 단어(context)로 위치 파악.</strong> 빈칸 앞뒤 단어를 지문에서 Scan → 그 주변 1~2단어가 정답입니다.
+        </div>
+        <div style="background:var(--l-bg);border:1px solid var(--l-bdr);border-left:3px solid var(--l);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;">
+          <strong style="color:var(--l);">문법 형태 확인.</strong> 빈칸 앞이 관사면 명사, 동사 앞이면 부사 등 품사를 보고 범위를 좁히세요.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matching Information -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 05</div>
+        <div class="pc-title" style="color:var(--r);">Matching Information / Features</div>
+      </div>
+    </div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;margin-bottom:12px;">
+        <strong>Matching Information</strong>: 특정 정보·예시가 어느 단락에 있는지 찾기<br>
+        <strong>Matching Features</strong>: 인물·날짜·이론과 특징을 연결하기 (e.g. 어떤 과학자가 어떤 주장을)
+      </div>
+      <div class="pc-sec">풀이 전략</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);flex-shrink:0;width:18px;text-align:center;padding-top:1px;">①</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">고유명사·숫자부터 Scan.</strong> 사람 이름, 연도, 퍼센트는 눈에 바로 들어오므로 위치 파악이 빠릅니다.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);flex-shrink:0;width:18px;text-align:center;padding-top:1px;">②</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">같은 단락이 여러 번 정답이 될 수 있습니다.</strong> 한 단락을 이미 썼다고 다시 사용 못한다고 착각하지 마세요.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);flex-shrink:0;width:18px;text-align:center;padding-top:1px;">③</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">Matching Features는 보기 리스트를 먼저 암기.</strong> 이름 목록(A=Smith, B=Jones 등)을 머릿속에 넣고 지문을 읽으면 훨씬 빠릅니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 유형 06: Multiple Choice -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 06</div>
+        <div class="pc-title" style="color:var(--r);">Multiple Choice (MCQ)</div>
+      </div>
+      <div class="chip" style="color:var(--l);border-color:var(--l-bdr);background:var(--l-bg);font-size:9px;">소거법 필수</div>
+    </div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;">보기 4개 중 1개를 고르는 단답형과, 보기 5–7개 중 2–3개를 고르는 <strong style="color:var(--ink)">다중선택형</strong> 두 가지가 있습니다. 다중선택은 모두 맞아야 점수를 받습니다.</div>
+      <div class="pc-sec">소거법 4단계</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:10px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--w);flex-shrink:0;">①</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">문제 키워드로 지문 위치 먼저 Scan.</strong> 고유명사·숫자로 해당 단락을 빠르게 찾습니다.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:10px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--w);flex-shrink:0;">②</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">지문에 없는 내용은 즉시 소거.</strong> 언급조차 없으면 100% 오답입니다.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:10px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--w);flex-shrink:0;">③</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">지문에 있어도 질문과 무관하면 소거.</strong> 맥락 연결이 핵심입니다.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:8px;padding:10px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--r);flex-shrink:0;">✕</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--r)">보기 단어가 지문에 그대로 나온다고 정답이 아닙니다.</strong> 지문 단어를 그대로 쓴 오답 보기가 가장 흔한 함정입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 유형 07: Matching Sentence Endings -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 07</div>
+        <div class="pc-title" style="color:var(--r);">Matching Sentence Endings</div>
+      </div>
+    </div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;">문장 앞부분(stems)과 뒷부분(endings)을 연결합니다. stems는 지문 순서대로, endings는 섞여 있고 남는 보기가 있습니다.</div>
+      <div class="pc-sec">풀이 전략</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:var(--l-bg);border:1px solid var(--l-bdr);border-left:3px solid var(--l);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--l)">stems는 지문 순서 = 위에서 아래로.</strong> 첫 번째 stem을 찾으면 두 번째는 그 아래에 있습니다.</div>
+        <div style="background:var(--l-bg);border:1px solid var(--l-bdr);border-left:3px solid var(--l);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--l)">문법적으로도 연결돼야 합니다.</strong> 주어-동사 일치, 시제, 단수/복수 확인으로 후보를 좁히세요.</div>
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-left:3px solid var(--r);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--r)">endings를 모두 쓰지 않아도 됩니다.</strong> endings 개수가 stems보다 많은 게 정상입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 유형 08: Short Answer Questions -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 08</div>
+        <div class="pc-title" style="color:var(--r);">Short Answer Questions</div>
+      </div>
+      <div class="chip" style="color:var(--r);border-color:var(--r-bdr);background:var(--r-bg);font-size:9px;">단어 수 제한 엄수</div>
+    </div>
+    <div class="pc-body">
+      <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--r);line-height:1.75;margin-bottom:12px;">⚠️ "NO MORE THAN THREE WORDS AND/OR A NUMBER" 등 단어 수 제한 — <strong>지문의 단어를 그대로</strong> 복사합니다.</div>
+      <div class="pc-sec">의문사별 팁</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:5px;">What / Which</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.6;">명사(구) 답변. 지문에서 해당 대상을 가리키는 명사를 그대로 가져옵니다.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:5px;">When / Where</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.6;">날짜·장소·시간 표현. 숫자도 단어 수에 포함됩니다.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:5px;">Why</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.6;">이유절 또는 명사구. because 는 단어 수에 포함되므로 필요 없으면 생략.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:5px;">How + 형용사/부사</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.6;">"How long → 기간", "How many → 숫자" 등 의문사 뒤 맥락으로 답 유형 예측 가능.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 유형 09: Table / Flow Chart / Diagram Completion -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 09</div>
+        <div class="pc-title" style="color:var(--r);">Table / Flow Chart / Diagram Completion</div>
+      </div>
+    </div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;">표(Table), 흐름도(Flow Chart), 도식(Diagram)의 빈칸을 채웁니다. 단어 수 제한 동일 적용, 지문 단어 그대로 복사.</div>
+      <div class="pc-sec">유형별 탐색 전략</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-size:18px;flex-shrink:0;">📊</div>
+          <div><div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px;">Table</div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;">열(column) 머리글 = 지문의 범주. 행(row)별로 같은 범주 정보를 Scan합니다.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-size:18px;flex-shrink:0;">🔄</div>
+          <div><div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px;">Flow Chart</div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;">화살표 순서 = 지문 순서. 단계별로 아래로 내려가며 답을 찾습니다.</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-size:18px;flex-shrink:0;">🗺️</div>
+          <div><div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px;">Diagram / Map</div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;">방향어(north/adjacent/opposite)와 상대적 위치를 지문에서 찾습니다. 지도는 방위, 도식은 부품 이름이 답인 경우가 많습니다.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 유형 10: Pick from a List -->
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--r);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">유형 10</div>
+        <div class="pc-title" style="color:var(--r);">Pick from a List</div>
+      </div>
+      <div class="chip" style="color:var(--vocab);border-color:var(--vocab-bdr);background:var(--vocab-bg);font-size:9px;">개수 확인 필수</div>
+    </div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;">보기 목록에서 <strong style="color:var(--ink)">정해진 개수만큼</strong> 고르는 유형. "Choose TWO"이면 두 개 모두 맞아야 점수입니다.</div>
+      <div class="pc-sec">핵심 전략</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--r);flex-shrink:0;">①</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">지시문의 숫자를 반드시 먼저 확인.</strong> 하나 더 고르거나 하나 덜 고르면 0점입니다.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--r);flex-shrink:0;">②</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">특정 단락에 집중되는 경우가 많습니다.</strong> "According to paragraph C…" 형태면 그 단락에서만 찾으면 됩니다.</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--r);flex-shrink:0;">③</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">Paraphrase 함정이 MCQ보다 더 많습니다.</strong> 보기가 지문을 어떻게 바꿔 표현하는지 의미 단위로 비교하세요.</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;background:var(--home-bg);border:1px solid var(--home-bdr);border-radius:8px;padding:12px 14px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--home);margin-bottom:6px;">유형 01–10 한눈에 요약</div>
+        <div style="font-size:11.5px;color:var(--ink2);line-height:1.9;font-family:'DM Mono',monospace;">T/F/NG — 사실 일치 판단<br>Y/N/NG — 필자 의견 일치 판단<br>Matching Headings — 단락 소제목 연결<br>Sentence/Summary Completion — 지문 단어 그대로 빈칸 채우기<br>Matching Info/Features — 위치 찾기·특징 연결<br>MCQ — 소거법 4지선다<br>Sentence Endings — 문장 앞뒤 연결<br>Short Answer — 단답형 (단어 수 엄수)<br>Table/Flow/Diagram — 시각 자료 빈칸<br>Pick from a List — 복수 선택 (개수 확인!)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── QUIZ ── -->
+  <div class="sec-row"><div class="sec-lbl">확인 퀴즈 · 5문제</div><div class="sec-line"></div></div>
+
+  <!-- Q1 -->
+  <div class="wq-card" id="rqc1">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--r)">Q 01 / 05</div>
+      <div class="wq-stem">지문에 어떤 주제에 대한 언급이 전혀 없을 때 T/F/NG의 정답은?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="rAns(1,'A')"><span class="opt-l">A</span>TRUE</button>
+        <button class="wq-opt" onclick="rAns(1,'B')"><span class="opt-l">B</span>FALSE</button>
+        <button class="wq-opt" onclick="rAns(1,'C')"><span class="opt-l">C</span>NOT GIVEN</button>
+        <button class="wq-opt" onclick="rAns(1,'D')"><span class="opt-l">D</span>문제에 따라 다르다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="rfb1"><div class="fb-res" id="rfr1"></div>정답: <strong>NOT GIVEN</strong> — 지문에 언급이 없으면 항상 NG입니다. FALSE는 지문에 <em>반박 증거</em>가 있을 때만 가능합니다.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="wq-card" id="rqc2">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--r)">Q 02 / 05</div>
+      <div class="wq-stem">Matching Headings에서 보기의 단어가 단락에 그대로 등장하면?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="rAns(2,'A')"><span class="opt-l">A</span>그 보기가 정답일 가능성이 높다</button>
+        <button class="wq-opt" onclick="rAns(2,'B')"><span class="opt-l">B</span>함정일 수 있으니 전체 의미를 확인해야 한다</button>
+        <button class="wq-opt" onclick="rAns(2,'C')"><span class="opt-l">C</span>관계없다, 단락 전체를 읽어야만 알 수 있다</button>
+        <button class="wq-opt" onclick="rAns(2,'D')"><span class="opt-l">D</span>그 보기는 오답이다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="rfb2"><div class="fb-res" id="rfr2"></div>정답: <strong>B</strong> — IELTS는 보기 단어를 단락에 그대로 넣어 함정을 만듭니다. <strong>의미(paraphrase)가 일치하는지</strong> 반드시 확인하세요.</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="wq-card" id="rqc3">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--r)">Q 03 / 05</div>
+      <div class="wq-stem">Sentence Completion에서 지문의 단어를 paraphrase해서 써도 되는가?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="rAns(3,'A')"><span class="opt-l">A</span>같은 의미면 괜찮다</button>
+        <button class="wq-opt" onclick="rAns(3,'B')"><span class="opt-l">B</span>단어 수 제한 내면 된다</button>
+        <button class="wq-opt" onclick="rAns(3,'C')"><span class="opt-l">C</span>안 된다. 지문의 단어를 정확히 그대로 써야 한다</button>
+        <button class="wq-opt" onclick="rAns(3,'D')"><span class="opt-l">D</span>문법이 맞으면 괜찮다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="rfb3"><div class="fb-res" id="rfr3"></div>정답: <strong>C</strong> — Sentence/Summary Completion의 답은 반드시 <strong>지문의 단어를 그대로</strong> 사용합니다. 철자도 동일해야 합니다.</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="wq-card" id="rqc4">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--r)">Q 04 / 05</div>
+      <div class="wq-stem">Y/N/NG와 T/F/NG의 가장 큰 차이는?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="rAns(4,'A')"><span class="opt-l">A</span>Y/N/NG가 더 어렵다</button>
+        <button class="wq-opt" onclick="rAns(4,'B')"><span class="opt-l">B</span>Y/N/NG는 필자의 의견과 일치하는지를 묻는다</button>
+        <button class="wq-opt" onclick="rAns(4,'C')"><span class="opt-l">C</span>T/F/NG에서만 NOT GIVEN이 나온다</button>
+        <button class="wq-opt" onclick="rAns(4,'D')"><span class="opt-l">D</span>차이가 없다, 같은 유형이다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="rfb4"><div class="fb-res" id="rfr4"></div>정답: <strong>B</strong> — T/F/NG는 <em>사실 정보</em>와 일치하는지, Y/N/NG는 <em>필자의 관점·주장</em>과 일치하는지를 묻습니다. 지시문에서 반드시 구분하세요.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="wq-card" id="rqc5">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--r)">Q 05 / 05</div>
+      <div class="wq-stem">한 문제에 막혔을 때 가장 좋은 전략은?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="rAns(5,'A')"><span class="opt-l">A</span>끝까지 풀고 넘어간다</button>
+        <button class="wq-opt" onclick="rAns(5,'B')"><span class="opt-l">B</span>그 문제를 건너뛰고 이후 문제를 먼저 푼다</button>
+        <button class="wq-opt" onclick="rAns(5,'C')"><span class="opt-l">C</span>해당 Passage를 처음부터 다시 읽는다</button>
+        <button class="wq-opt" onclick="rAns(5,'D')"><span class="opt-l">D</span>빈칸으로 제출한다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="rfb5"><div class="fb-res" id="rfr5"></div>정답: <strong>B</strong> — 2분 초과 시 표시하고 넘어가세요. 이후 문제를 풀다 보면 힌트가 보이는 경우도 있고, 남은 시간에 돌아올 수 있습니다.</div>
+  </div>
+
+  <div class="score-banner" id="rScore">
+    <div class="score-big" style="color:var(--r)" id="rScNum">–</div>
+    <div class="score-of">5문제 중 정답</div>
+    <div class="score-msg" id="rScMsg"></div>
+  </div>
+
+  <div class="tip-box" style="border-top-color:var(--r)">
+    <div class="tip-title" style="color:var(--r)">📌 Reading 핵심 요약</div>
+    <div class="tip-text">
+      <strong>Skimming → Scanning → 답 확인</strong> 순서를 지키면 60분이 충분합니다. 처음부터 정독하는 습관이 가장 큰 적입니다.<br><br>
+      오늘 배운 것: <strong>T/F/NG 함정 3가지 · Matching Headings 고속 풀이 · Completion 단어 수 규칙</strong><br><br>
+      <strong>다음 세션 예고:</strong> Speaking Part 2 Cue Card 구조 + Part 3 고득점 답변법
+    </div>
+  </div>
+
+</div>
+</div>
+<!-- ══════════ SPEAKING ══════════ -->
+<div class="page" id="page-speaking">
+<div class="container">
+
+  <div style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:12px;padding:18px 18px 16px;margin-top:20px;margin-bottom:4px;position:relative;overflow:hidden;">
+    <div style="position:absolute;right:-6px;bottom:-14px;font-family:'Playfair Display',serif;font-size:80px;font-weight:700;color:rgba(107,46,188,.06);line-height:1;pointer-events:none;">SPEAK</div>
+    <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vocab);margin-bottom:6px;">Speaking · Session 01</div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:6px;">Cue Card + Part 3 전략</div>
+    <div style="font-size:13px;color:var(--ink2);line-height:1.7;">Speaking은 <strong style="color:var(--ink)">구조를 외우면 답변 시간이 2배</strong>로 늘어납니다. Part 2 Cue Card 템플릿과 Part 3 고득점 패턴을 익혀두세요.</div>
+  </div>
+
+  <div class="sec-row"><div class="sec-lbl">Part 1 — 빠른 복습</div><div class="sec-line"></div></div>
+  <div class="card"><div class="card-body">
+    <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;">
+      <div style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:7px;padding:8px 12px;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--vocab);min-width:52px;text-align:center;flex-shrink:0;">P1<br><span style="font-size:15px;font-family:'Playfair Display',serif;font-weight:700;">4-5분</span></div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.7;padding-top:2px;">가족·취미·일상 주제 Q&amp;A. <strong style="color:var(--ink)">답변 확장 공식: 직접 답 → 이유 → 예시</strong></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+      <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-radius:8px;padding:11px 13px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--r);margin-bottom:6px;">Band 5 답변</div>
+        <div style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--ink2);line-height:1.7;">"Do you enjoy cooking?" — "Yes, I do."</div>
+      </div>
+      <div style="background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:11px 13px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--w);margin-bottom:6px;">Band 7 답변</div>
+        <div style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--ink2);line-height:1.7;">"Yes, quite a bit actually. I find it relaxing after work — especially Korean dishes that take time to prepare."</div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="sec-row"><div class="sec-lbl">Part 2 — Cue Card 심화</div><div class="sec-line"></div></div>
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--vocab);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">3-4분</div>
+        <div class="pc-title" style="color:var(--vocab);">Cue Card 구조 · WHEN·WHERE·WHO·WHAT·WHY</div>
+      </div>
+    </div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:13px;">카드를 받으면 <strong style="color:var(--ink)">1분 준비시간</strong>이 주어집니다. 이 1분에 메모하는 구조가 2분 독백의 품질을 결정합니다.</div>
+      <div class="pc-sec">1분 메모 템플릿</div>
+      <div style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:8px;padding:14px 16px;font-family:'DM Mono',monospace;font-size:12px;line-height:2.1;color:var(--ink2);">
+        <span style="color:var(--vocab);font-weight:500;">WHEN</span> — 언제 일어난 일인지<br>
+        <span style="color:var(--r);font-weight:500;">WHERE</span> — 장소 / 배경<br>
+        <span style="color:var(--l);font-weight:500;">WHO</span> — 함께한 사람 / 상황 속 인물<br>
+        <span style="color:var(--w);font-weight:500;">WHAT</span> — 핵심 내용<br>
+        <span style="color:var(--home);font-weight:500;">WHY</span> — 왜 기억에 남는가 / 느낀 점
+      </div>
+      <div class="pc-sec" style="margin-top:14px;">예시: Describe a memorable trip you have taken.</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 14px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--vocab);margin-bottom:4px;">1분 메모</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11.5px;line-height:2;color:var(--ink2);">WHEN: last summer<br>WHERE: Jeju Island<br>WHO: two colleagues<br>WHAT: hiking Hallasan, sunrise<br>WHY: cloud sea below</div>
+        </div>
+        <div style="background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:11px 14px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--w);margin-bottom:5px;">Band 7 오프닝</div>
+          <div style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--ink2);line-height:1.8;">I would like to talk about a trip I took to Jeju Island last July with two colleagues. What made it memorable was hiking Hallasan at dawn and seeing a sea of clouds stretching below us.</div>
+        </div>
+      </div>
+      <div class="pc-sec" style="margin-top:14px;">2분을 채우는 기술</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:11px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 13px;">
+          <div style="font-size:16px;flex-shrink:0;">🔁</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">감각 묘사 추가.</strong> "The air smelled of pine and the trail was steep but exhilarating" — 오감 묘사는 30초를 쉽게 채웁니다.</div>
+        </div>
+        <div style="display:flex;gap:11px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 13px;">
+          <div style="font-size:16px;flex-shrink:0;">💭</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">당시 감정 + 지금 생각 분리.</strong> "At the time I felt… Looking back now, I think…" 구조로 한 주제를 두 각도로 말할 수 있습니다.</div>
+        </div>
+        <div style="display:flex;gap:11px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 13px;">
+          <div style="font-size:16px;flex-shrink:0;">↩️</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--ink)">마지막 WHY로 마무리.</strong> "That is why this experience has stayed with me" 같은 마무리 문장을 준비해두세요.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="para-card" style="margin-bottom:12px;">
+    <div class="pc-hd">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--vocab);color:#fff;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:.08em;">4-5분</div>
+        <div class="pc-title" style="color:var(--vocab);">Part 3 — 고득점 답변 구조</div>
+      </div>
+      <div class="chip" style="color:var(--home);border-color:var(--home-bdr);background:var(--home-bg);font-size:9px;">Band 7 결정 파트</div>
+    </div>
+    <div class="pc-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.75;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:13px;">Part 3은 <strong style="color:var(--ink)">추상적·사회적 주제</strong>로 토론합니다. 짧게 답하면 점수가 내려갑니다.</div>
+      <div class="pc-sec">PEEL 답변 구조</div>
+      <div style="background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:8px;padding:13px 15px;font-family:'DM Mono',monospace;font-size:12px;line-height:2.1;color:var(--ink2);">
+        <span style="color:var(--vocab);font-weight:500;">P</span>oint&nbsp;&nbsp; — 의견 1문장 (직접적으로)<br>
+        <span style="color:var(--home);font-weight:500;">E</span>xplain — 이유 1-2문장<br>
+        <span style="color:var(--wt2);font-weight:500;">E</span>xample — 구체적 사례 또는 가상 예시<br>
+        <span style="color:var(--r);font-weight:500;">L</span>ink&nbsp;&nbsp; — 원래 질문으로 다시 연결
+      </div>
+      <div class="pc-sec" style="margin-top:14px;">예시 답변 (Band 7)</div>
+      <div style="background:var(--w-bg);border:1px solid var(--w-bdr);border-radius:8px;padding:12px 14px;">
+        <div style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--ink2);line-height:1.85;">
+          <span style="color:var(--vocab);font-style:normal;font-weight:500;font-family:'DM Mono',monospace;font-size:9px;">POINT</span> "Absolutely — travel has become far more accessible but also more homogenised."<br>
+          <span style="color:var(--home);font-style:normal;font-weight:500;font-family:'DM Mono',monospace;font-size:9px;">EXPLAIN</span> "Low-cost airlines have opened it up to people who could not previously afford it."<br>
+          <span style="color:var(--wt2);font-style:normal;font-weight:500;font-family:'DM Mono',monospace;font-size:9px;">EXAMPLE</span> "A decade ago a Seoul-to-Bangkok flight was a luxury, whereas today many young Koreans go on short notice."<br>
+          <span style="color:var(--r);font-style:normal;font-weight:500;font-family:'DM Mono',monospace;font-size:9px;">LINK</span> "So yes, the nature of travel has shifted quite dramatically."
+        </div>
+      </div>
+      <div class="pc-sec" style="margin-top:14px;">고득점 링킹 표현</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--vocab);margin-bottom:7px;">의견 시작</div>
+          <div class="conn-grid" style="gap:5px;">
+            <div class="conn" style="font-size:10.5px;">I would argue that</div>
+            <div class="conn" style="font-size:10.5px;">From my perspective,</div>
+            <div class="conn" style="font-size:10.5px;">It seems to me that</div>
+            <div class="conn" style="font-size:10.5px;">To be honest,</div>
+          </div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--vocab);margin-bottom:7px;">시간 버는 표현</div>
+          <div class="conn-grid" style="gap:5px;">
+            <div class="conn" style="font-size:10.5px;">That is an interesting point</div>
+            <div class="conn" style="font-size:10.5px;">Let me think about that</div>
+            <div class="conn" style="font-size:10.5px;">It depends on how you look at it</div>
+            <div class="conn" style="font-size:10.5px;">Well, in a sense,</div>
+          </div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--vocab);margin-bottom:7px;">예시 도입</div>
+          <div class="conn-grid" style="gap:5px;">
+            <div class="conn" style="font-size:10.5px;">Take, for example,</div>
+            <div class="conn" style="font-size:10.5px;">A good illustration of this is</div>
+            <div class="conn" style="font-size:10.5px;">Consider the case of</div>
+            <div class="conn" style="font-size:10.5px;">In many countries,</div>
+          </div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--vocab);margin-bottom:7px;">반론 인정</div>
+          <div class="conn-grid" style="gap:5px;">
+            <div class="conn" style="font-size:10.5px;">Having said that,</div>
+            <div class="conn" style="font-size:10.5px;">Then again,</div>
+            <div class="conn" style="font-size:10.5px;">On the other hand,</div>
+            <div class="conn" style="font-size:10.5px;">I can see why some people</div>
+          </div>
+        </div>
+      </div>
+      <div class="pc-sec" style="margin-top:14px;">한국 응시자 흔한 실수</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-left:3px solid var(--r);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--r);">답변이 2-3문장에서 끊김.</strong> PEEL 구조로 최소 5문장을 목표하세요.</div>
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-left:3px solid var(--r);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--r);">모른다고 바로 포기.</strong> "It is hard to say, but I would guess that…"으로 추측을 이어가세요.</div>
+        <div style="background:var(--r-bg);border:1px solid var(--r-bdr);border-left:3px solid var(--r);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--ink2);line-height:1.65;"><strong style="color:var(--r);">발음 완벽주의로 유창성 저하.</strong> IELTS는 원어민 발음이 기준이 아닙니다. <strong style="color:var(--ink)">명확성·유창성·자연스러운 리듬</strong>이 점수를 만듭니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-row"><div class="sec-lbl">채점 기준 4가지 · 각 25%</div><div class="sec-line"></div></div>
+  <div class="card"><div class="card-body">
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:9px;padding:11px 13px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--vocab);min-width:36px;padding-top:1px;">FC</div>
+        <div><div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:3px;">Fluency &amp; Coherence</div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;">말이 자연스럽게 이어지는가? 긴 침묵·반복 없이 논리적으로 흐르는가?</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:9px;padding:11px 13px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--vocab);min-width:36px;padding-top:1px;">LR</div>
+        <div><div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:3px;">Lexical Resource</div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;">다양하고 적절한 어휘를 쓰는가? AWL 어휘 세션 단어들을 Speaking에도 활용하세요.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:9px;padding:11px 13px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--vocab);min-width:36px;padding-top:1px;">GRA</div>
+        <div><div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:3px;">Grammatical Range &amp; Accuracy</div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;">조건절·관계절 등 복잡한 구조를 시도하는가? 완벽하지 않아도 다양하게 시도하는 게 이득.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:9px;padding:11px 13px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--vocab);min-width:36px;padding-top:1px;">PRO</div>
+        <div><div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:3px;">Pronunciation</div><div style="font-size:12.5px;color:var(--muted);line-height:1.6;">원어민 발음 불필요. 명확하게 말하는 것이 기준.</div></div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="sec-row"><div class="sec-lbl">확인 퀴즈 · 5문제</div><div class="sec-line"></div></div>
+
+  <div class="wq-card" id="sqc1">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--vocab)">Q 01 / 05</div>
+      <div class="wq-stem">Part 2 Cue Card 1분 준비 시간에 가장 효과적인 메모 구조는?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="sAns(1,'A')"><span class="opt-l">A</span>전체 답변을 문장으로 써둔다</button>
+        <button class="wq-opt" onclick="sAns(1,'B')"><span class="opt-l">B</span>WHEN · WHERE · WHO · WHAT · WHY 키워드만 메모한다</button>
+        <button class="wq-opt" onclick="sAns(1,'C')"><span class="opt-l">C</span>모르는 단어를 찾아 쓴다</button>
+        <button class="wq-opt" onclick="sAns(1,'D')"><span class="opt-l">D</span>준비 없이 바로 말하기 시작한다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="sfb1"><div class="fb-res" id="sfr1"></div>정답: <strong>B</strong> — 1분에 전체 문장을 쓰려 하면 시간이 모자랍니다. 5개의 키워드 메모가 2분 독백을 구조적으로 채워줍니다.</div>
+  </div>
+
+  <div class="wq-card" id="sqc2">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--vocab)">Q 02 / 05</div>
+      <div class="wq-stem">Part 3에서 모르는 주제의 질문을 받았을 때 가장 좋은 대응은?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="sAns(2,'A')"><span class="opt-l">A</span>모른다고 솔직하게 말한다</button>
+        <button class="wq-opt" onclick="sAns(2,'B')"><span class="opt-l">B</span>질문을 다시 해달라고 요청한다</button>
+        <button class="wq-opt" onclick="sAns(2,'C')"><span class="opt-l">C</span>추측을 붙여서라도 계속 말한다</button>
+        <button class="wq-opt" onclick="sAns(2,'D')"><span class="opt-l">D</span>침묵하고 시험관이 넘어가길 기다린다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="sfb2"><div class="fb-res" id="sfr2"></div>정답: <strong>C</strong> — 유창성 점수는 말하는 양과 직결됩니다. "It is hard to say, but I would guess that…"으로 추측을 이어가세요.</div>
+  </div>
+
+  <div class="wq-card" id="sqc3">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--vocab)">Q 03 / 05</div>
+      <div class="wq-stem">IELTS Speaking 발음(Pronunciation) 기준은?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="sAns(3,'A')"><span class="opt-l">A</span>원어민 발음을 구현해야 한다</button>
+        <button class="wq-opt" onclick="sAns(3,'B')"><span class="opt-l">B</span>억양 없는 중립적 발음이어야 한다</button>
+        <button class="wq-opt" onclick="sAns(3,'C')"><span class="opt-l">C</span>듣는 사람이 이해하기 쉬운 명확한 발음과 자연스러운 리듬</button>
+        <button class="wq-opt" onclick="sAns(3,'D')"><span class="opt-l">D</span>모든 단어를 또박또박 천천히 발음한다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="sfb3"><div class="fb-res" id="sfr3"></div>정답: <strong>C</strong> — 원어민 발음은 필요하지 않습니다. 명확성과 이해 가능성이 기준이며, 한국어 억양이 있어도 7.0이 나옵니다.</div>
+  </div>
+
+  <div class="wq-card" id="sqc4">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--vocab)">Q 04 / 05</div>
+      <div class="wq-stem">Part 2 답변 시간을 자연스럽게 2분 채우는 가장 좋은 방법은?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="sAns(4,'A')"><span class="opt-l">A</span>같은 내용을 반복해서 말한다</button>
+        <button class="wq-opt" onclick="sAns(4,'B')"><span class="opt-l">B</span>당시 감정과 지금 돌아보는 생각을 분리해 두 각도로 말한다</button>
+        <button class="wq-opt" onclick="sAns(4,'C')"><span class="opt-l">C</span>최대한 천천히 말한다</button>
+        <button class="wq-opt" onclick="sAns(4,'D')"><span class="opt-l">D</span>관련 없는 다른 경험을 추가한다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="sfb4"><div class="fb-res" id="sfr4"></div>정답: <strong>B</strong> — "At the time I felt… / Looking back now, I think…" 구조는 같은 주제를 두 각도로 다루어 30-40초를 자연스럽게 추가합니다.</div>
+  </div>
+
+  <div class="wq-card" id="sqc5">
+    <div class="wq-body">
+      <div class="wq-num" style="color:var(--vocab)">Q 05 / 05</div>
+      <div class="wq-stem">Part 3에서 Band 7을 위한 답변 구조는?</div>
+      <div class="wq-opts">
+        <button class="wq-opt" onclick="sAns(5,'A')"><span class="opt-l">A</span>통계 수치를 반드시 인용한다</button>
+        <button class="wq-opt" onclick="sAns(5,'B')"><span class="opt-l">B</span>의견 + 이유 + 구체적 사례 + 링크 (PEEL 구조)</button>
+        <button class="wq-opt" onclick="sAns(5,'C')"><span class="opt-l">C</span>시험관의 의견에 반드시 동의한다</button>
+        <button class="wq-opt" onclick="sAns(5,'D')"><span class="opt-l">D</span>모든 문장을 복잡한 구조로 만든다</button>
+      </div>
+    </div>
+    <div class="wq-fb" id="sfb5"><div class="fb-res" id="sfr5"></div>정답: <strong>B</strong> — PEEL 구조는 Speaking에서도 동일하게 적용됩니다. 의견만 말하고 끝내는 Band 5 패턴에서 벗어나려면 이유와 예시가 필수입니다.</div>
+  </div>
+
+  <div class="score-banner" id="sScore">
+    <div class="score-big" style="color:var(--vocab)" id="sScNum">-</div>
+    <div class="score-of">5문제 중 정답</div>
+    <div class="score-msg" id="sScMsg"></div>
+  </div>
+
+  <div class="tip-box" style="border-top-color:var(--vocab)">
+    <div class="tip-title" style="color:var(--vocab)">📌 Speaking 핵심 요약</div>
+    <div class="tip-text">
+      <strong>Part 2:</strong> WHEN·WHERE·WHO·WHAT·WHY 메모 → 감각 묘사 + 감정 분리로 2분 채우기<br>
+      <strong>Part 3:</strong> PEEL 구조로 최소 5문장 · 링킹 표현 준비 · 추측이라도 계속 말하기<br><br>
+      연습 루틴: 하루 5분 혼자 말하기 (Cue Card 주제 하나씩) + 녹음 후 자기 피드백
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <button class="bn active" id="bnHome"    style="--c:var(--home)"  onclick="goPage('home')"><div class="bn-icon">🏠</div><div class="bn-lbl">Home</div></button>
+  <button class="bn" id="bnIntro"   style="--c:var(--r)"     onclick="goPage('intro')"><div class="bn-icon">📋</div><div class="bn-lbl">소개</div></button>
+  <button class="bn" id="bnVocab"   style="--c:var(--vocab)"  onclick="goPage('vocab')"><div class="bn-icon">📖</div><div class="bn-lbl">어휘</div></button>
+  <button class="bn" id="bnWt2"     style="--c:var(--wt2)"   onclick="goPage('wt2')"><div class="bn-icon">✍️</div><div class="bn-lbl">Writing</div></button>
+  <button class="bn" id="bnReading" style="--c:var(--r)"     onclick="goPage('reading')"><div class="bn-icon">🔍</div><div class="bn-lbl">Reading</div></button>
+  <button class="bn" id="bnSpeaking" style="--c:var(--vocab)" onclick="goPage('speaking')"><div class="bn-icon">🎤</div><div class="bn-lbl">Speaking</div></button>
+</div>
+
+<script>
+const pages=['home','intro','vocab','wt2','reading','speaking'];
+const navBtns={home:'bnHome',intro:'bnIntro',vocab:'bnVocab',wt2:'bnWt2',reading:'bnReading',speaking:'bnSpeaking'};
+const progC={home:'var(--home)',intro:'var(--r)',vocab:'var(--vocab)',wt2:'var(--wt2)',reading:'var(--r)',speaking:'var(--vocab)'};
+const progW={home:'0%',intro:'20%',vocab:'40%',wt2:'60%',reading:'80%',speaking:'100%'};
+const topBtns=document.querySelectorAll('.nav-btn');
+const topMap=['home','intro','vocab','wt2','reading','speaking'];
+
+function goPage(id){
+  pages.forEach(p=>{
+    document.getElementById('page-'+p).classList.toggle('active',p===id);
+    document.getElementById(navBtns[p]).classList.toggle('active',p===id);
+  });
+  topBtns.forEach((b,i)=>b.classList.toggle('active',topMap[i]===id));
+  const pf=document.getElementById('progFill');
+  pf.style.background=progC[id]; pf.style.width=progW[id];
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function switchITab(tab,el){
+  ['r','l','w','s'].forEach(t=>document.getElementById('it-'+t).classList.toggle('active',t===tab));
+  document.querySelectorAll('.itab').forEach(b=>b.classList.remove('on-r','on-l','on-w','on-s'));
+  el.classList.add('on-'+tab);
+}
+
+/* Vocab quiz */
+const vC={1:'B',2:'A',3:'C',4:'D',5:'A'};
+const vA={};let vS=0;
+const vM=['다시 도전! 단어 카드를 한 번 더 읽고 재시도하세요.','절반 이상! Paraphrase 박스를 다시 확인하세요.','좋습니다! 다음 세션에서 새 5개 단어로 이어가요.','훌륭합니다! 동의어 묶음을 Writing에도 적용해보세요.','완벽합니다! 🎯 어휘 감각 충분합니다.'];
+function vAns(n,c){
+  if(vA[n])return;vA[n]=c;
+  document.querySelectorAll('#vqc'+n+' .wq-opt').forEach(o=>{
+    o.style.cursor='default';
+    const l=o.querySelector('.opt-l').textContent.trim();
+    if(l===vC[n])o.classList.add('correct');
+    else if(l===c)o.classList.add('wrong');
+  });
+  const fb=document.getElementById('vfb'+n),res=document.getElementById('vfr'+n);
+  fb.classList.add('visible');
+  if(c===vC[n]){vS++;res.textContent='✓ 정답!';res.className='fb-res ok';fb.classList.add('ok');}
+  else{res.textContent='✗ 오답';res.className='fb-res bad';fb.classList.add('bad');}
+  if(Object.keys(vA).length===5)setTimeout(()=>{
+    document.getElementById('vScNum').textContent=vS+' / 5';
+    document.getElementById('vScMsg').textContent=vM[vS-1]||vM[0];
+    const b=document.getElementById('vScore');b.classList.add('visible');
+    b.scrollIntoView({behavior:'smooth',block:'center'});
+  },400);
+}
+
+/* Writing T2 quiz */
+const wC={1:'B',2:'C',3:'C',4:'C'};
+const wA={};let wS=0;
+const wM=['다시 도전! Blueprint를 다시 읽어보세요.','절반! PEEL 구조 파트를 다시 확인하세요.','좋습니다! 실전 Writing에 적용해보세요.','완벽합니다! 🎯 구조 완전 이해입니다.'];
+function wAns(n,c){
+  if(wA[n])return;wA[n]=c;
+  document.querySelectorAll('#wqc'+n+' .wq-opt').forEach(o=>{
+    o.style.cursor='default';
+    const l=o.querySelector('.opt-l').textContent.trim();
+    if(l===wC[n])o.classList.add('correct');
+    else if(l===c)o.classList.add('wrong');
+  });
+  const fb=document.getElementById('wfb'+n),res=document.getElementById('wfr'+n);
+  fb.classList.add('visible');
+  if(c===wC[n]){wS++;res.textContent='✓ 정답!';res.className='fb-res ok';fb.classList.add('ok');}
+  else{res.textContent='✗ 오답';res.className='fb-res bad';fb.classList.add('bad');}
+  if(Object.keys(wA).length===4)setTimeout(()=>{
+    document.getElementById('wScNum').textContent=wS+' / 4';
+    document.getElementById('wScMsg').textContent=wM[wS-1]||wM[0];
+    const b=document.getElementById('wScore');b.classList.add('visible');
+    b.scrollIntoView({behavior:'smooth',block:'center'});
+  },400);
+}
+
+/* Reading quiz */
+const rC={1:'C',2:'B',3:'C',4:'B',5:'B'};
+const rA={};let rS=0;
+const rM=['다시 도전! 유형 설명을 한 번 더 읽어보세요.','좋아지고 있어요! 함정 패턴 파트를 다시 확인하세요.','좋습니다! 실전 문제로 적용해보세요.','훌륭합니다! Reading 감각이 쌓이고 있습니다.','완벽합니다! 🎯 유형 이해 완료입니다.'];
+function rAns(n,c){
+  if(rA[n])return;rA[n]=c;
+  document.querySelectorAll('#rqc'+n+' .wq-opt').forEach(o=>{
+    o.style.cursor='default';
+    const l=o.querySelector('.opt-l').textContent.trim();
+    if(l===rC[n])o.classList.add('correct');
+    else if(l===c)o.classList.add('wrong');
+  });
+  const fb=document.getElementById('rfb'+n),res=document.getElementById('rfr'+n);
+  fb.classList.add('visible');
+  if(c===rC[n]){rS++;res.textContent='✓ 정답!';res.className='fb-res ok';fb.classList.add('ok');}
+  else{res.textContent='✗ 오답';res.className='fb-res bad';fb.classList.add('bad');}
+  if(Object.keys(rA).length===5)setTimeout(()=>{
+    document.getElementById('rScNum').textContent=rS+' / 5';
+    document.getElementById('rScMsg').textContent=rM[rS-1]||rM[0];
+    const b=document.getElementById('rScore');b.classList.add('visible');
+    b.scrollIntoView({behavior:'smooth',block:'center'});
+  },400);
+}
+
+/* Speaking quiz */
+const sC={1:'B',2:'C',3:'C',4:'B',5:'B'};
+const sA={};let sS=0;
+const sM=['다시 도전! Part 2와 3 전략을 다시 읽어보세요.','좋아지고 있어요! PEEL 구조 파트를 다시 확인하세요.','좋습니다! 링킹 표현을 실전에서 써보세요.','훌륭합니다! Speaking 구조가 잡히고 있습니다.','완벽합니다! 🎯 이제 실전 연습으로 넘어가세요.'];
+function sAns(n,c){
+  if(sA[n])return;sA[n]=c;
+  document.querySelectorAll('#sqc'+n+' .wq-opt').forEach(o=>{
+    o.style.cursor='default';
+    const l=o.querySelector('.opt-l').textContent.trim();
+    if(l===sC[n])o.classList.add('correct');
+    else if(l===c)o.classList.add('wrong');
+  });
+  const fb=document.getElementById('sfb'+n),res=document.getElementById('sfr'+n);
+  fb.classList.add('visible');
+  if(c===sC[n]){sS++;res.textContent='✓ 정답!';res.className='fb-res ok';fb.classList.add('ok');}
+  else{res.textContent='✗ 오답';res.className='fb-res bad';fb.classList.add('bad');}
+  if(Object.keys(sA).length===5)setTimeout(()=>{
+    document.getElementById('sScNum').textContent=sS+' / 5';
+    document.getElementById('sScMsg').textContent=sM[sS-1]||sM[0];
+    const b=document.getElementById('sScore');b.classList.add('visible');
+    b.scrollIntoView({behavior:'smooth',block:'center'});
+  },400);
+}
+</script>
+</body>
+</html>
