@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Speaking — 뼈대 세션 · IELTS Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;--paper:#fff;--surface2:#f9f7f4;--border:#e2ddd6;--border2:#cbc6bc;
+  --ink:#18160f;--ink2:#3c3930;--muted:#8c8880;
+  --r:#bc3318;--l:#1560a8;--w:#1a7a48;--vocab:#6b2ebc;--wt2:#0a7a72;--home:#b06818;
+  --r-bg:#fdf0ec;--l-bg:#edf3fc;--w-bg:#ecf7f1;--vocab-bg:#f4effe;--wt2-bg:#eaf7f6;--home-bg:#fdf6ed;
+  --r-bdr:#f2c4b8;--l-bdr:#b4d0f0;--w-bdr:#a8dcc0;--vocab-bdr:#d4b4f4;--wt2-bdr:#98dcd8;--home-bdr:#f0d0a0;
+  --p1:var(--l);--p1-bg:var(--l-bg);--p1-bdr:var(--l-bdr);
+  --p2:var(--vocab);--p2-bg:var(--vocab-bg);--p2-bdr:var(--vocab-bdr);
+  --p3:var(--w);--p3-bg:var(--w-bg);--p3-bdr:var(--w-bdr);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;padding-bottom:32px}
+
+/* ── HEADER ── */
+.hdr{background:var(--paper);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.05);height:52px;display:flex;align-items:center;padding:0 18px;gap:12px;position:sticky;top:0;z-index:100}
+.back{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.06em;padding:5px 11px;border-radius:5px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;text-decoration:none;transition:all .15s}
+.back:hover{color:var(--ink2);border-color:var(--border2)}
+.logo{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink)}
+.logo em{font-style:normal;color:var(--vocab)}
+
+/* ── HERO ── */
+.hero{max-width:720px;margin:0 auto;padding:32px 18px 8px}
+.hero-tag{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--vocab);margin-bottom:8px}
+.hero-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--ink);margin-bottom:7px;line-height:1.2}
+.hero-desc{font-size:13px;color:var(--ink2);line-height:1.7}
+
+/* ── WRAP ── */
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sr{display:flex;align-items:center;gap:12px;margin:26px 0 13px}
+.sl{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.sl+div{flex:1;height:1px;background:var(--border)}
+
+/* ── PART CARDS ── */
+.part-card{background:var(--paper);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,.04);animation:fu .3s ease both}
+.part-card:nth-child(2){animation-delay:.06s}
+.part-card:nth-child(3){animation-delay:.12s}
+.part-hd{padding:11px 17px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.part-badge{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.08em;padding:3px 10px;border-radius:4px;border:1px solid}
+.part-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--ink)}
+.part-time{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+.part-body{padding:15px 17px}
+.struct-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+
+/* steps */
+.steps{display:flex;flex-direction:column;gap:9px;margin-bottom:13px}
+.step{display:flex;gap:10px;align-items:flex-start}
+.step-num{width:22px;height:22px;border-radius:50%;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;border:1px solid}
+.step-name{font-size:12.5px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.step-phrase{font-size:12.5px;font-style:italic;margin-bottom:2px}
+.step-desc{font-size:11.5px;color:var(--muted);line-height:1.5}
+
+/* example box */
+.ex-box{border-radius:0 8px 8px 0;border-left:3px solid;padding:11px 13px;background:var(--surface2)}
+.ex-label{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ex-box p{font-size:13px;color:var(--ink2);line-height:1.7}
+
+/* ── FILLER SECTION ── */
+.filler-card{background:var(--paper);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.filler-hd{padding:11px 17px 10px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.filler-hd-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--ink)}
+.filler-tag{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;padding:3px 9px;border-radius:4px;background:var(--vocab-bg);color:var(--vocab);border:1px solid var(--vocab-bdr)}
+.filler-body{padding:14px 17px;display:flex;flex-direction:column;gap:13px}
+.phrase-group{}
+.pg-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--ink2);cursor:default;transition:border-color .13s}
+.chip:hover{border-color:var(--vocab)}
+
+/* ── TIP BOX ── */
+.tip{background:var(--vocab-bg);border:1px solid var(--vocab-bdr);border-radius:10px;padding:13px 15px;margin-bottom:13px;display:flex;gap:10px;align-items:flex-start}
+.tip-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.tip-text{font-size:13px;color:var(--ink2);line-height:1.7}
+.tip-text strong{color:var(--vocab);font-weight:500}
+
+/* ── QUIZ ── */
+.quiz-card{background:var(--paper);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:13px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.quiz-hd{padding:11px 17px 10px;background:var(--surface2);border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.quiz-body{padding:14px 17px;display:flex;flex-direction:column;gap:18px}
+.qi{}
+.qi-q{font-size:13.5px;color:var(--ink);font-weight:400;line-height:1.6;margin-bottom:9px}
+.qi-q .qnum{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-right:6px}
+.opts{display:flex;flex-direction:column;gap:5px}
+.opt{background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:9px 13px;font-size:13px;color:var(--ink2);cursor:pointer;text-align:left;transition:all .13s;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+.opt:hover{border-color:var(--vocab);color:var(--vocab);background:var(--vocab-bg)}
+.opt.ok{background:var(--w-bg);border-color:var(--w);color:var(--w)}
+.opt.no{background:var(--r-bg);border-color:var(--r);color:var(--r)}
+.opt-l{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0;min-width:16px}
+.exp{display:none;margin-top:8px;padding:9px 12px;border-radius:7px;font-size:12.5px;color:var(--ink2);line-height:1.7;border-left:3px solid var(--w);background:var(--w-bg)}
+.exp.show{display:block}
+
+/* score */
+.score-box{display:none;text-align:center;padding:20px;border-top:1px solid var(--border)}
+.score-box.show{display:block}
+.score-n{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--vocab);line-height:1}
+.score-of{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px}
+.score-msg{font-size:13px;color:var(--ink2);margin-top:8px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <a class="back" href="https://Alex426628.github.io/ielts-study/">← Hub</a>
+  <div class="logo">IELTS <em>Speaking</em></div>
+</div>
+
+<div class="hero">
+  <div class="hero-tag">🎤 Speaking · Session 02</div>
+  <div class="hero-title">Part 1 · 2 · 3 뼈대</div>
+  <div class="hero-desc">어떤 주제가 나와도 쓸 수 있는 파트별 답변 구조 + 실전 표현 모음</div>
+</div>
+
+<div class="wrap">
+
+<!-- ── PART CARDS ── -->
+<div class="sr"><div class="sl">파트별 뼈대</div><div></div></div>
+
+<!-- PART 1 -->
+<div class="part-card">
+  <div class="part-hd">
+    <span class="part-badge" style="color:var(--p1);border-color:var(--p1-bdr);background:var(--p1-bg)">PART 1</span>
+    <span class="part-title">일상 Q&A</span>
+    <span class="part-time">4–5분</span>
+  </div>
+  <div class="part-body">
+    <div class="struct-label">뼈대 구조 · 2–3문장</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="color:var(--p1);border-color:var(--p1-bdr);background:var(--p1-bg)">1</div>
+        <div>
+          <div class="step-name">직접 답하기</div>
+          <div class="step-phrase" style="color:var(--p1)">"I'd say I'm pretty much into…"</div>
+          <div class="step-desc">질문에 바로 답. Yes/No로 끝내지 말 것.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="color:var(--p1);border-color:var(--p1-bdr);background:var(--p1-bg)">2</div>
+        <div>
+          <div class="step-name">이유 하나 추가</div>
+          <div class="step-phrase" style="color:var(--p1)">"…mainly because…"</div>
+          <div class="step-desc">이유 1개면 충분. 2개 이상은 Part 3에서.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="color:var(--p1);border-color:var(--p1-bdr);background:var(--p1-bg)">3</div>
+        <div>
+          <div class="step-name">가볍게 마무리</div>
+          <div class="step-phrase" style="color:var(--p1)">"…so it's kind of become a big part of my life."</div>
+          <div class="step-desc">짧고 자연스럽게 닫기.</div>
+        </div>
+      </div>
+    </div>
+    <div class="ex-box" style="border-left-color:var(--p1)">
+      <div class="ex-label">실전 예시</div>
+      <p><strong style="color:var(--p1)">"I'd say I'm pretty much into</strong> following global markets, <strong style="color:var(--p1)">mainly because</strong> I find it genuinely exciting to track how things move. <strong style="color:var(--p1)">So yeah, it's kind of become</strong> a big part of my daily routine."</p>
+    </div>
+  </div>
+</div>
+
+<!-- PART 2 -->
+<div class="part-card">
+  <div class="part-hd">
+    <span class="part-badge" style="color:var(--p2);border-color:var(--p2-bdr);background:var(--p2-bg)">PART 2</span>
+    <span class="part-title">Cue Card 독백</span>
+    <span class="part-time">3–4분</span>
+  </div>
+  <div class="part-body">
+    <div class="struct-label">1분 메모 → 2분 독백</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="color:var(--p2);border-color:var(--p2-bdr);background:var(--p2-bg)">1</div>
+        <div>
+          <div class="step-name">오프닝</div>
+          <div class="step-phrase" style="color:var(--p2)">"I'd like to talk about…"</div>
+          <div class="step-desc">WHEN + WHERE + WHO를 1문장에 압축.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="color:var(--p2);border-color:var(--p2-bdr);background:var(--p2-bg)">2</div>
+        <div>
+          <div class="step-name">핵심 설명</div>
+          <div class="step-phrase" style="color:var(--p2)">"What I particularly liked about it was…"</div>
+          <div class="step-desc">감각 묘사 추가 → 시간 자연스럽게 채우기.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="color:var(--p2);border-color:var(--p2-bdr);background:var(--p2-bg)">3</div>
+        <div>
+          <div class="step-name">감정 분리</div>
+          <div class="step-phrase" style="color:var(--p2)">"At the time I felt… Looking back now, I think…"</div>
+          <div class="step-desc">같은 주제를 두 각도로 → 30초 추가.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="color:var(--p2);border-color:var(--p2-bdr);background:var(--p2-bg)">4</div>
+        <div>
+          <div class="step-name">마무리</div>
+          <div class="step-phrase" style="color:var(--p2)">"That's why it's so memorable to me."</div>
+          <div class="step-desc">WHY로 닫기. 새 정보 금지.</div>
+        </div>
+      </div>
+    </div>
+    <div class="ex-box" style="border-left-color:var(--p2)">
+      <div class="ex-label">실전 예시</div>
+      <p><strong style="color:var(--p2)">"I'd like to talk about</strong> a trip I took to Jeju last July. <strong style="color:var(--p2)">What I particularly liked</strong> was hiking Hallasan at dawn — the air was cold and the trail was steep. <strong style="color:var(--p2)">At the time I felt</strong> exhausted, but <strong style="color:var(--p2)">looking back now I think</strong> it was one of the best decisions I've made. <strong style="color:var(--p2)">That's why</strong> it's still so memorable."</p>
+    </div>
+  </div>
+</div>
+
+<!-- PART 3 -->
+<div class="part-card">
+  <div class="part-hd">
+    <span class="part-badge" style="color:var(--p3);border-color:var(--p3-bdr);background:var(--p3-bg)">PART 3</span>
+    <span class="part-title">추상 토론</span>
+    <span class="part-time">4–5분</span>
+  </div>
+  <div class="part-body">
+    <div class="struct-label">PEEL · 최소 5문장</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="color:var(--p3);border-color:var(--p3-bdr);background:var(--p3-bg)">P</div>
+        <div>
+          <div class="step-name">Point — 의견</div>
+          <div class="step-phrase" style="color:var(--p3)">"I would argue that…" / "From my perspective…"</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="color:var(--p3);border-color:var(--p3-bdr);background:var(--p3-bg)">E</div>
+        <div>
+          <div class="step-name">Explain — 이유</div>
+          <div class="step-phrase" style="color:var(--p3)">"This is mainly because…" / "The reason is that…"</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="color:var(--p3);border-color:var(--p3-bdr);background:var(--p3-bg)">E</div>
+        <div>
+          <div class="step-name">Example — 사례</div>
+          <div class="step-phrase" style="color:var(--p3)">"Take, for example…" / "Consider the case of…"</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="color:var(--p3);border-color:var(--p3-bdr);background:var(--p3-bg)">L</div>
+        <div>
+          <div class="step-name">Link — 마무리</div>
+          <div class="step-phrase" style="color:var(--p3)">"So yes, that's why I think…"</div>
+          <div class="step-desc">원래 질문으로 연결하며 닫기.</div>
+        </div>
+      </div>
+    </div>
+    <div class="ex-box" style="border-left-color:var(--p3)">
+      <div class="ex-label">실전 예시</div>
+      <p><strong style="color:var(--p3)">"I would argue that</strong> remote work has fundamentally changed how people think about careers. <strong style="color:var(--p3)">This is mainly because</strong> it removed the need to live near your workplace. <strong style="color:var(--p3)">Take, for example,</strong> how many Koreans now work for global companies without relocating. <strong style="color:var(--p3)">So yes, that's why I think</strong> geography matters much less than it used to."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FILLER PHRASES ── -->
+<div class="sr"><div class="sl">시간 버는 표현</div><div></div></div>
+<div class="filler-card">
+  <div class="filler-hd">
+    <div class="filler-hd-title">Filler Phrases 모음</div>
+    <span class="filler-tag">어떤 주제에도 사용 가능</span>
+  </div>
+  <div class="filler-body">
+    <div class="phrase-group">
+      <div class="pg-label">의견 시작 · Part 1 · 3</div>
+      <div class="chips">
+        <span class="chip">I'd say…</span>
+        <span class="chip">I would argue that…</span>
+        <span class="chip">From my perspective…</span>
+        <span class="chip">To be honest with you…</span>
+        <span class="chip">It seems to me that…</span>
+      </div>
+    </div>
+    <div class="phrase-group">
+      <div class="pg-label">시간 버는 표현 · 막혔을 때</div>
+      <div class="chips">
+        <span class="chip">That's an interesting question.</span>
+        <span class="chip">Let me think about that for a moment.</span>
+        <span class="chip">It depends on how you look at it.</span>
+        <span class="chip">Well, in a sense…</span>
+        <span class="chip">It's hard to say, but I'd guess…</span>
+      </div>
+    </div>
+    <div class="phrase-group">
+      <div class="pg-label">예시 도입 · Part 2 · 3</div>
+      <div class="chips">
+        <span class="chip">Take, for example…</span>
+        <span class="chip">A good illustration of this is…</span>
+        <span class="chip">Consider the case of…</span>
+        <span class="chip">For instance…</span>
+      </div>
+    </div>
+    <div class="phrase-group">
+      <div class="pg-label">반론 인정 · Part 3 Band 7 필수</div>
+      <div class="chips">
+        <span class="chip">Having said that…</span>
+        <span class="chip">Then again…</span>
+        <span class="chip">I can see why some people…</span>
+        <span class="chip">Admittedly…</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TIP ── -->
+<div class="tip">
+  <div class="tip-icon">💡</div>
+  <div class="tip-text">
+    <strong>핵심 포인트:</strong> 뼈대를 외우면 주제가 뭐가 나와도 첫 5초 안에 구조가 잡힙니다.
+    Part 1은 <strong>2–3문장</strong>, Part 2는 <strong>감정 분리로 2분</strong>, Part 3는 <strong>PEEL 5문장 이상</strong>이 목표입니다.
+  </div>
+</div>
+
+<!-- ── QUIZ ── -->
+<div class="sr"><div class="sl">확인 퀴즈 · 4문제</div><div></div></div>
+<div class="quiz-card">
+  <div class="quiz-hd">Quiz — 뼈대 구조 확인</div>
+  <div class="quiz-body" id="quiz-container"></div>
+  <div class="score-box" id="score-box">
+    <div class="score-n" id="score-n">-</div>
+    <div class="score-of">/ 4 정답</div>
+    <div class="score-msg" id="score-msg"></div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const Q=[
+  {q:"Part 1에서 Band 7 답변의 기본 구조는?",
+   opts:["Yes/No 한 단어로 명확하게 답한다","직접 답 → 이유 → 가벼운 마무리 (2–3문장)","이유를 3개 이상 나열한다","예시를 먼저 말하고 결론을 나중에"],
+   ans:1,exp:"<strong>직접 답 → 이유 → 마무리</strong> 구조가 핵심. Yes/No로 끝내면 Band 5 수준입니다."},
+  {q:"Part 2에서 2분을 자연스럽게 채우는 가장 효과적인 기술은?",
+   opts:["같은 내용을 천천히 반복한다","'At the time I felt… / Looking back now, I think…'로 감정을 두 각도로 나눈다","관련 없는 에피소드를 추가한다","최대한 복잡한 문장을 쓴다"],
+   ans:1,exp:"같은 경험을 <strong>당시 감정 + 지금 시점</strong>으로 나누면 자연스럽게 30–40초가 추가됩니다."},
+  {q:"Part 3 PEEL에서 'L (Link)'의 역할은?",
+   opts:["새로운 예시를 추가한다","반론을 인정한다","원래 질문으로 다시 연결하며 답변을 닫는다","어휘를 바꿔 같은 내용을 반복한다"],
+   ans:2,exp:"Link는 <strong>원래 질문과 연결하며 자연스럽게 마무리</strong>하는 역할. 새 정보를 도입하는 곳이 아닙니다."},
+  {q:"시험 중 모르는 주제가 나왔을 때 가장 좋은 대응은?",
+   opts:["모른다고 솔직하게 말하고 멈춘다","질문을 다시 해달라고 요청한다","'It's hard to say, but I'd guess…'로 추측을 이어간다","침묵하고 시험관이 넘어가길 기다린다"],
+   ans:2,exp:"유창성(Fluency) 점수는 <strong>말하는 양</strong>과 직결됩니다. 추측이라도 계속 말하는 것이 이득입니다."}
+];
+
+let answered=0,correct=0;
+
+function render(){
+  const c=document.getElementById('quiz-container');
+  Q.forEach((item,qi)=>{
+    const d=document.createElement('div');
+    d.className='qi';
+    d.innerHTML=`<div class="qi-q"><span class="qnum">Q ${qi+1}</span>${item.q}</div>
+    <div class="opts">${item.opts.map((o,oi)=>`
+      <button class="opt" data-qi="${qi}" data-oi="${oi}">
+        <span class="opt-l">${String.fromCharCode(65+oi)}</span><span>${o}</span>
+      </button>`).join('')}
+    </div>
+    <div class="exp" id="exp-${qi}">${item.exp}</div>`;
+    c.appendChild(d);
+  });
+  document.querySelectorAll('.opt').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      const qi=+this.dataset.qi,oi=+this.dataset.oi;
+      const grp=document.querySelectorAll(`[data-qi="${qi}"]`);
+      if([...grp].some(b=>b.classList.contains('ok')||b.classList.contains('no')))return;
+      answered++;
+      const ok=oi===Q[qi].ans;
+      if(ok){this.classList.add('ok');correct++;}
+      else{this.classList.add('no');grp[Q[qi].ans].classList.add('ok');}
+      document.getElementById('exp-'+qi).classList.add('show');
+      if(answered===Q.length){
+        const sb=document.getElementById('score-box');
+        sb.classList.add('show');
+        document.getElementById('score-n').textContent=correct;
+        const msgs=['다시 도전해 보세요!','조금 더 복습이 필요해요.','절반 이상! 계속 연습하세요.','잘 하고 있어요!','완벽합니다! 🎉'];
+        document.getElementById('score-msg').textContent=msgs[Math.min(correct,4)];
+      }
+    });
+  });
+}
+render();
+</script>
+</body>
+</html>
